@@ -1,6 +1,6 @@
-export const runtime = "nodejs"; // viktigt på Vercel för Puppeteer
+export const runtime = "node"; // Vercel kräver "node" (inte "nodejs")
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { pdfPayloadSchema } from "@/lib/schemas/pdfSchema";
@@ -10,39 +10,50 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const parsed = pdfPayloadSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+      return new Response(JSON.stringify({ error: parsed.error.flatten() }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
     }
+
     const data = parsed.data;
     const now = new Date(data.createdAt ?? Date.now());
-    const dateStr = now.toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
+    const dateStr = now.toLocaleDateString("sv-SE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
     const html = makeHTML({ ...data, dateStr });
 
-    // Vercel-kompatibel Chrome setup
-    const isLocal = process.env.NODE_ENV !== "production";
-    const executablePath = isLocal
-      ? process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/google-chrome" // lokalt/Railway
-      : await chromium.executablePath(); // Vercel serverless
+    // Prod (Vercel) använder @sparticuz/chromium, lokalt kan systemets Chrome duga
+    const isProd = process.env.VERCEL === "1";
+    const executablePath = isProd ? await chromium.executablePath() : process.env.PUPPETEER_EXECUTABLE_PATH;
 
     const browser = await puppeteer.launch({
-      args: isLocal ? ["--no-sandbox", "--disable-setuid-sandbox"] : chromium.args,
+      args: isProd ? chromium.args : ["--no-sandbox", "--disable-setuid-sandbox"],
       headless: true,
-      executablePath,
-      defaultViewport: chromium.defaultViewport,
+      executablePath, // i dev: sätt PUPPETEER_EXECUTABLE_PATH om behövs
     });
 
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "networkidle0" });
-    const pdfBuffer = await page.pdf({
+
+    const pdf = await page.pdf({
       format: "A4",
       printBackground: true,
       margin: { top: "20mm", right: "16mm", bottom: "22mm", left: "16mm" },
     });
+
     await browser.close();
 
+    // pdf: Uint8Array från puppeteer
     const filename = `relationsanalys_${data.person1}_${data.person2}.pdf`.replace(/\s+/g, "_");
 
-    return new NextResponse(pdfBuffer, {
+    // Konvertera till Buffer för TypeScript-kompatibilitet
+    const buffer = Buffer.from(pdf);
+
+    return new Response(buffer, {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -52,12 +63,16 @@ export async function POST(req: NextRequest) {
     });
   } catch (e) {
     console.error(e);
-    return NextResponse.json({ error: "INTERNAL_ERROR" }, { status: 500 });
+    return new Response(JSON.stringify({ error: "INTERNAL_ERROR" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
 
+// --- dina helpers behålls oförändrade ---
 function esc(s: string) {
-  return s.replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]!));
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
 }
 
 function makeHTML(data: {
@@ -99,9 +114,7 @@ function makeHTML(data: {
     <h1 class="title">Relationsanalys – ${esc(person1)} & ${esc(person2)}</h1>
     <p class="subtitle">
       ${dateStr} • PDF v1 • <span class="badge">MVP</span>${
-        safetyFlag 
-          ? ' <span class="badge" style="background:#FEE2E2;color:#991B1B;margin-left:6px;">⚠️ TRYGGHET: FLAGGAD</span>' 
-          : ''
+        safetyFlag ? ' <span class="badge" style="background:#FEE2E2;color:#991B1B;margin-left:6px;">⚠️ TRYGGHET: FLAGGAD</span>' : ''
       }
     </p>
   </header>
@@ -136,4 +149,3 @@ function makeHTML(data: {
 </body>
 </html>`;
 }
-
