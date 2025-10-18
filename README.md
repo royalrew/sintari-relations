@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 Sintari Relations
 
-## Getting Started
+AI-driven relationsanalys för att förstå och förbättra dina relationer.
 
-First, run the development server:
+## 📅 Progress
+
+### ✅ Dag 1 - Relationformulär
+**Status:** KLAR  
+
+### ✅ Dag 2 - relation_agent v1  
+**Status:** KLAR  
+
+### ✅ Dag 3 - PDF Export v1
+**Status:** KLAR  
+
+### ✅ Dag 4 - Ethics & Safety
+**Status:** KLAR  
+
+### ✅ Dag 5 - Deploy Setup (Vercel-ready)
+**Status:** KLAR  
+**Uppgift:** Env + health endpoint  
+**Output:** Vercel-kompatibel, health endpoint, deploy-guide
+
+## 🚀 Quick Start
 
 ```bash
+# Installera dependencies
+npm install
+
+# Lokalt (dev)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Produktion
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Öppna [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Deploy till Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Se **[DEPLOY.md](./DEPLOY.md)** för fullständig guide!
 
-## Learn More
+**Snabbversion:**
+1. Pusha till GitHub
+2. Importera i Vercel
+3. Lägg till env-variabler från `env.template`
+4. Deploy!
+5. Testa `/api/health`
 
-To learn more about Next.js, take a look at the following resources:
+## 🛡️ Safety System (Production-ready)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Trygghetsdetektor (23 säkerhetsord):
+- Flaggar: elak, kränkande, hotar, våld, aggressiv...
+- **Reflektion #1:** Tryggetsvarning
+- **Rekommendation:** Specialiserad för trygghet
+- **UI:** Röd box + hjälplänk
+- **PDF:** "⚠️ TRYGGHET: FLAGGAD" badge
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧠 AI-Agent Features
 
-## Deploy on Vercel
+- **130+ riskindikatorer** (7 kategorier)
+- **3 reflektioner** (tonläge, risker, reparation)
+- **1 handlingsbar rekommendation** (7 specialiserade varianter)
+- **Trygghetsprioritet** (safety-first design)
+- **Slumpvarianter** (mindre repetitivt)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Projektstruktur
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+sintari-relations/
+├── app/
+│   ├── api/
+│   │   ├── health/route.ts           ✅ Health endpoint
+│   │   └── export/route.ts           ✅ Vercel-kompatibel PDF
+│   ├── components/
+│   │   └── DisclaimerBanner.tsx      ✅
+│   ├── legal/ethics/page.tsx         ✅
+│   ├── page.tsx                      ✅
+│   └── ...
+├── lib/
+│   ├── agents/relation_agent.ts      ✅
+│   └── schemas/...                   ✅
+├── data/
+│   ├── indicators.json               ✅ 130+ ord
+│   ├── policy.json                   ✅
+│   └── README.md                     ✅
+├── vercel.json                       ✅ Config
+├── env.template                      ✅ Env mall
+├── DEPLOY.md                         ✅ Deploy guide
+└── ...
+```
+
+## 🔧 Tech Stack
+
+- **Next.js 15** - App Router
+- **TypeScript** - Type safety
+- **Tailwind CSS 4** - Styling
+- **Zod** - Validation
+- **Puppeteer-core** - Serverless PDF
+- **@sparticuz/chromium** - Vercel Chrome
+
+## 📝 Nästa steg
+
+**Dag 6:** Billing - Stripe testbetalning (Checkout + webhook → run)
+
+---
+
+**Del av Sintari 5-års roadmap** 🚀  
+Från kod till Monaco 👑
+
+**Dag 1-5/360 klara!** ✅  
+**355 dagar kvar!**
+
+**MVP är Vercel-ready!** 🎉
