@@ -1,4 +1,4 @@
-export const runtime = "node"; // Vercel kräver "node" (inte "nodejs")
+export const runtime = "nodejs";
 
 import { NextRequest } from "next/server";
 import chromium from "@sparticuz/chromium";
@@ -26,14 +26,10 @@ export async function POST(req: NextRequest) {
 
     const html = makeHTML({ ...data, dateStr });
 
-    // Prod (Vercel) använder @sparticuz/chromium, lokalt kan systemets Chrome duga
-    const isProd = process.env.VERCEL === "1";
-    const executablePath = isProd ? await chromium.executablePath() : process.env.PUPPETEER_EXECUTABLE_PATH;
-
     const browser = await puppeteer.launch({
-      args: isProd ? chromium.args : ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
       headless: true,
-      executablePath, // i dev: sätt PUPPETEER_EXECUTABLE_PATH om behövs
     });
 
     const page = await browser.newPage();
