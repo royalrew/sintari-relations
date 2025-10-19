@@ -1,4 +1,4 @@
-import { z } from "next/dist/compiled/zod";
+import { z } from "zod";
 
 export const pdfPayloadSchema = z.object({
   person1: z.string().min(2),

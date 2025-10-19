@@ -58,7 +58,7 @@ const TEST_CASES = [
       hasRepairSignals: false,
       hasWarmth: false,
       netScore: -2,
-      safetyFlag: true // rädd, kontrollerande, hotfull
+      safetyFlag: "CAUTION" // rädd, kontrollerande, hotfull
     }
   },
   {
@@ -127,7 +127,7 @@ export async function runGoldenTests(): Promise<void> {
         errors.push(`netScore: förväntat ${testCase.expected.netScore}, fick ${scoreData.netScore}`);
       }
       
-      if (testCase.expected.safetyFlag && scoreData.safetyFlag !== testCase.expected.safetyFlag) {
+      if ('safetyFlag' in testCase.expected && scoreData.safetyFlag !== testCase.expected.safetyFlag) {
         errors.push(`safetyFlag: förväntat ${testCase.expected.safetyFlag}, fick ${scoreData.safetyFlag}`);
       }
       

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "test:golden": "node scripts/run-golden-test.js",
     "test:golden:simple": "node lib/tests/golden-test-simple.js",
     "test:openai": "node lib/test-openai.js"
@@ -19,7 +19,8 @@
     "puppeteer-core": "^23.11.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "stripe": "^14.25.0"
+    "stripe": "^14.25.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

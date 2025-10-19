@@ -1,7 +1,7 @@
 "use server";
 
 import { relationSchema } from "@/lib/schemas/relationSchema";
-import { relationAgentV1 } from "@/lib/agents/relation_agent";
+import { relationAgentV1, type RelationAgentOutput } from "@/lib/agents/relation_agent";
 import { relationAgentAI, type RelationAgentAIOutput } from "@/lib/agents/relation_agent_ai";
 import { calculateScore } from "@/lib/utils/calculateScore";
 import { writeFile, mkdir, access, readFile } from "fs/promises";
@@ -270,11 +270,13 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
       }, latency);
     } catch (error) {
       console.error("AI agent failed, using fallback:", error);
-      analysisResult = await timeStage("fallback_analysis", async () => {
+      const fallbackResult = await timeStage<RelationAgentOutput>("fallback_analysis", async () => {
         return relationAgentV1(parsed.data);
       }, latency);
+      
+      // Wrap fallback result to match RelationAgentAIOutput type
       analysisResult = {
-        ...analysisResult,
+        ...fallbackResult,
         analysisMode: "fallback" as const,
         confidence: 0.8
       };
@@ -292,9 +294,9 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
     const report: AnalysisReportV2 = {
       run_id: runId,
       timestamp,
-      order_id: null,
-      session_id: null, // Could be set from cookies/headers
-      user_id: null, // Pseudonymized user ID
+      order_id: undefined,
+      session_id: undefined, // Could be set from cookies/headers 
+      user_id: undefined, // Pseudonymized user ID
       locale: "sv-SE",
       timezone: "Europe/Stockholm",
       overall_status: overallStatus,
@@ -315,7 +317,7 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
         analysis_mode: analysisResult.analysisMode,
         confidence: analysisResult.confidence,
         model: analysisResult.analysisMode === "ai" ? "gpt-3.5-turbo" : "deterministic-v1",
-        temperature: analysisResult.analysisMode === "ai" ? 0.7 : null,
+        temperature: analysisResult.analysisMode === "ai" ? 0.7 : undefined,
         system_version: getSystemConfig().system_version,
         analysis_pipeline: ["validate", "extract_signals", analysisResult.analysisMode === "ai" ? "llm_analysis" : "fallback_analysis", "persist"],
         ai_chain_version: getSystemConfig().ai_chain_version,
@@ -334,7 +336,7 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
         timestamp,
       },
       payment: {
-        provider: null,
+        provider: undefined,
         status: "not_required", // Could be set based on Stripe integration
         amount: 0,
         currency: "SEK",
