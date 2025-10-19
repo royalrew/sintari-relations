@@ -270,16 +270,15 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
       }, latency);
     } catch (error) {
       console.error("AI agent failed, using fallback:", error);
-      const fallbackResult = await timeStage<RelationAgentOutput>("fallback_analysis", async () => {
-        return relationAgentV1(parsed.data);
+      analysisResult = await timeStage<RelationAgentAIOutput>("fallback_analysis", async () => {
+        const base = await relationAgentV1(parsed.data); // RelationAgentOutput
+        const wrapped: RelationAgentAIOutput = {
+          ...base,
+          analysisMode: "fallback",
+          confidence: 0.7,
+        };
+        return wrapped;
       }, latency);
-      
-      // Wrap fallback result to match RelationAgentAIOutput type
-      analysisResult = {
-        ...fallbackResult,
-        analysisMode: "fallback" as const,
-        confidence: 0.8
-      };
     }
 
     // Calculate tokens and cost for metrics
