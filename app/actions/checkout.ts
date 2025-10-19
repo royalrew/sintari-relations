@@ -1,14 +1,26 @@
 "use server";
 
+function getBaseUrl(): string {
+  // Production URL from environment
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL;
+  }
+  
+  // Vercel automatic URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  
+  // Local development fallback
+  return 'http://localhost:3000';
+}
+
 export async function createCheckoutSession(data: {
   person1: string;
   person2: string;
   description: string;
 }) {
-  // Better URL detection for Vercel
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-                  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
-                  'http://localhost:3000');
+  const baseUrl = getBaseUrl();
   
   const successUrl = `${baseUrl}/analyze?payment_success=true&session_id={CHECKOUT_SESSION_ID}&person1=${encodeURIComponent(data.person1)}&person2=${encodeURIComponent(data.person2)}&description=${encodeURIComponent(data.description)}`;
   const cancelUrl = `${baseUrl}/analyze`;

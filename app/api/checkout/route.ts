@@ -10,7 +10,7 @@ async function getStripe() {
       Stripe = (await import('stripe')).default;
     }
     stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-      apiVersion: '2024-12-18.acacia',
+      apiVersion: '2024-06-20',
     });
   }
   return stripe;
