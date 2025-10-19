@@ -5,14 +5,21 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test:golden": "node scripts/run-golden-test.js",
+    "test:golden:simple": "node lib/tests/golden-test-simple.js",
+    "test:openai": "node lib/test-openai.js"
   },
   "dependencies": {
     "@sparticuz/chromium": "^133.0.0",
+    "lucide-react": "^0.468.0",
     "next": "15.5.6",
+    "openai": "^4.67.2",
+    "puppeteer": "^23.11.1",
     "puppeteer-core": "^23.11.1",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "stripe": "^14.25.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

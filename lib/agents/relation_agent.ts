@@ -25,9 +25,11 @@ const REPAIR_HINTS = [
   "tog ansvar", "ansvar", "beklagar"
 ];
 
-// Värme & positiv grund
+// Värme & positiv grund - utökad för bättre identifiering
 const WARM_TONE = [
-  "kärlek", "älskar", "värme", "omtanke", "respekt", "tillit", "förståelse", "stöd"
+  "kärlek", "älskar", "värme", "omtanke", "respekt", "tillit", "förståelse", "stöd",
+  "kommunicerar bra", "bra kommunikation", "pratar bra", "lyssnar", "snäll", "ärlig",
+  "tacksam", "glad", "lycka", "harmoni", "samarbete", "tillsammans", "planerar"
 ];
 
 // Trygghetshot - signaler som kan indikera osäker relation (röd flagga)

@@ -1,220 +1,163 @@
 "use client";
 
-import { useState } from "react";
-import { analyzeRelation } from "./actions/analyzeRelation";
-import { DisclaimerBanner } from "./components/DisclaimerBanner";
+import Link from "next/link";
+
+/** Fallback-ikoner (byt till lucide-react när du vill) */
+// import { ShieldCheck, Sparkles, Clock, CheckCircle2, Mail } from "lucide-react";
+const ShieldCheck = () => <span aria-hidden className="inline-block">🛡️</span>;
+const Sparkles = () => <span aria-hidden className="inline-block">✨</span>;
+const Clock = () => <span aria-hidden className="inline-block">⏱️</span>;
+const CheckCircle2 = () => <span aria-hidden className="inline-block">✅</span>;
+const Mail = () => <span aria-hidden className="inline-block">📧</span>;
+
+function CtaCard() {
+  return (
+    <section
+      aria-label="Huvudbudskap och call-to-action"
+      className="relative mb-8 rounded-3xl border border-purple-200/60 bg-gradient-to-r from-purple-50 to-indigo-50 p-6 sm:p-8 shadow-sm"
+    >
+      <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/40" />
+      <div className="flex items-start gap-3">
+        <div className="text-purple-600 text-2xl mt-0.5"><Sparkles /></div>
+        <div className="flex-1">
+          <p className="inline-flex items-center gap-2 text-xs font-semibold text-purple-700 bg-purple-100/60 px-2.5 py-1 rounded-full">
+            Nytt • PDF ingår
+          </p>
+          <h2 className="mt-3 text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight">
+            Få en relationsanalys på några minuter
+          </h2>
+          <p className="mt-2 text-sm sm:text-base text-gray-700">
+            Fyll i tre fält, betala tryggt och få en konkret rekommendation direkt på sidan – plus en nedladdningsbar PDF.
+          </p>
+          <div className="mt-5 flex flex-col sm:flex-row gap-3">
+            <Link
+              href="/analyze"
+              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 px-5 py-3 text-white font-semibold shadow-lg shadow-purple-300/30 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-500 transition-all"
+            >
+              Starta nu
+            </Link>
+            <Link
+              href="/legal/ethics"
+              className="inline-flex items-center justify-center rounded-xl border border-purple-200 bg-white/80 px-5 py-3 text-purple-700 font-semibold hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-400 transition-all"
+            >
+              Läs om etik & trygghet
+            </Link>
+          </div>
+          <ul className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-gray-700">
+            <li className="inline-flex items-center gap-1.5"><ShieldCheck /> Trygg betalning</li>
+            <li className="inline-flex items-center gap-1.5"><Clock /> Klar på ~1–2 min</li>
+            <li className="inline-flex items-center gap-1.5"><CheckCircle2 /> PDF ingår</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeatureCards() {
+  const items = [
+    { title: "Tydliga råd", desc: "Praktiska steg att testa redan i dag – inga fluffiga texter.", icon: Sparkles },
+    { title: "Etik först", desc: "Samtycke, säkerhet och tydliga gränser är inbyggt.", icon: ShieldCheck },
+    { title: "Snabbt & smidigt", desc: "Fyll i, betala, få svar och PDF – på några minuter.", icon: Clock },
+  ];
+  return (
+    <section aria-label="Fördelar" className="mt-10">
+      <div className="grid sm:grid-cols-3 gap-4">
+        {items.map(({ title, desc, icon: Icon }) => (
+          <article
+            key={title}
+            className="group rounded-2xl border border-gray-200/80 bg-white p-5 shadow-sm ring-1 ring-black/0 hover:shadow-md hover:-translate-y-0.5 transition-all"
+          >
+            <div className="flex items-center gap-3">
+              <div className="text-purple-600 text-xl"><Icon /></div>
+              <h3 className="font-semibold text-gray-900">{title}</h3>
+            </div>
+            <p className="mt-2 text-sm text-gray-700">{desc}</p>
+            <div className="mt-3 h-px bg-gradient-to-r from-purple-100 via-gray-100 to-transparent" />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function SocialProof() {
+  return (
+    <section aria-label="Förtroende" className="mt-14">
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+        <p className="text-sm text-gray-600">Byggd med fokus på trygghet och nytta</p>
+        <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-gray-700">
+          <li className="inline-flex items-center gap-1"><CheckCircle2 /> Ingen data säljs</li>
+          <li className="inline-flex items-center gap-1"><CheckCircle2 /> Svenskt språkstöd</li>
+          <li className="inline-flex items-center gap-1"><CheckCircle2 /> PDF för utskrift</li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function FooterCta() {
+  return (
+    <section aria-label="Avslutande call-to-action" className="mt-16">
+      <div className="rounded-3xl border border-gray-200 bg-white p-8 shadow-xl text-center">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          Klar att prova Sintari Relations?
+        </h2>
+        <p className="mt-2 text-gray-600 max-w-2xl mx-auto">
+          Svara på tre frågor och få en konkret rekommendation – direkt på sidan. Du kan ladda ner resultatet som PDF.
+        </p>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <Link
+            href="/analyze"
+            className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-3 text-white font-semibold shadow-lg hover:from-purple-700 hover:to-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-500 transition-all"
+          >
+            Kom igång nu
+          </Link>
+          <Link
+            href="mailto:hej@sintari.se"
+            className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-6 py-3 text-gray-800 font-semibold hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-400 transition"
+          >
+            <span className="mr-2"><Mail /></span> Frågor? Maila oss
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
-  const [pending, setPending] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
-  const [reflections, setReflections] = useState<string[] | null>(null);
-  const [recommendation, setRecommendation] = useState<string | null>(null);
-  const [safetyFlag, setSafetyFlag] = useState(false);
-  const [formData, setFormData] = useState<{ person1: string; person2: string; description: string } | null>(null);
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setPending(true);
-    setErrors({});
-    setReflections(null);
-    setRecommendation(null);
-
-    const form = e.currentTarget;
-    const formDataObj = new FormData(form);
-    const res = await analyzeRelation(formDataObj);
-
-    if (res.ok) {
-      setReflections(res.data.reflections);
-      setRecommendation(res.data.recommendation);
-      setSafetyFlag(res.data.safetyFlag);
-      
-      // Store form data for PDF generation
-      setFormData({
-        person1: formDataObj.get("person1") as string,
-        person2: formDataObj.get("person2") as string,
-        description: formDataObj.get("description") as string,
-      });
-    } else if (res.error === "VALIDATION_ERROR" && res.issues) {
-      setErrors(res.issues);
-    } else {
-      setErrors({ _form: ["Något gick fel. Försök igen."] });
-    }
-
-    setPending(false);
-  }
-
-  const handleDownloadPDF = async () => {
-    if (!reflections || !recommendation || !formData) return;
-
-    try {
-      const res = await fetch("/api/export", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          reflections,
-          recommendation,
-          safetyFlag,
-          createdAt: new Date().toISOString(),
-        }),
-      });
-
-      if (!res.ok) throw new Error("Export misslyckades");
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `relationsanalys_${formData.person1}_${formData.person2}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("PDF export error:", error);
-      alert("Kunde inte skapa PDF. Försök igen.");
-    }
-  };
-
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 p-8">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-12 pt-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
+    <main className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 selection:bg-purple-200/60 selection:text-purple-900">
+      <div className="mx-auto max-w-5xl px-6 sm:px-8 pb-16">
+        {/* Header */}
+        <header className="pt-10 text-center">
+          <p className="mx-auto inline-flex items-center gap-2 rounded-full border border-purple-200 bg-white/70 px-3 py-1 text-xs font-semibold text-purple-700 shadow-sm">
+            Beta • Månad 1
+          </p>
+          <h1 className="mt-3 text-4xl sm:text-6xl font-extrabold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
             Sintari Relations
           </h1>
-          <p className="text-gray-600 text-lg">Analysera och förstå dina relationer med AI</p>
-        </div>
+          <p className="mt-3 text-gray-700 text-base sm:text-lg max-w-2xl mx-auto">
+            Analysera och förstå dina relationer med AI-driven insikt och praktiska rekommendationer.
+          </p>
+        </header>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="person1" className="block text-sm font-semibold text-gray-700 mb-2">
-                Person 1
-              </label>
-              <input
-                id="person1"
-                name="person1"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
-                placeholder="T.ex. Anna"
-              />
-              {errors.person1?.[0] && <p className="mt-1 text-sm text-red-600">{errors.person1[0]}</p>}
-            </div>
+        {/* CTA */}
+        <CtaCard />
 
-            <div>
-              <label htmlFor="person2" className="block text-sm font-semibold text-gray-700 mb-2">
-                Person 2
-              </label>
-              <input
-                id="person2"
-                name="person2"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
-                placeholder="T.ex. Erik"
-              />
-              {errors.person2?.[0] && <p className="mt-1 text-sm text-red-600">{errors.person2[0]}</p>}
-            </div>
+        {/* Features */}
+        <FeatureCards />
 
-            <div>
-              <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
-                Beskrivning av relationen
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                rows={6}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none resize-none"
-                placeholder="Beskriv relationen, utmaningar och styrkor..."
-              />
-              {errors.description?.[0] && <p className="mt-1 text-sm text-red-600">{errors.description[0]}</p>}
-              <p className="mt-2 text-sm text-gray-500">Dela detaljer för bättre analys.</p>
-            </div>
+        {/* Social proof */}
+        <SocialProof />
 
-            {/* Samtycke */}
-            <div className="flex items-start gap-2">
-              <input
-                id="consent"
-                name="consent"
-                type="checkbox"
-                required
-                className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
-              />
-              <label htmlFor="consent" className="text-sm text-gray-700">
-                Jag bekräftar samtycke och har läst{" "}
-                <a
-                  href="/legal/ethics"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline text-purple-600 hover:text-purple-800"
-                >
-                  Etik & ansvarsbegränsning
-                </a>
-                .
-              </label>
-            </div>
-            {errors.consent?.[0] && <p className="text-sm text-red-600">{errors.consent[0]}</p>}
+        {/* Footer CTA */}
+        <FooterCta />
 
-            <button
-              type="submit"
-              disabled={pending}
-              className={`w-full py-4 rounded-lg font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] ${
-                pending
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 shadow-lg hover:shadow-xl"
-              }`}
-            >
-              {pending ? "Analyserar…" : "Analysera relation"}
-            </button>
-
-            {errors._form?.[0] && <p className="text-red-600 text-sm text-center">{errors._form[0]}</p>}
-          </form>
-
-          {/* Disclaimer Banner */}
-          <DisclaimerBanner />
-
-          {reflections && (
-            <div className="mt-8 space-y-4 animate-fade-in">
-              <div className="p-5 rounded-xl border-2 bg-indigo-50 border-indigo-200">
-                <p className="font-bold text-indigo-800 text-lg mb-3 flex items-center gap-2">
-                  <span>💭</span> Reflektioner
-                </p>
-                <ul className="space-y-2">
-                  {reflections.map((r, i) => (
-                    <li key={i} className="flex gap-2">
-                      <span className="text-indigo-600 font-semibold">{i + 1}.</span>
-                      <span className="text-indigo-900">{r}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className={`p-5 rounded-xl border-2 ${safetyFlag ? 'bg-red-50 border-red-200' : 'bg-emerald-50 border-emerald-200'}`}>
-                <p className={`font-bold text-lg mb-3 flex items-center gap-2 ${safetyFlag ? 'text-red-800' : 'text-emerald-800'}`}>
-                  <span>{safetyFlag ? '🛡️' : '✨'}</span> Rekommendation
-                </p>
-                <p className={`leading-relaxed ${safetyFlag ? 'text-red-900' : 'text-emerald-900'}`}>{recommendation}</p>
-              </div>
-
-              {/* Safety help link */}
-              {safetyFlag && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <p className="text-sm text-red-700">
-                    Behöver du stöd? Prata med någon du litar på eller sök professionell hjälp.{" "}
-                    <a href="/legal/ethics" className="underline font-semibold">Läs mer om stöd</a>.
-                  </p>
-                </div>
-              )}
-
-              {/* PDF Download Button */}
-              <button
-                onClick={handleDownloadPDF}
-                className="w-full py-4 rounded-lg font-semibold text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
-              >
-                <span>📄</span> Ladda ner PDF
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="text-center mt-8 text-gray-500 text-sm">
-          <p>Månad 1 • Dag 4 • Ethics & Safety v1 ✓</p>
-        </div>
+        {/* Liten fotnot */}
+        <p className="mt-10 text-center text-xs text-gray-500">
+          Etik: AI-genererad analys. Inte terapi. Använd med samtycke. Vid akuta lägen – kontakta 112.
+        </p>
       </div>
     </main>
   );

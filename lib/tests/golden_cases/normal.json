@@ -1,0 +1,18 @@
+{
+  "description": "Normal case - positive relationship",
+  "input": {
+    "person1": "Anna",
+    "person2": "Erik", 
+    "description": "Vi älskar varandra och kommunicerar bra. Vi planerar tillsammans och har ett fint samarbete."
+  },
+  "expected": {
+    "pos_count": 2,
+    "neg_count": 0,
+    "risk_count": 0,
+    "safety_flag": "NORMAL",
+    "overall_status": "OK",
+    "net_score": 2,
+    "repair_signals": "YES",
+    "warmth": "YES"
+  }
+}

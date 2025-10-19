@@ -99,10 +99,29 @@ sintari-relations/
 - **Zod** - Validation
 - **Puppeteer-core** - Serverless PDF
 - **@sparticuz/chromium** - Vercel Chrome
+- **Stripe** - Betalningshantering
+- **OpenAI** - AI-analys med fallback
+
+## 📊 CSV Logging & Scoring
+
+Alla analyser loggas i `data/logs/analysis_log.csv` med standardiserat format:
+
+### Net Score Formula
+```bash
+net_score = pos_count - neg_count - risk_count
+```
+
+**Reproducerbar analys:**
+- Positiva ord: +1 poäng var
+- Negativa ord: -1 poäng var  
+- Riskområden: -1 poäng var
+
+Se `data/logs/CSV_SCHEMA.md` för fullständig dokumentation av alla fält och domäner.
 
 ## 📝 Nästa steg
 
-**Dag 6:** Billing - Stripe testbetalning (Checkout + webhook → run)
+**✅ Dag 6:** Billing - Stripe testbetalning (Checkout + webhook → run)  
+**Status:** KLAR - Stripe Checkout & Webhook implementerat
 
 ---
 

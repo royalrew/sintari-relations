@@ -1,0 +1,18 @@
+{
+  "description": "Danger case - explicit violence",
+  "input": {
+    "person1": "Maja",
+    "person2": "Kim",
+    "description": "Jag känner mig ofta rädd hemma. Han blir arg och skriker, ibland kastar saker och säger elaka ord. Jag har börjat sova i vardagsrummet för att undvika konflikter."
+  },
+  "expected": {
+    "pos_count": 0,
+    "neg_count": 1,
+    "risk_count": 3,
+    "safety_flag": "DANGER",
+    "overall_status": "CRITICAL", 
+    "net_score": -4,
+    "repair_signals": "NO",
+    "warmth": "NO"
+  }
+}

@@ -1,37 +1,52 @@
 export const runtime = "nodejs";
 
 import { NextRequest } from "next/server";
-import chromium from "@sparticuz/chromium";
-import puppeteer from "puppeteer-core";
 import { pdfPayloadSchema } from "@/lib/schemas/pdfSchema";
+
+function isServerless() {
+  // Känn igen Vercel/AWS/Railway. Lägg gärna till egna flags vid behov.
+  return Boolean(process.env.VERCEL || process.env.AWS_REGION || process.env.RAILWAY_STATIC_URL || process.env.SERVERLESS);
+}
+
+async function launchBrowser() {
+  if (isServerless()) {
+    // Serverless: puppeteer-core + @sparticuz/chromium
+    const chromium = (await import("@sparticuz/chromium")).default;
+    const puppeteer = (await import("puppeteer-core")).default;
+
+    return puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+      defaultViewport: { width: 1280, height: 800 },
+    });
+  } else {
+    // Lokalt: full puppeteer (laddar egen Chromium)
+    const puppeteer = (await import("puppeteer")).default;
+    return puppeteer.launch({
+      headless: true,
+      defaultViewport: { width: 1280, height: 800 },
+    });
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const parsed = pdfPayloadSchema.safeParse(body);
     if (!parsed.success) {
-      return new Response(JSON.stringify({ error: parsed.error.flatten() }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(JSON.stringify({ 
+        error: "VALIDATION_ERROR", 
+        details: parsed.error.flatten() 
+      }), { status: 400, headers: { "Content-Type": "application/json" }});
     }
 
     const data = parsed.data;
     const now = new Date(data.createdAt ?? Date.now());
-    const dateStr = now.toLocaleDateString("sv-SE", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-
+    const dateStr = now.toLocaleDateString("sv-SE", { year: "numeric", month: "long", day: "numeric" });
     const html = makeHTML({ ...data, dateStr });
 
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: true,
-    });
-
+    const browser = await launchBrowser();
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "networkidle0" });
 
@@ -43,13 +58,8 @@ export async function POST(req: NextRequest) {
 
     await browser.close();
 
-    // pdf: Uint8Array från puppeteer
     const filename = `relationsanalys_${data.person1}_${data.person2}.pdf`.replace(/\s+/g, "_");
-
-    // Konvertera till Buffer för TypeScript-kompatibilitet
-    const buffer = Buffer.from(pdf);
-
-    return new Response(buffer, {
+    return new Response(Buffer.from(pdf), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
@@ -58,8 +68,9 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (e) {
-    console.error(e);
-    return new Response(JSON.stringify({ error: "INTERNAL_ERROR" }), {
+    const msg = e instanceof Error ? e.message : String(e);
+    const stack = e instanceof Error ? e.stack : undefined;
+    return new Response(JSON.stringify({ error: "INTERNAL_ERROR", message: msg, ...(process.env.NODE_ENV === "development" && { stack }) }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

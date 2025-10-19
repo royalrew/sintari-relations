@@ -14,10 +14,10 @@ npm run dev
 
 ### 2️⃣ Environment Variables
 
-Kopiera `.env.example` till `.env.local`:
+Kopiera `env.template` till `.env.local`:
 
 ```bash
-cp .env.example .env.local
+cp env.template .env.local
 ```
 
 **För Vercel, lägg till dessa i dashboard:**
@@ -27,6 +27,11 @@ NEXT_PUBLIC_APP_NAME=Sintari Relations
 NEXT_PUBLIC_APP_VERSION=v0.1
 NEXT_PUBLIC_BASE_URL=https://din-app.vercel.app
 NODE_ENV=production
+
+# Stripe (för betalningar)
+STRIPE_SECRET_KEY=sk_live_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
 ```
 
 ### 3️⃣ Deploy till Vercel
@@ -70,9 +75,15 @@ https://din-app.vercel.app/api/health
 ```json
 {
   "status": "ok",
-  "time": "2025-10-18T12:30:00.000Z",
+  "timestamp": "2025-10-18T12:30:00.000Z",
   "version": "v0.1",
-  "service": "Sintari Relations API"
+  "service": "Sintari Relations API",
+  "environment": "production",
+  "uptime": 123.45,
+  "deployment": {
+    "platform": "vercel",
+    "region": "iad1"
+  }
 }
 ```
 
@@ -116,7 +127,7 @@ Höjer memory och timeout för PDF-export:
 }
 ```
 
-### `.env.example`
+### `env.template`
 Mall för environment variables.
 
 ---
