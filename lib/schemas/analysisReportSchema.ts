@@ -33,11 +33,29 @@ const signalsSchema = z.object({
   abuse_mention: z.boolean(),
 });
 
+// Agent result schema
+const agentResultSchema = z.object({
+  agent_id: z.string(),
+  version: z.string(),
+  status: z.enum(["success", "error", "skipped"]),
+  output: z.any().optional(),
+  error: z.string().optional(),
+  latency_ms: z.number(),
+});
+
+const agentOrchestratorSchema = z.object({
+  agents: z.array(agentResultSchema),
+  total_latency_ms: z.number(),
+  success_count: z.number(),
+  error_count: z.number(),
+});
+
 // Analysis results schema (removed duplicate safety_flag and net_score - only in signals)
 const analysisSchema = z.object({
   reflections: z.array(z.string()).length(3),
   recommendation: z.string(),
   signals: signalsSchema,
+  agent_results: agentOrchestratorSchema.optional(),
 });
 
 // Metadata schema

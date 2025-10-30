@@ -295,12 +295,31 @@ export default function AnalyzePage() {
           const generateV2Report = await loadGenerateAnalysisReportV2();
           if (generateV2Report) {
             const v2Res = await generateV2Report(formDataObj);
-            if (v2Res.ok) {
+            console.log("V2 report response:", v2Res);
+            
+            if (v2Res && v2Res.ok && v2Res.data) {
               setV2Report(v2Res.data);
               // Update safety flag with the enhanced version from v2 report
-              // v2 uses string-based safety_flag from signals (NORMAL/CAUTION/RISK/DANGER)
-              const enhancedSafetyFlag = v2Res.data.analysis.signals.safety_flag !== "NORMAL";
+              // Check agent_results.safety_gate first, then fallback to signals
+              let enhancedSafetyFlag = false;
+              
+              if (v2Res.data.analysis && v2Res.data.analysis.agent_results) {
+                const safetyAgent = v2Res.data.analysis.agent_results.agents.find(
+                  (agent: any) => agent.agent_id === 'safety_gate'
+                );
+                if (safetyAgent && safetyAgent.output && safetyAgent.output.emits) {
+                  enhancedSafetyFlag = safetyAgent.output.emits.safety === "RED";
+                }
+              }
+              
+              // Fallback to signals if agent_results not available
+              if (!enhancedSafetyFlag && v2Res.data.analysis && v2Res.data.analysis.signals) {
+                enhancedSafetyFlag = v2Res.data.analysis.signals.safety_flag !== "NORMAL";
+              }
+              
               setSafetyFlag(enhancedSafetyFlag);
+            } else {
+              console.warn("V2 report generation failed or incomplete:", v2Res);
             }
           }
         } catch (error) {

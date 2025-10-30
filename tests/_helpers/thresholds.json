@@ -1,0 +1,8 @@
+{
+  "bronze":   {"total": 0.85, "tone": 0.50, "reco": 0.50, "expl": 0.00},
+  "silver":   {"total": 0.85, "tone": 0.60, "reco": 0.60, "expl": 0.80},
+  "gold":     {"total": 0.85, "tone": 0.60, "reco": 0.60, "expl": 0.90},
+  "platinum": {"total": 0.92, "tone": 0.86, "reco": 0.86, "expl": 0.95, "min_spans": 2, "min_labels": 2},
+  "diamond":  {"total": 0.93, "tone": 0.87, "reco": 0.87, "expl": 0.95, "min_spans": 2, "min_labels": 2, "min_memory": 0.94}
+}
+

@@ -47,3 +47,29 @@ next-env.d.ts
 .vscode/
 .idea/
 *.swp
+
+.vercel
+
+# --- Sintari additions ---
+# Python & test artefakter
+__pycache__/
+.pytest_cache/
+pytest.ini
+
+# Runtime & logs
+runtime/
+runs/
+data/logs/
+*.log
+*.csv
+
+# Reports & exports
+report.pdf
+*.pdf
+
+# Environment
+.env.vercel
+
+# Build/Cache scripts
+scripts/*.py
+lib/orchestrator.js

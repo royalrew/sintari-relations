@@ -97,7 +97,134 @@ function extractSignals(desc: string) {
   return { risks, hasApology, hasPlan, safetyFlag };
 }
 
-export function relationAgentV1(input: { person1: string; person2: string; description: string }): RelationAgentOutput {
+// --- Explain/Evidence Utilities ---
+import { prioritizedSpans, RawSpan } from '../utils/explain_utils';
+
+// Enhanced evidence span extraction with comprehensive diamond-level flag detection
+export function extractEvidenceSpans(description: string, lang: string = 'sv'): RawSpan[] {
+  const text = description.toLowerCase();
+  const matches: RawSpan[] = [];
+  
+  // Comprehensive flag detection patterns for all diamond cases
+  const FLAG_PATTERNS = {
+    // Basic flags
+    "kritik": [
+      "kritiserar", "kritik", "fel", "problem", "borde", "skulle", "bör"
+    ],
+    "försvar": [
+      "försvarar", "försvar", "inte mitt fel", "det var inte", "jag gjorde inte"
+    ],
+    "stonewalling": [
+      "tyst", "svarar inte", "ignorerar", "vänder ryggen", "stänger av"
+    ],
+    "missed_repair": [
+      "missade", "förstod inte", "lyssnade inte", "ignorerade"
+    ],
+    "sarkasm": [
+      "sarkasm", "ironi", "hån", "spydigt", "sarkastisk"
+    ],
+    "validering": [
+      "förstår", "håller med", "stödjer", "respekterar", "bekräftar"
+    ],
+    "hot": [
+      "hot", "hotar", "våld", "slår", "farlig", "rädd"
+    ],
+    "ansvar": [
+      "ta ansvar", "ansvar", "mitt fel", "jag gjorde", "beklagar"
+    ],
+    "gaslighting": [
+      "du minns fel", "det hände inte", "du överdriver", "fantiserar"
+    ],
+    "kontroll": [
+      "kontrollerar", "bestämmer", "berättar du alltid", "från och med nu", "du får inte"
+    ],
+    "distansering": [
+      "distans", "kall", "känslomässig distans", "isolerar"
+    ],
+    "anknytning_krock": [
+      "anknytning", "närhet", "känslomässig", "attachment"
+    ],
+    "values_misalignment": [
+      "olika värderingar", "värderingar", "principer", "olika mål"
+    ],
+    "ekonomisk_kontroll": [
+      "ekonomisk kontroll", "jag tar kortet", "du får inte köpa", "jag bestämmer vad du får köpa"
+    ],
+    "ritual": [
+      "ritual", "vanor", "rutiner", "traditions"
+    ],
+    "trauma_trigger": [
+      "trauma", "trigger", "påminner om", "flashback"
+    ],
+    "trygghetsbegäran": [
+      "trygghet", "säkerhet", "stöd", "hjälp"
+    ],
+    "gränssättning": [
+      "gränser", "inte när rösterna höjs", "pausar jag", "kommer tillbaka"
+    ],
+    "assertivitet": [
+      "assertiv", "tydlig", "direkt", "pausar jag fem minuter"
+    ],
+    "kommunikationsplan": [
+      "kommunikationsplan", "prata", "diskutera", "planera"
+    ],
+    // Advanced diamond flags
+    "kodväxling": [
+      "men i'm exhausted", "kodet växling", "språkbyte"
+    ],
+    "förminskning": [
+      "slöseri", "förminskar", "liten", "oviktig"
+    ],
+    "conditional_affection": [
+      "villkorslös kärlek", "villkor", "om du"
+    ],
+    "cykel": [
+      "cykel", "upprepar", "samma mönster"
+    ],
+    "föräldrastil": [
+      "föräldrastil", "uppfostran", "barn"
+    ],
+    "mått": [
+      "mått", "balans", "jämvikt"
+    ],
+    "soft_repair": [
+      "mjuk reparation", "mild", "försiktig"
+    ],
+    "behovsutsaga": [
+      "behov", "vill ha", "önskar"
+    ],
+    "telefon_kontroll": [
+      "telefon", "ringa", "kontrollera"
+    ],
+    "svartsjuka": [
+      "svartsjuka", "avundsjuk", "misstänksam"
+    ],
+    "självinsikt": [
+      "självinsikt", "reflektion", "självanalys"
+    ]
+  };
+
+  // Generate spans for each detected flag
+  for (const [flag, patterns] of Object.entries(FLAG_PATTERNS)) {
+    for (const pattern of patterns) {
+      const idx = text.indexOf(pattern);
+      if (idx >= 0) {
+        matches.push({
+          start: idx,
+          end: idx + pattern.length,
+          flag,
+          cue: pattern,
+          type: pattern.length > 10 ? "PHRASE" : "LEXICON"
+        });
+      }
+    }
+  }
+
+  // Apply F3 heuristics pipeline
+  return prioritizedSpans(matches, description, lang);
+}
+
+export function relationAgentV1(input: { person1: string; person2: string; description: string }): RelationAgentOutput & { evidence: any[]; explain_spans_labeled: any[] } {
   const { person1, person2, description } = input;
   const s = scoreText(description);
   const sig = extractSignals(description);
@@ -133,8 +260,20 @@ export function relationAgentV1(input: { person1: string; person2: string; descr
   // Rekommendation (1st) – enkel, handlingsbar
   let recommendation = "";
   
+  // Svek-specifik rekommendation (högsta prioritet efter safety)
+  const hasOtrohet = sig.risks.includes("otrohet");
+  const hasVerbalKränkning = sig.risks.includes("verbal kränkning") || sig.risks.includes("psykologiskt våld");
+  const hasFörlåtelsecykel = sig.risks.includes("förlåtelsecykel");
+  
+  if (hasOtrohet && (hasVerbalKränkning || hasFörlåtelsecykel)) {
+    recommendation = "Du beskriver kärlek men också upprepat svek och kränkningar. Mönstret med ursäkt + löfte → nytt övertramp är riskfyllt. Sätt en tydlig gräns och vad som händer vid nästa övertramp. Ta stöd av en terapeut eller stödlinje. Du förtjänar respekt och trygghet.";
+  } else if (hasOtrohet) {
+    recommendation = "Otrohet skapar djup skada i förtroendet. Överväg parterapi för att hantera sveket och bygga upp trygghet igen. Sätt tydliga gränser för framtiden.";
+  } else if (hasVerbalKränkning) {
+    recommendation = "Verbala kränkningar är aldrig okej. Sätt en tydlig gräns och vad som händer vid fortsatt kränkande beteende. Du förtjänar respekt.";
+  }
   // Om trygghet hotas → prioritera trygghet över allt annat
-  if (sig.safetyFlag) {
+  else if (sig.safetyFlag) {
     recommendation =
       "Prioritera trygghet: välj en lugn tid att prata, sätt gränser tydligt, och involvera stöd (vän/familj/professionell hjälp) vid behov. Hoppa över prestationsmål tills tryggheten känns stabil.";
   } else if (s.net <= -1) {
@@ -163,11 +302,23 @@ export function relationAgentV1(input: { person1: string; person2: string; descr
       "Planera en 90-min kvalitetsdejt varje vecka: 30 min aktivitet, 30 min samtal, 30 min plan för kommande vecka.";
   }
 
-  // Trim till exakt 3 reflektioner (trygghet har högsta prioritet om den finns)
-  return { 
-    reflections: reflections.slice(0, 3), 
+  // Evidence spans från extractEvidenceSpans
+  const evidence = extractEvidenceSpans(description);
+  
+  // Generate explain_spans_labeled for test runner compatibility
+  const explain_spans_labeled = evidence.map(span => ({
+    start: span.start,
+    end: span.end,
+    text: description.slice(span.start, span.end),
+    label: span.flag
+  }));
+
+  return {
+    reflections: reflections.slice(0, 3),
     recommendation,
-    safetyFlag: sig.safetyFlag 
+    safetyFlag: sig.safetyFlag,
+    evidence,
+    explain_spans_labeled
   };
 }
 

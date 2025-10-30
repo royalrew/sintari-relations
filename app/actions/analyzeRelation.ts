@@ -3,7 +3,9 @@
 import { relationSchema } from "@/lib/schemas/relationSchema";
 import { relationAgentV1, type RelationAgentOutput } from "@/lib/agents/relation_agent";
 import { relationAgentAI, type RelationAgentAIOutput } from "@/lib/agents/relation_agent_ai";
+import { runAllAgents, type AgentOrchestratorResult } from "@/lib/agents/agent_orchestrator";
 import { calculateScore } from "@/lib/utils/calculateScore";
+import { normalizeText, canonLabel } from "@/lib/utils/textUtils";
 import { writeFile, mkdir, access, readFile } from "fs/promises";
 import { join } from "path";
 import { 
@@ -149,7 +151,35 @@ async function logAnalysisToCSV(data: LogData) {
   console.log("Successfully wrote to CSV file:", csvPath);
 }
 
-export async function analyzeRelation(formData: FormData): Promise<Ok<{ reflections: string[]; recommendation: string; safetyFlag: boolean; analysisMode?: "ai" | "fallback"; confidence?: number }> | Err> {
+// Canonical label mapper
+function canon(label: string): string {
+  if (!label) return "";
+  const map: Record<string, string> = {
+    kritik: "kritik", critic: "kritik", criticism: "kritik",
+    försvar: "försvar", defense: "försvar",
+    stonewalling: "stonewalling",
+    gaslighting: "gaslighting",
+    ansvar: "ansvar", repair: "repair", meta_repair: "meta_repair",
+    kontroll: "kontroll", kontrollbeteende: "kontroll",
+    distansering: "distansering", gränssättning: "gränssättning",
+    assertivitet: "assertivitet", trauma_trigger: "trauma_trigger"
+    // ... fyll på med alla diamondlabels om fler behövs
+  };
+  const t = label.trim().toLowerCase().replace(/-/g, "_");
+  return map[t] || t;
+}
+
+export async function analyzeRelation(formData: FormData): Promise<Ok<{
+  reflections: string[];
+  recommendation: string;
+  safetyFlag: boolean;
+  analysisMode?: "ai" | "fallback";
+  confidence?: number;
+  evidence?: any[];
+  explain_spans?: number[][];
+  explain_spans_labeled?: {start:number,end:number,label:string}[];
+  agent_results?: AgentOrchestratorResult;
+}> | Err> {
   const payload = {
     person1: formData.get("person1"),
     person2: formData.get("person2"),
@@ -176,6 +206,20 @@ export async function analyzeRelation(formData: FormData): Promise<Ok<{ reflecti
   // Apply automatic consistency rules
   const signals = finalizeSignals(rawSignals);
 
+  // Run all agents in parallel
+  const agentResults = await timeStage("agent_orchestration", async () => {
+    return await runAllAgents({
+      person1: parsed.data.person1,
+      person2: parsed.data.person2,
+      description: parsed.data.description,
+      consent: parsed.data.consent === "on"
+    }, {
+      run_id: runId,
+      timestamp,
+      language: detectLanguage(parsed.data.description)
+    });
+  }, latency);
+
   // Try AI agent first, fallback to deterministic if it fails
   let out: RelationAgentAIOutput;
   try {
@@ -194,6 +238,25 @@ export async function analyzeRelation(formData: FormData): Promise<Ok<{ reflecti
       confidence: 0.8
     };
   }
+
+  // Enhanced evidence/explain_spans generation
+  const evidence = (out as any).evidence || [];
+  
+  // Convert evidence to explain_spans format
+  const explain_spans = evidence.map((e: any) => {
+    if (e.span && Array.isArray(e.span)) {
+      return e.span; // Already in [start, end] format
+    } else if (e.start !== undefined && e.end !== undefined) {
+      return [e.start, e.end]; // Convert from {start, end} to [start, end]
+    }
+    return [0, 0]; // Fallback
+  });
+  
+  const explain_spans_labeled = evidence.map((e: any) => ({
+    start: e.start || (e.span ? e.span[0] : 0),
+    end: e.end || (e.span ? e.span[1] : 0),
+    label: canonLabel(e.flag || "kritik")
+  }));
 
   // Store the comprehensive v2 report for potential use
   try {
@@ -226,7 +289,30 @@ export async function analyzeRelation(formData: FormData): Promise<Ok<{ reflecti
     // Don't fail the request if logging fails
   }
   
-  return { ok: true, data: out };
+  // Safety-first override: Om safety är RED, skriv över rekommendation
+  let finalRecommendation = out.recommendation;
+  let finalSafetyFlag = out.safetyFlag;
+  
+  if (agentResults && agentResults.agents) {
+    const safetyAgent = agentResults.agents.find(agent => agent.agent_id === 'safety_gate');
+    if (safetyAgent && safetyAgent.status === 'success' && safetyAgent.output?.emits?.safety === "RED") {
+      finalSafetyFlag = true;
+      finalRecommendation = "Sök omedelbar hjälp - fysiskt våld är aldrig okej. Vid akut fara, ring nödnumret i ditt land (i Sverige: 112). Kontakta en stödorganisation eller vänd dig till sjukvården för hjälp.";
+    }
+  }
+  
+  return { 
+    ok: true, 
+    data: { 
+      ...out, 
+      recommendation: finalRecommendation,
+      safetyFlag: finalSafetyFlag,
+      evidence, 
+      explain_spans, 
+      explain_spans_labeled, 
+      agent_results: agentResults 
+    } 
+  };
 }
 
 export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<AnalysisReportV2> | Err> {
@@ -256,6 +342,20 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
 
     // Apply automatic consistency rules
     const signals = finalizeSignals(rawSignals);
+
+    // Run all agents in parallel
+    const agentResults = await timeStage("agent_orchestration", async () => {
+      return await runAllAgents({
+        person1: parsed.data.person1,
+        person2: parsed.data.person2,
+        description: parsed.data.description,
+        consent: parsed.data.consent === "on"
+      }, {
+        run_id: runId,
+        timestamp,
+        language: detectLanguage(parsed.data.description)
+      });
+    }, latency);
     
     // Validate signals consistency
     const validation = validateSignals(signals);
@@ -309,8 +409,18 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
       },
       analysis: {
         reflections: analysisResult.reflections,
-        recommendation: analysisResult.recommendation,
+        recommendation: (() => {
+          // Safety-first override för V2 rapporten också
+          if (agentResults && agentResults.agents) {
+            const safetyAgent = agentResults.agents.find(agent => agent.agent_id === 'safety_gate');
+            if (safetyAgent && safetyAgent.status === 'success' && safetyAgent.output?.emits?.safety === "RED") {
+              return "Sök omedelbar hjälp - fysiskt våld är aldrig okej. Vid akut fara, ring nödnumret i ditt land (i Sverige: 112). Kontakta en stödorganisation eller vänd dig till sjukvården för hjälp.";
+            }
+          }
+          return analysisResult.recommendation;
+        })(),
         signals,
+        agent_results: agentResults,
       },
       metadata: {
         analysis_mode: analysisResult.analysisMode,

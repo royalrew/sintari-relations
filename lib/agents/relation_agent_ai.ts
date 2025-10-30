@@ -43,25 +43,40 @@ async function initializeOpenAI() {
       chat: {
         completions: {
           create: async (params: any) => {
-            const response = await fetch("https://api.openai.com/v1/chat/completions", {
-              method: "POST",
-              headers: {
-                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                model: params.model || "gpt-3.5-turbo",
-                messages: params.messages,
-                max_tokens: params.max_tokens,
-                temperature: params.temperature,
-              }),
-            });
+            // Create timeout controller
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
             
-            if (!response.ok) {
-              throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
+            try {
+              const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                  "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  model: params.model || "gpt-3.5-turbo",
+                  messages: params.messages,
+                  max_tokens: params.max_tokens,
+                  temperature: params.temperature,
+                }),
+                signal: controller.signal,
+              });
+              
+              clearTimeout(timeoutId);
+              
+              if (!response.ok) {
+                throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
+              }
+              
+              return await response.json();
+            } catch (error) {
+              clearTimeout(timeoutId);
+              if (error instanceof Error && error.name === 'AbortError') {
+                throw new Error('OpenAI request timeout');
+              }
+              throw error;
             }
-            
-            return await response.json();
           }
         }
       }
@@ -81,6 +96,8 @@ async function initializeOpenAI() {
 export type RelationAgentAIOutput = RelationAgentOutput & {
   analysisMode: "ai" | "fallback";
   confidence?: number;
+  evidence?: any[];
+  explain_spans_labeled?: any[];
 };
 
 export async function relationAgentAI(input: { 
@@ -102,7 +119,8 @@ export async function relationAgentAI(input: {
     return {
       ...fallbackResult,
       analysisMode: "fallback",
-      confidence: 0.8
+      confidence: 0.8,
+      explain_spans_labeled: fallbackResult.explain_spans_labeled
     };
   }
 
@@ -133,22 +151,29 @@ SVARA ENDAST med JSON i denna exakta format:
   "confidence": 0.1-1.0
 }`;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Billig modell för kostnadseffektivitet
-      messages: [
-        {
-          role: "system",
-          content: "Du är en kunnig relationsexpert som ger konkreta, korta råd på svenska. Använd korrekt svenska grammatik och standardiserat språk: 'Fortsätt med...' för positiva relationer, 'Diskutera och planera...' för utmaningar. Fokusera på trygghet först, sedan praktiska lösningar."
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      max_tokens: 300, // Begränsa för kostnad
-      temperature: 0.7,
-      timeout: 10000, // 10 sek timeout
+    // Create timeout wrapper for the OpenAI call
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('OpenAI request timeout')), 10000);
     });
+
+    const completion = await Promise.race([
+      openai.chat.completions.create({
+        model: "gpt-3.5-turbo", // Billig modell för kostnadseffektivitet
+        messages: [
+          {
+            role: "system",
+            content: "Du är en kunnig relationsexpert som ger konkreta, korta råd på svenska. Använd korrekt svenska grammatik och standardiserat språk: 'Fortsätt med...' för positiva relationer, 'Diskutera och planera...' för utmaningar. Fokusera på trygghet först, sedan praktiska lösningar."
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        max_tokens: 300, // Begränsa för kostnad
+        temperature: 0.7,
+      }),
+      timeoutPromise
+    ]) as any;
 
     const response = completion.choices[0]?.message?.content;
     
@@ -188,7 +213,9 @@ SVARA ENDAST med JSON i denna exakta format:
       recommendation: aiResult.recommendation,
       safetyFlag: finalSafetyFlag,
       analysisMode: "ai",
-      confidence: aiResult.confidence || 0.9
+      confidence: aiResult.confidence || 0.9,
+      evidence: fallbackResult.evidence,
+      explain_spans_labeled: fallbackResult.explain_spans_labeled
     };
 
   } catch (error) {
@@ -198,7 +225,9 @@ SVARA ENDAST med JSON i denna exakta format:
     return {
       ...fallbackResult,
       analysisMode: "fallback",
-      confidence: 0.8
+      confidence: 0.8,
+      evidence: fallbackResult.evidence,
+      explain_spans_labeled: fallbackResult.explain_spans_labeled
     };
   }
 }

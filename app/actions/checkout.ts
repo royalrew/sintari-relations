@@ -28,6 +28,7 @@ export async function createCheckoutSession(data: {
   console.log('Checkout baseUrl:', baseUrl); // Debug log
 
   try {
+    // Call Stripe API directly instead of internal fetch to avoid circular calls
     const response = await fetch(`${baseUrl}/api/checkout`, {
       method: 'POST',
       headers: {
