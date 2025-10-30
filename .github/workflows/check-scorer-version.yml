@@ -1,0 +1,74 @@
+name: Check Scorer Version Changelog
+
+on:
+  pull_request:
+    paths:
+      - 'tests/_helpers/scoring_relations.py'
+
+jobs:
+  check-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if SCORER_VERSION changed
+        id: check_version
+        run: |
+          SCORER_FILE="tests/_helpers/scoring_relations.py"
+          CHANGELOG_FILE="tests/_helpers/CHANGELOG.md"
+          
+          # Extract SCORER_VERSION from PR diff
+          VERSION_CHANGED=$(git diff origin/${{ github.base_ref }}..HEAD -- "$SCORER_FILE" | grep -E "^\+.*SCORER_VERSION" | head -1 || echo "")
+          
+          if [ -z "$VERSION_CHANGED" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ SCORER_VERSION unchanged, skipping check"
+            exit 0
+          fi
+          
+          # Extract new version
+          NEW_VERSION=$(echo "$VERSION_CHANGED" | grep -oE '"[^"]+"' | head -1 | tr -d '"' || echo "")
+          
+          if [ -z "$NEW_VERSION" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "⚠️ Could not extract version, skipping check"
+            exit 0
+          fi
+          
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "📋 SCORER_VERSION changed to: $NEW_VERSION"
+
+      - name: Check CHANGELOG for version entry
+        if: steps.check_version.outputs.changed == 'true'
+        run: |
+          CHANGELOG_FILE="tests/_helpers/CHANGELOG.md"
+          NEW_VERSION="${{ steps.check_version.outputs.version }}"
+          
+          # Check if CHANGELOG was modified
+          CHANGELOG_MODIFIED=$(git diff origin/${{ github.base_ref }}..HEAD -- "$CHANGELOG_FILE" | wc -l || echo "0")
+          
+          if [ "$CHANGELOG_MODIFIED" -eq 0 ]; then
+            echo "❌ ERROR: SCORER_VERSION changed to $NEW_VERSION but CHANGELOG.md was not updated!"
+            echo ""
+            echo "Please add an entry to tests/_helpers/CHANGELOG.md documenting this version change."
+            echo ""
+            echo "Example format:"
+            echo "## $NEW_VERSION (YYYY-MM-DD)"
+            echo ""
+            echo "- Description of changes"
+            exit 1
+          fi
+          
+          # Check if new version appears in CHANGELOG
+          if ! grep -q "$NEW_VERSION" "$CHANGELOG_FILE"; then
+            echo "❌ ERROR: CHANGELOG.md was modified but does not contain version $NEW_VERSION!"
+            echo ""
+            echo "Please ensure tests/_helpers/CHANGELOG.md contains an entry for $NEW_VERSION"
+            exit 1
+          fi
+          
+          echo "✅ CHANGELOG.md updated with version $NEW_VERSION"
+
