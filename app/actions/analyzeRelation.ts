@@ -227,6 +227,10 @@ export async function analyzeRelation(formData: FormData): Promise<Ok<{
     out = await timeStage("llm_analysis", async () => {
       return await relationAgentAI(parsed.data);
     }, latency);
+
+    // 🔧 Nytt steg: stabilisera/normalisera AI-output
+    out = normalizeResult(out as any);
+
     console.log(`Analysis completed using ${out.analysisMode} mode with confidence ${out.confidence}`);
   } catch (error) {
     console.error("AI agent failed, using fallback:", error);
@@ -238,6 +242,8 @@ export async function analyzeRelation(formData: FormData): Promise<Ok<{
       analysisMode: "fallback",
       confidence: 0.8
     };
+    // 🔧 Nytt steg
+    out = normalizeResult(out as any);
   }
 
   // Enhanced evidence/explain_spans generation
@@ -369,6 +375,8 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
       analysisResult = await timeStage("llm_analysis", async () => {
         return await relationAgentAI(parsed.data);
       }, latency);
+      // 🔧 Nytt steg: stabilisera/normalisera AI-output
+      analysisResult = normalizeResult(analysisResult as any);
     } catch (error) {
       console.error("AI agent failed, using fallback:", error);
       analysisResult = await timeStage<RelationAgentAIOutput>("fallback_analysis", async () => {
@@ -380,6 +388,8 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
         };
         return wrapped;
       }, latency);
+      // 🔧 Nytt steg
+      analysisResult = normalizeResult(analysisResult as any);
     }
 
     // Calculate tokens and cost for metrics

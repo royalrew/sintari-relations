@@ -10,14 +10,23 @@
  */
 
 export interface NormalizedResult {
-  attachment_style: string;
-  ethics_check: string;
-  risk_flags: string[];
-  tone_target: string;
-  top_reco: string | string[];
-  confidence: number;
-  explain_spans: string[];
-  explain_labels: string[];
+  // Core relation fields (from orchestrator)
+  attachment_style?: string;
+  ethics_check?: string;
+  risk_flags?: string[];
+  tone_target?: string;
+  top_reco?: string | string[];
+  confidence?: number;
+  explain_spans?: string[];
+  explain_labels?: string[];
+  // RelationAgentOutput fields (preserved)
+  reflections?: string[];
+  recommendation?: string;
+  safetyFlag?: boolean;
+  // RelationAgentAIOutput fields (preserved)
+  analysisMode?: "ai" | "fallback";
+  evidence?: any[];
+  explain_spans_labeled?: any[];
   [key: string]: any; // Allow other fields to pass through
 }
 
@@ -168,22 +177,24 @@ function generateExplainLabels(result: any): string[] {
 
 /**
  * Normalize and stabilize relations analysis result
+ * Preserves all original fields while adding/normalizing required fields
  * 
  * @param raw - Raw output from orchestrator/agents
- * @returns Normalized and stabilized result with all required fields
+ * @returns Normalized and stabilized result with all required fields preserved
  */
-export function normalizeResult(raw: any): NormalizedResult {
-  // Start with a copy to avoid mutating original
-  const result: NormalizedResult = {
-    attachment_style: "",
-    ethics_check: "safe",
-    risk_flags: [],
-    tone_target: "",
-    top_reco: "",
-    confidence: 0.90,
-    explain_spans: [],
-    explain_labels: [],
-    ...raw, // Merge in all other fields
+export function normalizeResult<T extends Record<string, any>>(raw: T): T & NormalizedResult {
+  // Start with a copy to avoid mutating original, preserving all existing fields
+  const result: any = {
+    ...raw, // Preserve all original fields first
+    // Set defaults only for fields that don't exist
+    attachment_style: raw.attachment_style ?? "",
+    ethics_check: raw.ethics_check ?? "safe",
+    risk_flags: raw.risk_flags ?? [],
+    tone_target: raw.tone_target ?? "",
+    top_reco: raw.top_reco ?? "",
+    confidence: raw.confidence ?? 0.90,
+    explain_spans: raw.explain_spans ?? [],
+    explain_labels: raw.explain_labels ?? [],
   };
 
   // Fix mojibake in all string fields
