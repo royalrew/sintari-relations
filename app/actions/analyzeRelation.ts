@@ -6,6 +6,7 @@ import { relationAgentAI, type RelationAgentAIOutput } from "@/lib/agents/relati
 import { runAllAgents, type AgentOrchestratorResult } from "@/lib/agents/agent_orchestrator";
 import { calculateScore } from "@/lib/utils/calculateScore";
 import { normalizeText, canonLabel } from "@/lib/utils/textUtils";
+import { normalizeResult } from "@/lib/scoring/runtime_normalize";
 import { writeFile, mkdir, access, readFile } from "fs/promises";
 import { join } from "path";
 import { 
