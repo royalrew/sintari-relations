@@ -15,4 +15,8 @@
       transform: translateY(0);
     }
   }
+  
+  .text-muted-foreground {
+    color: #6b7280;
+  }
 }

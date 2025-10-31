@@ -650,6 +650,45 @@ async function main() {
   // Save results (atomic write)
   await mkdir(OUTPUT_DIR, { recursive: true });
   await writeJsonlAtomic(OUTPUT_FILE, results);
+
+  // Ping dashboard reload endpoint
+  const reloadUrl = process.env.DASH_RELOAD_URL || "http://localhost:3000/api/reload";
+  const reloadToken = process.env.DASH_RELOAD_TOKEN;
+  if (reloadToken) {
+    try {
+      await fetch(`${reloadUrl}?token=${encodeURIComponent(reloadToken)}`, { method: "POST" });
+      console.log("🔁 Dashboard revalidated");
+    } catch (e) {
+      console.warn("⚠️ Could not revalidate dashboard:", e.message);
+    }
+  }
+
+  // Generate Investor PDF v2 (Python pdfkit)
+  try {
+    const { spawn } = await import('child_process');
+    const pyBin = process.env.PYTHON_BIN || "python";
+    const pyScript = join(ROOT, "scripts", "export", "investor_pdf_v2.py");
+    
+    const pyProc = spawn(pyBin, [pyScript], {
+      cwd: ROOT,
+      stdio: "inherit",
+      shell: true,
+    });
+    
+    pyProc.on("error", (err) => {
+      console.warn("⚠️ Could not generate PDF:", err.message);
+    });
+    
+    pyProc.on("exit", (code) => {
+      if (code === 0) {
+        console.log("📄 Investor PDF generated");
+      } else {
+        console.warn(`⚠️ PDF generation exited with code ${code}`);
+      }
+    });
+  } catch (e) {
+    console.warn("⚠️ Could not spawn PDF generator:", e.message);
+  }
   
   // Calculate stats (samma logik som report-parser)
   const stats = {

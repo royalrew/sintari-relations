@@ -8,13 +8,16 @@
     "start": "next start -p 3001",
     "test:golden": "node scripts/run-golden-test.js",
     "test:golden:simple": "node lib/tests/golden-test-simple.js",
-    "test:openai": "node lib/test-openai.js"
+    "test:openai": "node lib/test-openai.js",
+    "export:pdf": "node scripts/export_pdf.mjs"
   },
   "dependencies": {
     "@sparticuz/chromium": "^133.0.0",
+    "@types/pdfkit": "^0.17.3",
     "lucide-react": "^0.468.0",
     "next": "15.5.6",
     "openai": "^4.67.2",
+    "pdfkit": "^0.17.2",
     "puppeteer": "^23.11.1",
     "puppeteer-core": "^23.11.1",
     "react": "19.1.0",

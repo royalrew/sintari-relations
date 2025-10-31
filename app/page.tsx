@@ -114,6 +114,12 @@ function FooterCta() {
             Kom igång nu
           </Link>
           <Link
+            href="/dashboard"
+            className="inline-flex items-center justify-center rounded-xl border border-purple-200 bg-white/80 px-6 py-3 text-purple-700 font-semibold hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-purple-400 transition-all"
+          >
+            📊 Dashboard
+          </Link>
+          <Link
             href="mailto:hej@sintari.se"
             className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-6 py-3 text-gray-800 font-semibold hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-400 transition"
           >

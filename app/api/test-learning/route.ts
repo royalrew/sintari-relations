@@ -13,7 +13,7 @@ export async function GET() {
     
     console.log('\n🔍 Analyzing performance trends...');
     const trends = learningSystem.analyzePerformanceTrends();
-    console.log(`✅ Trends analyzed: ${Object.keys(trends).length} metrics`);
+    console.log(`✅ Trends analyzed: ${trends ? Object.keys(trends).length : 0} metrics`);
     
     console.log('\n💡 Generating learning suggestions...');
     const suggestions = learningSystem.generateLearningSuggestions();
@@ -31,7 +31,7 @@ export async function GET() {
       success: true,
       summary: {
         historical_runs: learningSystem.performanceHistory.length,
-        trends_analyzed: Object.keys(trends).length,
+        trends_analyzed: trends ? Object.keys(trends).length : 0,
         suggestions_generated: suggestions.length,
         autoheal_completed: true,
         learning_cycle_completed: true
@@ -45,7 +45,7 @@ export async function GET() {
     console.error('❌ Learning system test failed:', error);
     return NextResponse.json({
       success: false,
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }

@@ -19,6 +19,13 @@ export interface AgentOrchestratorResult {
   total_latency_ms: number;
   success_count: number;
   error_count: number;
+  routing_info?: {
+    tier: string;
+    pattern?: string;
+    confidence?: number;
+    modelId?: string;
+  };
+  cost_info?: any;
 }
 
 export async function runAllAgents(

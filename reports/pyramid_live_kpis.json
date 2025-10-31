@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "source": "reports/pyramid_live.jsonl",
+    "mtime": 1761944766.8387196,
+    "generated_utc": "2025-10-31T21:11:08Z",
+    "sha1": "d08cffd57bcb"
+  },
+  "counts": {
+    "total": 425,
+    "fastpath": 102,
+    "base": 254,
+    "mid": 52,
+    "top": 17,
+    "routed": 323
+  },
+  "pct": {
+    "fastpath_total": 24.0,
+    "base_routed": 78.63777089783281,
+    "mid_routed": 16.09907120743034,
+    "top_routed": 5.263157894736842
+  },
+  "cost": {
+    "total_usd": 1.046,
+    "avg_usd": 0.0024611764705882353,
+    "p95_usd": 0.01
+  }
+}

@@ -8,6 +8,8 @@ Analyserar pyramid_live.jsonl och genererar markdown-rapport.
 import json
 import sys
 import pathlib
+import hashlib
+import time
 from collections import defaultdict
 from typing import Dict, Any, List
 
@@ -164,6 +166,47 @@ def main():
         f.write(report)
     
     print(f"\n[OK] Report saved to: {output_file}", file=sys.stderr)
+    
+    # Build canonical KPI JSON (single source of truth)
+    input_path = pathlib.Path(input_file)
+    try:
+        with open(input_file, 'rb') as f:
+            file_content = f.read()
+        sha1_hash = hashlib.sha1(file_content).hexdigest()[:12]
+    except Exception:
+        sha1_hash = "unknown"
+    
+    kpi = {
+        "meta": {
+            "source": str(input_file),
+            "mtime": input_path.stat().st_mtime,
+            "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "sha1": sha1_hash,
+        },
+        "counts": {
+            "total": analysis["total"],
+            "fastpath": analysis["fastpath"],
+            "base": analysis.get("base", 0),
+            "mid": analysis.get("mid", 0),
+            "top": analysis.get("top", 0),
+            "routed": analysis.get("base", 0) + analysis.get("mid", 0) + analysis.get("top", 0),
+        },
+        "pct": {
+            "fastpath_total": analysis["distribution"].get("fastpath_pct", 0.0),
+            "base_routed": analysis["distribution"].get("base_pct", 0.0),
+            "mid_routed": analysis["distribution"].get("mid_pct", 0.0),
+            "top_routed": analysis["distribution"].get("top_pct", 0.0),
+        },
+        "cost": analysis["cost_stats"],
+    }
+    
+    out_json = input_file.replace(".jsonl", "_kpis.json")
+    try:
+        with open(out_json, "w", encoding="utf-8") as f:
+            json.dump(kpi, f, ensure_ascii=False, indent=2)
+        print(f"[OK] KPI JSON saved to: {out_json}", file=sys.stderr)
+    except Exception as e:
+        print(f"[ERROR] Could not write KPI JSON: {e}", file=sys.stderr)
 
 
 if __name__ == '__main__':

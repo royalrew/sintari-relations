@@ -1,6 +1,6 @@
 # Pyramid Live Report
 
-**Generated:** 1761914259.5349417  
+**Generated:** 1761944569.318317  
 **Total Cases:** 425
 
 ---
@@ -9,12 +9,12 @@
 
 | Tier | Count | Percentage | Target | Status |
 |------|-------|------------|--------|--------|
-| **FastPath** | 105 | 24.7% | 20-30% | [PASS] |
-| **Base** | 250 | 78.1% | 70-90% | [PASS] |
-| **Mid** | 55 | 17.2% | 10-20% | [PASS] |
-| **Top** | 15 | 4.7% | 3-7% | [PASS] |
+| **FastPath** | 102 | 24.0% | 20-30% | [PASS] |
+| **Base** | 254 | 78.6% | 70-90% | [PASS] |
+| **Mid** | 52 | 16.1% | 10-20% | [PASS] |
+| **Top** | 17 | 5.3% | 3-7% | [PASS] |
 
-**Routed Cases:** 320
+**Routed Cases:** 323
 
 ---
 
@@ -22,7 +22,7 @@
 
 | Metric | Value |
 |--------|-------|
-| Total Cost | $1.0550 USD |
+| Total Cost | $1.0460 USD |
 | Average Cost/Case | $0.0025 USD |
 | p95 Cost | $0.0100 USD |
 
