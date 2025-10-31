@@ -3,6 +3,7 @@ import { spawn } from 'child_process';
 import { join } from 'path';
 import { getWorkText, normalizeText, canonLabel, generateFallbackSpans } from '@/lib/utils/textUtils';
 import { detectViolence } from '@/lib/utils/safetyDetection';
+import { logRouter } from './_orchestrator_logs';
 
 export interface AgentResult {
   agent_id: string;
@@ -92,6 +93,83 @@ export async function runAllAgents(
   if (!sharedText) {
     console.warn("[WARN] Empty sharedText; falling back to raw");
   }
+  
+  // ============================================================
+  // FAS 2: FASTPATH FÖRST (lågrisk, lågkostnad, trivialt)
+  // ============================================================
+  // Check FastPath och routing FÖRE Shield (för att fånga triviala hälsningar innan Shield normaliserar)
+  // Step 1: Check FastPath och routing
+  let routingDecision: any = null;
+  let fastpathResult: any = null;
+  let costCheck: any = null;
+  
+  try {
+    const routerBridgePath = join(process.cwd(), '..', 'sintari-relations', 'backend', 'ai', 'router_bridge.py');
+    const routerPayload = {
+      text: sharedText,
+      lang: context.language || 'sv',
+      dialog: undefined, // Could be extracted from input if available
+      safety_flags: undefined, // Will be set after safety_gate runs
+      run_id: context.run_id,
+      budget_per_run: 0.10, // $0.10 per run
+      weekly_budget: 10.0, // $10 per week
+    };
+    
+    routingDecision = await runAgentBridge(routerBridgePath, routerPayload);
+    
+    if (routingDecision?.fastpath?.qualifies) {
+      fastpathResult = routingDecision.fastpath;
+      console.log(`[ROUTER] FastPath match: ${fastpathResult.pattern}`);
+    } else if (routingDecision?.routing) {
+      console.log(`[ROUTER] Tier: ${routingDecision.routing.tier}, Confidence: ${routingDecision.routing.confidence.toFixed(2)}`);
+    }
+    
+    costCheck = routingDecision?.cost_check;
+    if (costCheck && !costCheck.ok) {
+      console.warn(`[COST] Budget check failed: ${costCheck.action}`);
+    }
+  } catch (error) {
+    console.warn(`[ROUTER] Routing failed, using default: ${error}`);
+    // Fallback: continue with normal flow
+  }
+  
+    // If FastPath qualifies, return early with fastpath result
+    if (fastpathResult?.qualifies) {
+      const fastpathResponse = fastpathResult.response;
+      
+      // Shadow-logging (Fas 2 production test)
+      await logRouter(context.run_id, {
+        tier: 'fastpath',
+        fastPathUsed: true,
+        fastPathPattern: fastpathResult.pattern,
+        estUsd: 0.0001, // FastPath is nearly free
+        textLength: sharedText.length,
+        language: context.language || 'sv',
+      });
+      
+      return {
+        agents: [{
+          agent_id: 'fastpath',
+          version: '1.0.0',
+          status: 'success',
+          output: { response: fastpathResponse },
+          latency_ms: Date.now() - startTime,
+        }],
+        total_latency_ms: Date.now() - startTime,
+        success_count: 1,
+        error_count: 0,
+        routing_info: {
+          tier: 'fastpath',
+          pattern: fastpathResult.pattern,
+          confidence: fastpathResult.confidence,
+        },
+        cost_info: costCheck,
+      };
+    }
+  
+  // ============================================================
+  // END FAS 2 ROUTING
+  // ============================================================
   
   // Skapa payload för agenter med sharedText
   const agentPayload = {
@@ -228,12 +306,83 @@ export async function runAllAgents(
   const successCount = results.filter(r => r.status === 'success').length;
   const errorCount = results.filter(r => r.status === 'error').length;
 
+  // Shadow-logging (Fas 2 production test)
+  if (routingDecision?.routing) {
+    const tier = routingDecision.routing.tier;
+    const costMult = routingDecision.routing.cost_multiplier || 1.0;
+    const estimatedCost = 0.001 * costMult; // Base cost * multiplier
+    
+    await logRouter(context.run_id, {
+      tier,
+      modelId: routingDecision.routing.model,
+      fastPathUsed: false,
+      estUsd: estimatedCost,
+      routing: {
+        confidence: routingDecision.routing.confidence,
+        reason: routingDecision.routing.reason,
+      },
+      textLength: sharedText.length,
+      language: context.language || 'sv',
+    });
+  }
+  
   return {
     agents: results,
     total_latency_ms: totalLatency,
     success_count: successCount,
-    error_count: errorCount
+    error_count: errorCount,
+    routing_info: routingDecision?.routing ? {
+      tier: routingDecision.routing.tier,
+      confidence: routingDecision.routing.confidence,
+      model: routingDecision.routing.model,
+      reason: routingDecision.routing.reason,
+    } : undefined,
+    cost_info: costCheck,
   };
+}
+
+async function runAgentBridge(scriptPath: string, payload: any): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const python = spawn('python', [scriptPath], {
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: {
+        ...process.env,
+        LC_ALL: 'C.UTF-8',
+        LANG: 'C.UTF-8'
+      }
+    });
+
+    let stdout = '';
+    let stderr = '';
+
+    python.stdout.on('data', (data) => {
+      stdout += data.toString();
+    });
+
+    python.stderr.on('data', (data) => {
+      stderr += data.toString();
+    });
+
+    python.stdin.write(JSON.stringify(payload));
+    python.stdin.end();
+
+    python.on('close', (code) => {
+      if (code === 0) {
+        try {
+          const result = JSON.parse(stdout);
+          resolve(result);
+        } catch (e) {
+          reject(new Error(`Failed to parse router bridge output: ${e}`));
+        }
+      } else {
+        reject(new Error(`Router bridge failed with code ${code}: ${stderr}`));
+      }
+    });
+
+    python.on('error', (error) => {
+      reject(new Error(`Failed to start router bridge: ${error}`));
+    });
+  });
 }
 
 async function runAgent(agentId: string, payload: any): Promise<any> {

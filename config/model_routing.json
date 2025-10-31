@@ -1,0 +1,28 @@
+{
+  "tiers": {
+    "base": {
+      "confidence_min": 0.0,
+      "confidence_max": 0.83
+    },
+    "mid": {
+      "confidence_min": 0.70,
+      "confidence_max": 0.83
+    },
+    "top": {
+      "confidence_min": 0.0,
+      "confidence_max": 0.70
+    }
+  },
+  "distribution_target": {
+    "fastpath": 0.22,
+    "base": 0.75,
+    "mid": 0.14,
+    "top": 0.05
+  },
+  "exploration": {
+    "epsilon_top": 0.012
+  },
+  "version": "2025-01-30-pyramid-pass",
+  "locked": true
+}
+
