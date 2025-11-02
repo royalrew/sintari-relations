@@ -80,14 +80,19 @@ function resolveAgent(relPath: string): string {
   );
 }
 
-const DEFAULT_CONFIG: BridgeConfig = {
-  agentName: "micro_mood",
-  pythonScript: resolveAgent(path.join("emotion", "micro_mood.py")),
-  poolSize: 2, // 2-4 workers enligt spec
-  callTimeoutMs: 750, // Per-call timeout
-  circuitBreakerThreshold: 5, // 5 fel → circuit open
-  circuitBreakerResetMs: 30000, // 30s innan reset
-};
+// Lazy config factory to resolve paths at runtime (not module load time)
+function getDefaultConfig(): BridgeConfig {
+  return {
+    agentName: "micro_mood",
+    pythonScript: resolveAgent(path.join("emotion", "micro_mood.py")),
+    poolSize: 2, // 2-4 workers enligt spec
+    callTimeoutMs: 750, // Per-call timeout
+    circuitBreakerThreshold: 5, // 5 fel → circuit open
+    circuitBreakerResetMs: 30000, // 30s innan reset
+  };
+}
+
+const DEFAULT_CONFIG = getDefaultConfig();
 
 // -------------------- Circuit Breaker -------------------- //
 
@@ -170,7 +175,14 @@ class PyBridgePool {
 
   private spawnWorker(): Worker {
     const pythonBin = process.env.PYTHON_BIN || "python";
-    const scriptPath = this.config.pythonScript;
+    // Re-resolve path at runtime in case cwd changed
+    let scriptPath = this.config.pythonScript;
+    try {
+      scriptPath = resolveAgent(path.join("emotion", "micro_mood.py"));
+    } catch (e) {
+      // Fallback to config path if resolve fails
+      console.warn(`[PyBridge] Failed to re-resolve agent path, using config: ${scriptPath}`);
+    }
     
     const worker: Worker = {
       process: spawn(pythonBin, [scriptPath], {
@@ -396,7 +408,9 @@ let poolInstance: PyBridgePool | null = null;
 
 function getPyBridgePool(): PyBridgePool {
   if (!poolInstance) {
-    poolInstance = new PyBridgePool(DEFAULT_CONFIG);
+    // Create config at pool creation time (runtime), not module load
+    const config = getDefaultConfig();
+    poolInstance = new PyBridgePool(config);
   }
   return poolInstance;
 }

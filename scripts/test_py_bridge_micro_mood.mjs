@@ -10,6 +10,7 @@
 import { spawn } from "child_process";
 import { createRequire } from "module";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -60,7 +61,32 @@ const TEST_CASES = [
 function callPythonDirect(text, lang = "sv") {
   return new Promise((resolve, reject) => {
     const pythonBin = process.env.PYTHON_BIN || "python";
-    const scriptPath = path.resolve(__dirname, "..", "..", "agents", "emotion", "micro_mood.py");
+    // Try multiple paths: sintari-relations/agents/ (vendored) or ../agents/ (monorepo)
+    const cwd = process.cwd();
+    const candidates = [
+      path.join(cwd, "agents", "emotion", "micro_mood.py"),           // 1) Vendored ./agents/
+      path.resolve(__dirname, "..", "agents", "emotion", "micro_mood.py"), // 2) Relative to script
+      path.join(cwd, "..", "agents", "emotion", "micro_mood.py"),     // 3) Monorepo ../agents/
+      path.resolve(__dirname, "..", "..", "agents", "emotion", "micro_mood.py"), // 4) Fallback
+    ];
+    
+    let scriptPath = null;
+    for (const candidate of candidates) {
+      if (fs.existsSync(candidate)) {
+        scriptPath = path.resolve(candidate);
+        break;
+      }
+    }
+    
+    if (!scriptPath) {
+      reject(new Error(
+        `micro_mood.py not found.\n` +
+        `Checked:\n${candidates.map(c => `  - ${c}`).join("\n")}\n` +
+        `CWD: ${cwd}\n` +
+        `__dirname: ${__dirname}`
+      ));
+      return;
+    }
     
     const request = JSON.stringify({
       agent: "micro_mood",

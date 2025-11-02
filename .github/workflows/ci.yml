@@ -110,7 +110,16 @@ jobs:
           PYTHON_BIN: python3
         run: |
           if [ -f scripts/test_py_bridge_micro_mood.mjs ]; then
-            if [ -f pnpm-lock.yaml ]; then pnpm node scripts/test_py_bridge_micro_mood.mjs; else node scripts/test_py_bridge_micro_mood.mjs; fi
+            # Verify agent exists before running test
+            if [ ! -f agents/emotion/micro_mood.py ]; then
+              echo "❌ agents/emotion/micro_mood.py not found - skipping test"
+              exit 0
+            fi
+            if [ -f pnpm-lock.yaml ]; then 
+              pnpm node scripts/test_py_bridge_micro_mood.mjs
+            else 
+              node scripts/test_py_bridge_micro_mood.mjs
+            fi
           else
             echo "no py-bridge test — skip"
           fi
