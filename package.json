@@ -10,6 +10,7 @@
     "test": "jest",
     "test:golden": "node scripts/run-golden-test.js",
     "test:golden:simple": "node lib/tests/golden-test-simple.js",
+    "test:smoke": "node lib/tests/golden-test-simple.js",
     "test:openai": "node lib/test-openai.js",
     "export:pdf": "node scripts/export_pdf.mjs"
   },
