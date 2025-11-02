@@ -17,6 +17,52 @@ jobs:
       LANG: C.UTF-8
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      # TEMP: hämta agents från huvud-repot tills submodule finns
+      # NOTE: Uppdatera <org>/<huvud-repo> till ditt riktiga repo där agents/ ligger
+      - name: Fetch agents (temporary)
+        run: |
+          set -e
+          # Försök med HTTPS (fungerar för publika repo)
+          if git clone --depth=1 https://github.com/royalrew/Sintari-AI-Market.git _root 2>/dev/null; then
+            echo "✅ Cloned via HTTPS"
+          # Försök med SSH (om deploy key finns)
+          elif git clone --depth=1 git@github.com:royalrew/Sintari-AI-Market.git _root 2>/dev/null; then
+            echo "✅ Cloned via SSH"
+          # Försök med GITHUB_TOKEN (för privata repo - automatiskt tillgänglig i Actions)
+          elif [ -n "$GITHUB_TOKEN" ]; then
+            git clone --depth=1 https://x-access-token:$GITHUB_TOKEN@github.com/royalrew/Sintari-AI-Market.git _root
+            echo "✅ Cloned via GITHUB_TOKEN"
+          else
+            echo "⚠️ Could not clone main repo - agents may be missing"
+            exit 1
+          fi
+          
+          if [ -d _root/agents ]; then
+            mkdir -p agents
+            if command -v rsync >/dev/null 2>&1; then
+              rsync -a --delete _root/agents/ ./agents/
+            else
+              cp -r _root/agents/* ./agents/
+            fi
+            rm -rf _root
+            echo "✅ Agents fetched successfully"
+          else
+            echo "❌ agents/ not found in cloned repo"
+            exit 1
+          fi
+
+      - name: List agents
+        run: |
+          ls -la agents/emotion || echo "⚠️ agents/emotion not found"
+          if [ -f agents/emotion/micro_mood.py ]; then 
+            echo "✅ agents/emotion/micro_mood.py found"; 
+          else 
+            echo "❌ agents/emotion/micro_mood.py MISSING - Py-Bridge tests will fail"; 
+          fi
 
       - uses: actions/setup-node@v4
         with:
