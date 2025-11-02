@@ -18,13 +18,28 @@ jobs:
         with:
           node-version: '20'
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Node deps
+      # JS deps via rätt paketmanager
+      - name: Install JS deps (lockfile-aware)
         run: |
-          if [ -f package.json ]; then npm ci; else echo "No package.json — skipping npm ci"; fi
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f yarn.lock ]; then
+            corepack enable && yarn install --frozen-lockfile
+          elif [ -f package.json ]; then
+            npm install
+          else
+            echo "No JS project found — skipping"
+          fi
 
       - name: Install Python deps
         run: |
@@ -35,7 +50,11 @@ jobs:
         env:
           ANALYSIS_DEBUG: '0'
         run: |
-          if [ -f lib/tests/golden-test-simple.js ]; then node lib/tests/golden-test-simple.js; else echo "No smoke test file — skip"; fi
+          if [ -f lib/tests/golden-test-simple.js ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm node lib/tests/golden-test-simple.js; else node lib/tests/golden-test-simple.js; fi
+          else
+            echo "No smoke test file — skip"
+          fi
 
       - name: Golden E2E (Node Orchestrator via Pytest)
         run: |
@@ -53,29 +72,43 @@ jobs:
         env:
           PYTHON_BIN: python3
         run: |
-          if [ -f scripts/test_py_bridge_micro_mood.mjs ]; then node scripts/test_py_bridge_micro_mood.mjs; else echo "no py-bridge test — skip"; fi
+          if [ -f scripts/test_py_bridge_micro_mood.mjs ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm node scripts/test_py_bridge_micro_mood.mjs; else node scripts/test_py_bridge_micro_mood.mjs; fi
+          else
+            echo "no py-bridge test — skip"
+          fi
 
       - name: Aggregate Emotion Events (Steg 99)
         run: |
-          if [ -f scripts/agg_emotion_events.mjs ]; then node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; fi
+          if [ -f scripts/agg_emotion_events.mjs ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; else node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; fi
+          fi
 
       - name: Emotion KPI Gates (Steg 99)
         run: |
-          if [ -f tests/ci/test_kpi_emotion_block.test.ts ]; then npm test -- tests/ci/test_kpi_emotion_block.test.ts || echo "kpi gate skip"; fi
+          if [ -f tests/ci/test_kpi_emotion_block.test.ts ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm test -- tests/ci/test_kpi_emotion_block.test.ts || echo "kpi gate skip"; else npm test -- tests/ci/test_kpi_emotion_block.test.ts || echo "kpi gate skip"; fi
+          fi
 
       - name: Emotion Drop Rate Gate
         run: |
-          if [ -f tests/ci/test_emotion_drop_rate.test.ts ]; then npm test -- tests/ci/test_emotion_drop_rate.test.ts || echo "drop rate skip"; fi
+          if [ -f tests/ci/test_emotion_drop_rate.test.ts ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm test -- tests/ci/test_emotion_drop_rate.test.ts || echo "drop rate skip"; else npm test -- tests/ci/test_emotion_drop_rate.test.ts || echo "drop rate skip"; fi
+          fi
 
       - name: RED Sanity Suite (10 cases)
         env:
           PYTHON_BIN: python3
         run: |
-          if [ -f tests/emotion/test_red_sanity.ts ]; then npm test -- tests/emotion/test_red_sanity.ts || echo "red sanity skip"; fi
+          if [ -f tests/emotion/test_red_sanity.ts ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm test -- tests/emotion/test_red_sanity.ts || echo "red sanity skip"; else npm test -- tests/emotion/test_red_sanity.ts || echo "red sanity skip"; fi
+          fi
 
       - name: Tone Gate (Soft)
         run: |
-          if [ -f tests/ci/test_tone_gate.test.ts ]; then npm test -- tests/ci/test_tone_gate.test.ts || echo "tone gate skip"; fi
+          if [ -f tests/ci/test_tone_gate.test.ts ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm test -- tests/ci/test_tone_gate.test.ts || echo "tone gate skip"; else npm test -- tests/ci/test_tone_gate.test.ts || echo "tone gate skip"; fi
+          fi
 
       - name: Pyramid live 200 (shadow) - FAIL-FAST
         env:
@@ -91,7 +124,7 @@ jobs:
           PYTHONHASHSEED: 42
         run: |
           if [ -f scripts/batch_run_sample.mjs ]; then
-            node scripts/batch_run_sample.mjs --n=200 --shadow --mix=live --trivial=datasets/trivial_pool.jsonl
+            if [ -f pnpm-lock.yaml ]; then pnpm node scripts/batch_run_sample.mjs --n=200 --shadow --mix=live --trivial=datasets/trivial_pool.jsonl; else node scripts/batch_run_sample.mjs --n=200 --shadow --mix=live --trivial=datasets/trivial_pool.jsonl; fi
             python scripts/metrics/pyramid_report.py reports/pyramid_live.jsonl > reports/pyramid_live.md
           else
             echo "batch_run_sample missing — skip"
@@ -163,14 +196,13 @@ jobs:
       - name: Drift watch (diamond memory) - HARD FAIL
         run: |
           python - <<'PY'
-          import sys, pathlib
           print("[OK] Diamond memory check skipped or stable")
           PY
 
       - name: Verify Prompt Shield import
         run: |
           python - <<'PY'
-          import importlib.util, sys, os
+          import importlib.util, os
           p = 'backend/guard/prompt_shield.py'
           if os.path.exists(p):
               spec = importlib.util.spec_from_file_location('prompt_shield', p)
