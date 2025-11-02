@@ -170,6 +170,29 @@ function canon(label: string): string {
   return map[t] || t;
 }
 
+// --- Crisis guard ---
+const crisisEnabled = () => process.env.CRISIS_RECO_ENABLED === "true";
+
+function allowCrisis(safety_gate?: any, abuse?: any, coercion?: any, selfharm?: any) {
+  if (!crisisEnabled()) return false;
+  
+  const safety = safety_gate?.emits?.safety ?? "GREEN"; // "GREEN"|"YELLOW"|"RED"
+  const hardStop = safety_gate?.emits?.hard_stop === true;
+  const abuseFlags = abuse?.emits?.abuse_flags ?? [];
+  const coercionFlags = coercion?.emits?.coercion_flags ?? [];
+  const selfHarm = selfharm?.emits?.selfharm_flag === true;
+
+  return (
+    selfHarm || hardStop || safety === "RED" || abuseFlags.length > 0 || coercionFlags.length > 0
+  );
+}
+
+function crisisRecommendationText(locale: string) {
+  return locale?.startsWith("sv")
+    ? "Sök omedelbar hjälp. Vid akut fara, ring 112."
+    : "Seek immediate help. If in danger, call your local emergency number.";
+}
+
 export async function analyzeRelation(formData: FormData): Promise<Ok<{
   reflections: string[];
   recommendation: string;
@@ -296,15 +319,29 @@ export async function analyzeRelation(formData: FormData): Promise<Ok<{
     // Don't fail the request if logging fails
   }
   
-  // Safety-first override: Om safety är RED, skriv över rekommendation
+  // Determine recommendation using crisis guard
   let finalRecommendation = out.recommendation;
   let finalSafetyFlag = out.safetyFlag;
   
   if (agentResults && agentResults.agents) {
     const safetyAgent = agentResults.agents.find(agent => agent.agent_id === 'safety_gate');
-    if (safetyAgent && safetyAgent.status === 'success' && safetyAgent.output?.emits?.safety === "RED") {
+    const abuseAgent = agentResults.agents.find(agent => agent.agent_id === 'risk_abuse');
+    const coercionAgent = agentResults.agents.find(agent => agent.agent_id === 'risk_coercion');
+    const selfharmAgent = agentResults.agents.find(agent => agent.agent_id === 'risk_selfharm');
+    
+    const canCrisis = allowCrisis(
+      safetyAgent?.output,
+      abuseAgent?.output,
+      coercionAgent?.output,
+      selfharmAgent?.output
+    );
+
+    if (canCrisis) {
+      const locale = detectLanguage(parsed.data.description) === "sv" ? "sv-SE" : "en-US";
+      finalRecommendation = crisisRecommendationText(locale);
       finalSafetyFlag = true;
-      finalRecommendation = "Sök omedelbar hjälp - fysiskt våld är aldrig okej. Vid akut fara, ring nödnumret i ditt land (i Sverige: 112). Kontakta en stödorganisation eller vänd dig till sjukvården för hjälp.";
+    } else {
+      finalRecommendation = out.recommendation;
     }
   }
   
@@ -421,11 +458,23 @@ export async function generateAnalysisReportV2(formData: FormData): Promise<Ok<A
       analysis: {
         reflections: analysisResult.reflections,
         recommendation: (() => {
-          // Safety-first override för V2 rapporten också
+          // Crisis guard för V2 rapporten
           if (agentResults && agentResults.agents) {
             const safetyAgent = agentResults.agents.find(agent => agent.agent_id === 'safety_gate');
-            if (safetyAgent && safetyAgent.status === 'success' && safetyAgent.output?.emits?.safety === "RED") {
-              return "Sök omedelbar hjälp - fysiskt våld är aldrig okej. Vid akut fara, ring nödnumret i ditt land (i Sverige: 112). Kontakta en stödorganisation eller vänd dig till sjukvården för hjälp.";
+            const abuseAgent = agentResults.agents.find(agent => agent.agent_id === 'risk_abuse');
+            const coercionAgent = agentResults.agents.find(agent => agent.agent_id === 'risk_coercion');
+            const selfharmAgent = agentResults.agents.find(agent => agent.agent_id === 'risk_selfharm');
+            
+            const canCrisis = allowCrisis(
+              safetyAgent?.output,
+              abuseAgent?.output,
+              coercionAgent?.output,
+              selfharmAgent?.output
+            );
+
+            if (canCrisis) {
+              const locale = detectLanguage(parsed.data.description) === "sv" ? "sv-SE" : "en-US";
+              return crisisRecommendationText(locale);
             }
           }
           return analysisResult.recommendation;

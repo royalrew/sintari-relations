@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { loadPhaseKPIs } from "@/lib/phases";
+import EmotionPanel from "./emotion_panel";
 
 type PyramidKPI = {
   meta: { source: string; sha1: string; generated_utc: string };
@@ -259,6 +260,11 @@ export default function DashboardPage() {
       </section>
 
       <PhaseTabs />
+      
+      {/* Emotion Panel */}
+      <section className="mt-8">
+        <EmotionPanel />
+      </section>
     </div>
   );
 }

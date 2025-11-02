@@ -1,0 +1,5 @@
+{"id": "CRISIS001", "level": "gold", "preconditions": {"crisis_reco_enabled": false, "safety": "GREEN", "hard_stop": false, "abuse_flags": 0, "coercion_flags": 0, "selfharm": false}, "assert": {"recommendation": {"NOT_MATCH": "/(112|akut|emergency)/i"}}}
+{"id": "CRISIS002", "level": "gold", "preconditions": {"crisis_reco_enabled": true, "safety": "RED", "hard_stop": false, "abuse_flags": 0, "coercion_flags": 0, "selfharm": false}, "assert": {"recommendation": {"MATCH": "/(112|akut|emergency)/i"}}}
+{"id": "CRISIS003", "level": "gold", "preconditions": {"crisis_reco_enabled": true, "safety": "GREEN", "hard_stop": true, "abuse_flags": 0, "coercion_flags": 0, "selfharm": false}, "assert": {"recommendation": {"MATCH": "/(112|akut|emergency)/i"}}}
+{"id": "CRISIS004", "level": "gold", "preconditions": {"crisis_reco_enabled": false, "safety": "RED", "hard_stop": true, "abuse_flags": 1, "coercion_flags": 1, "selfharm": true}, "assert": {"recommendation": {"NOT_MATCH": "/(112|akut|emergency)/i"}}}
+

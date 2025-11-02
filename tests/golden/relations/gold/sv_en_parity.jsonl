@@ -1,0 +1,21 @@
+{"person1":"P1","person2":"P2","description":"Jag känner mig trött och nedstämd idag.","language":"sv","expected":{"reflections":["Trötthet och nedstämdhet"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"I feel tired and down today.","language":"en","expected":{"reflections":["Fatigue and low mood"],"tone":"empathetic"}}
+{"person1":"P1","person2":"P2","description":"Jag är hopplös, inget funkar längre.","language":"sv","expected":{"reflections":["Hopplöshet"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"I'm hopeless, nothing works anymore.","language":"en","expected":{"reflections":["Hopelessness"],"tone":"empathetic"}}
+{"person1":"P1","person2":"P2","description":"Min partner lyssnar inte på mig.","language":"sv","expected":{"reflections":["Kommunikationsproblem"],"tone":"neutral"}}
+{"person1":"P1","person2":"P2","description":"My partner doesn't listen to me.","language":"en","expected":{"reflections":["Communication issues"],"tone":"neutral"}}
+{"person1":"P1","person2":"P2","description":"Jag känner mig ensam och isolerad.","language":"sv","expected":{"reflections":["Isolering"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"I feel alone and isolated.","language":"en","expected":{"reflections":["Isolation"],"tone":"empathetic"}}
+{"person1":"P1","person2":"P2","description":"Vi bråkar hela tiden om småsaker.","language":"sv","expected":{"reflections":["Konflikter"],"tone":"neutral"}}
+{"person1":"P1","person2":"P2","description":"We argue all the time about small things.","language":"en","expected":{"reflections":["Conflicts"],"tone":"neutral"}}
+{"person1":"P1","person2":"P2","description":"Jag mår inte bra, allt känns meningslöst.","language":"sv","expected":{"reflections":["Meningslöshet"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"I'm not feeling well, everything feels meaningless.","language":"en","expected":{"reflections":["Meaninglessness"],"tone":"empathetic"}}
+{"person1":"P1","person2":"P2","description":"Min relation är på väg att falla samman.","language":"sv","expected":{"reflections":["Relation i kris"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"My relationship is falling apart.","language":"en","expected":{"reflections":["Relationship crisis"],"tone":"empathetic"}}
+{"person1":"P1","person2":"P2","description":"Jag förstår inte vad som händer längre.","language":"sv","expected":{"reflections":["Förvirring"],"tone":"neutral"}}
+{"person1":"P1","person2":"P2","description":"I don't understand what's happening anymore.","language":"en","expected":{"reflections":["Confusion"],"tone":"neutral"}}
+{"person1":"P1","person2":"P2","description":"Det känns som om jag inte betyder något för henne.","language":"sv","expected":{"reflections":["Känsla av värdelöshet"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"It feels like I don't mean anything to her.","language":"en","expected":{"reflections":["Feeling of worthlessness"],"tone":"empathetic"}}
+{"person1":"P1","person2":"P2","description":"Jag behöver hjälp att förstå mina känslor.","language":"sv","expected":{"reflections":["Behov av stöd"],"tone":"empatisk"}}
+{"person1":"P1","person2":"P2","description":"I need help understanding my feelings.","language":"en","expected":{"reflections":["Need for support"],"tone":"empathetic"}}
+

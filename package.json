@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "lint:golden": "node scripts/lint_emotion_golden.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 3001",
+    "test": "jest",
     "test:golden": "node scripts/run-golden-test.js",
     "test:golden:simple": "node lib/tests/golden-test-simple.js",
     "test:openai": "node lib/test-openai.js",
@@ -27,10 +29,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "jest": "^30.2.0",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.5",
     "typescript": "^5"
   }
 }

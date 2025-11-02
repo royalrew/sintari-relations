@@ -1,0 +1,10 @@
+{"ts":"2025-11-02T14:00:00Z","profile":"baseline_both_off","acc":0.549,"gap":0.0135,"red_fp":0.000,"light_r":24.5,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"Ablation A: solid baseline"}
+{"ts":"2025-11-02T14:05:00Z","profile":"resolve_on_mutual_off","acc":0.549,"gap":0.0135,"red_fp":0.000,"light_r":24.5,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"Ablation B: no improvement"}
+{"ts":"2025-11-02T14:10:00Z","profile":"resolve_off_mutual_on","acc":0.563,"gap":0.0251,"red_fp":0.000,"light_r":24.5,"plus_r":53.7,"red_r":84.0,"neutral_r":100.0,"notes":"Ablation C: +5pp Plus, winner but fails criteria"}
+{"ts":"2025-11-02T14:15:00Z","profile":"both_on_safety","acc":0.563,"gap":0.0251,"red_fp":0.000,"light_r":24.5,"plus_r":53.7,"red_r":84.0,"neutral_r":100.0,"notes":"Ablation D: same as C"}
+{"ts":"2025-11-02T14:30:00Z","profile":"tension_lite_144","acc":0.556,"gap":0.0156,"red_fp":0.000,"light_r":26.4,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"Tension-lite feature ON: +1.9pp Light"}
+{"ts":"2025-11-02T14:35:00Z","profile":"tension_lite_160","acc":0.519,"gap":0.0116,"red_fp":0.000,"light_r":24.6,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"Tension-lite + 16 new Light cases: still stuck at 24.6%"}
+{"ts":"2025-11-02T15:00:00Z","profile":"tension_lite_190","acc":0.505,"gap":0.0110,"red_fp":0.000,"light_r":30.3,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"Tension-lite + 30 more Light cases: Light recall up to 30%, but still far from 55% target"}
+{"ts":"2025-11-02T15:05:00Z","profile":"session_summary","acc":0.549,"gap":0.0135,"red_fp":0.000,"light_r":24.5,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"FINAL: Prod baseline recommended. Light needs fundamental re-think or 100+ more cases."}
+{"ts":"2025-11-02T15:20:00Z","profile":"tension_lite_240","acc":0.479,"gap":0.0123,"red_fp":0.000,"light_r":32.9,"plus_r":48.8,"red_r":84.0,"neutral_r":100.0,"notes":"240 cases (149 Light): Recall improved to 32.9% but accuracy dropped to 0.479. Still far from 55% target."}
+

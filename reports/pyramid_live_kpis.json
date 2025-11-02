@@ -14,7 +14,7 @@
     "routed": 323
   },
   "pct": {
-    "fastpath_total": 24.0,
+    "fastpath_total": 24,
     "base_routed": 78.63777089783281,
     "mid_routed": 16.09907120743034,
     "top_routed": 5.263157894736842
@@ -23,5 +23,20 @@
     "total_usd": 1.046,
     "avg_usd": 0.0024611764705882353,
     "p95_usd": 0.01
+  },
+  "emotion": {
+    "window": "24h",
+    "events": 91,
+    "counts_by_level": {
+      "neutral": 43,
+      "light": 19,
+      "plus": 23,
+      "red": 6
+    },
+    "p50_latency_ms": 0,
+    "p95_latency_ms": 11,
+    "red_rate": 0.066,
+    "sv_en_gap": 0.341,
+    "generated_utc": "2025-11-02T09:43:41.244Z"
   }
 }

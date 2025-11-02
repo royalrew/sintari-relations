@@ -4,6 +4,7 @@ import { join } from 'path';
 import { getWorkText, normalizeText, canonLabel, generateFallbackSpans } from '@/lib/utils/textUtils';
 import { detectViolence } from '@/lib/utils/safetyDetection';
 import { logRouter } from './_orchestrator_logs';
+import { callMicroMood } from '@/backend/ai/py_bridge';
 
 export interface AgentResult {
   agent_id: string;
@@ -87,18 +88,79 @@ export async function runAllAgents(
   const results: AgentResult[] = [];
   const startTime = Date.now();
 
-  // Skapa sharedText med fallback-kedja
-  const raw = (input.description ?? "").toString();
-  const toUtf8 = (s: string) => Buffer.from(s, "utf8").toString("utf8");
-  const nfc = (s: string) => toUtf8(s).normalize("NFC");
+  // Robust text-input (fixar "Missing data.text" + mojibake)
+  const original = (input.description ?? input.text ?? "").toString();
   
-  const normalizedText = nfc(raw);
+  // Tidigt avbrott om helt tomt
+  if (!original.trim()) {
+    console.warn("[WARN] Empty text input, returning safe empty report");
+    return {
+      agents: [],
+      total_latency_ms: 0,
+      success_count: 0,
+      error_count: 0,
+      routing_info: {
+        tier: "empty",
+        confidence: 0.0,
+        modelId: "empty_input",
+      },
+      cost_info: {
+        blocked: true,
+        reason: "empty_input",
+      },
+    };
+  }
   
-  // Skapa sharedText som alla agenter ska använda
-  const sharedText = normalizedText.trim();
+  // Use original for emotion detection (critical path)
+  let sharedText = original.trim();
   
-  if (!sharedText) {
-    console.warn("[WARN] Empty sharedText; falling back to raw");
+  // ============================================================
+  // EMOTION CORE: Micro-Mood Detection (FÖRE routing)
+  // ============================================================
+  // Step 0: Check emotion/mood - if RED → route to safety_path
+  let emotionResult: any = null;
+  let emotionIsRed = false;
+  
+  try {
+    emotionResult = await callMicroMood(
+      sharedText,
+      context.language || "auto",
+      context.run_id
+    );
+    
+    if (emotionResult.ok && emotionResult.level === "red") {
+      emotionIsRed = true;
+      console.warn(`[EMOTION] RED detected: ${emotionResult.red_hint || "Critical mood detected"}`);
+      
+      // RED → safety_path: blockera och route to human
+      // Returnera early med safety block
+      return {
+        agents: [],
+        total_latency_ms: 0,
+        success_count: 0,
+        error_count: 0,
+        routing_info: {
+          tier: "safety_path",
+          confidence: 1.0,
+          modelId: "micro_mood_red_block",
+        },
+        cost_info: {
+          blocked: true,
+          reason: "emotion_red",
+          emotion_level: "red",
+          emotion_hint: emotionResult.red_hint,
+        },
+      };
+    }
+    
+    if (emotionResult.ok) {
+      console.log(`[EMOTION] ✅ Level: ${emotionResult.level}, Score: ${emotionResult.score.toFixed(2)}`);
+    } else {
+      console.warn(`[EMOTION] ⚠️ Detection returned ok=false: ${emotionResult.error}`);
+    }
+  } catch (error) {
+    // Non-blocking: om emotion detection failar, fortsätt normalt
+    console.warn(`[EMOTION] ❌ Detection failed, continuing: ${error instanceof Error ? error.message : String(error)}`);
   }
   
   // ============================================================
@@ -178,21 +240,41 @@ export async function runAllAgents(
   // END FAS 2 ROUTING
   // ============================================================
   
+  // Determine language with fallback (never "und")
+  let detectedLang = context.language || 'sv';
+  if (detectedLang === 'und' || !['sv', 'en'].includes(detectedLang.toLowerCase())) {
+    // Fallback: check if text is primarily ASCII (English) or has Swedish characters
+    const hasSwedish = /[åäöÅÄÖ]/.test(sharedText);
+    detectedLang = hasSwedish ? 'sv' : 'en';
+  }
+  detectedLang = detectedLang.toLowerCase();
+
+  // Create consent context (single source of truth)
+  const consentContext = {
+    verified: input.consent === true || input.consent === 'on',
+    mode: (input.consent === true || input.consent === 'on') ? 'explicit' : 'none',
+    timestamp: context.timestamp
+  };
+
   // Skapa payload för agenter med sharedText
+  // Diag-agents behöver data.text, inte bara description
   const agentPayload = {
     data: {
+      text: sharedText,  // CRITICAL: diag-agents expects data.text
       person1: input.person1,
       person2: input.person2,
-      description: sharedText,
+      description: sharedText,  // backward compatibility
       original_description: input.description,
-      shared_text: sharedText, // Alla agenter får samma text
+      shared_text: sharedText,
       consent_given: input.consent,
-      language: context.language || 'sv'
+      language: detectedLang,
+      lang: detectedLang  // alias for compatibility
     },
     meta: {
       run_id: context.run_id,
       timestamp: context.timestamp,
-      agent_version: "1.0.0"
+      agent_version: "1.0.0",
+      consent: consentContext  // inject consent context
     }
   };
 
@@ -228,6 +310,16 @@ export async function runAllAgents(
   // Vänta på alla agenter
   const agentResults = await Promise.all(agentPromises);
   results.push(...agentResults);
+
+  // Post-process: Use normalized text if available (after normalize agent has run)
+  const normalizeAgent = results.find(r => r.agent_id === 'normalize');
+  if (normalizeAgent && normalizeAgent.status === 'success' && normalizeAgent.output?.emits?.clean_text) {
+    const normalized = normalizeAgent.output.emits.clean_text;
+    if (normalized && normalized.trim().length > 0) {
+      sharedText = normalized.trim();
+      console.log("[ORCHESTRATOR] Using normalized text from normalize agent");
+    }
+  }
 
   // Post-process: Fix safety_gate för violence och risk detection
   const safetyAgent = results.find(r => r.agent_id === 'safety_gate');

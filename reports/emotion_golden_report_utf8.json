@@ -1,0 +1,389 @@
+﻿{
+  "total": 240,
+  "accuracy": 0.4417,
+  "confusion_matrix": {
+    "neutral": {
+      "neutral": 25,
+      "light": 0,
+      "plus": 0,
+      "red": 0
+    },
+    "light": {
+      "neutral": 108,
+      "light": 40,
+      "plus": 1,
+      "red": 0
+    },
+    "plus": {
+      "neutral": 17,
+      "light": 4,
+      "plus": 20,
+      "red": 0
+    },
+    "red": {
+      "neutral": 3,
+      "light": 1,
+      "plus": 0,
+      "red": 21
+    }
+  },
+  "misses": [
+    {
+      "id": "E001",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi pratar mest om vardagssaker och det flyter pÃ¥."
+    },
+    {
+      "id": "E002",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi har det bra, men ibland kÃ¤nns vardagen lite tung."
+    },
+    {
+      "id": "E006",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "SmÃ¥ irritationer dyker upp om stÃ¤dning dÃ¥ och dÃ¥."
+    },
+    {
+      "id": "E010",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag blir lite stressad av vÃ¥ra olika rutiner."
+    },
+    {
+      "id": "E014",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi glider isÃ¤r lite i vardagen, inget stort men mÃ¤rkbart."
+    },
+    {
+      "id": "E015",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Jag kÃ¤nner hopp och vÃ¤rme nÃ¤r vi pratar Ã¶ppet ðŸ™‚"
+    },
+    {
+      "id": "E018",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Lite frustration Ã¶ver att jag inte blir lyssnad pÃ¥ ibland."
+    },
+    {
+      "id": "E019",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi lÃ¶ste en konflikt pÃ¥ ett moget sÃ¤tt och kramades efterÃ¥t."
+    },
+    {
+      "id": "E022",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Det skaver lite kring ansvarsfÃ¶rdelningen hemma."
+    },
+    {
+      "id": "E023",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag kÃ¤nner mig Ã¤lskad och accepterad fÃ¶r den jag Ã¤r."
+    },
+    {
+      "id": "E026",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi har bÃ¶rjat missa varandras signaler."
+    },
+    {
+      "id": "E030",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Saknar nÃ¤rhet; inte katastrof, men det mÃ¤rks."
+    },
+    {
+      "id": "E031",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag kÃ¤nner mig respekterad Ã¤ven nÃ¤r vi tycker olika."
+    },
+    {
+      "id": "E034",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Det Ã¤r lite stelt efter jobbet, svÃ¥rt att landa."
+    },
+    {
+      "id": "E038",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Lite oro kring ekonomin pÃ¥verkar humÃ¶ret."
+    },
+    {
+      "id": "E042",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "SmÃ¥ kommentarer svider mer Ã¤n de borde."
+    },
+    {
+      "id": "E043",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "KÃ¤nner stark samhÃ¶righet nÃ¤r vi planerar framtiden ihop."
+    },
+    {
+      "id": "E047",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag vÃ¥gar vara sÃ¥rbar och fÃ¥r ett mjukt svar tillbaka."
+    },
+    {
+      "id": "E048",
+      "expected": "red",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Han sÃ¤ger att det aldrig hÃ¤nt, trots att jag vet att det gjorde det."
+    },
+    {
+      "id": "E056",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "Small tensions about how we spend evenings."
+    },
+    {
+      "id": "E057",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We solved a conflict well and hugged afterward."
+    },
+    {
+      "id": "E060",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel somewhat overlooked lately, nothing dramatic."
+    },
+    {
+      "id": "E062",
+      "expected": "red",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm scared of how angry she gets if I disagree."
+    },
+    {
+      "id": "E064",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We drift a bit; we don't check in like before."
+    },
+    {
+      "id": "E065",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm proud of us for communicating with kindness."
+    },
+    {
+      "id": "E069",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We feel closer after setting fair boundaries."
+    },
+    {
+      "id": "E072",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "Tension rises when we discuss money, but we're trying."
+    },
+    {
+      "id": "E073",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel encouraged and supported to grow."
+    },
+    {
+      "id": "E076",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We've grown a bit distant; I miss our jokes."
+    },
+    {
+      "id": "E080",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel slightly on edge around bedtime routines."
+    },
+    {
+      "id": "E081",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel loved and accepted for who I am."
+    },
+    {
+      "id": "E082",
+      "expected": "red",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "He blames me for everything; I'm exhausted."
+    },
+    {
+      "id": "E084",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We're a bit short with each other lately (not a big deal)."
+    },
+    {
+      "id": "E085",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I can be vulnerable and get a gentle response back."
+    },
+    {
+      "id": "E088",
+      "expected": "light",
+      "detected": "plus",
+      "lang": "en",
+      "text": "I miss feeling close; lately we just coexist."
+    },
+    {
+      "id": "E089",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We share small joys and check in kindly ðŸ™‚"
+    },
+    {
+      "id": "E090",
+      "expected": "red",
+      "detected": "light",
+      "lang": "en",
+      "text": "I feel isolated and anxious after our talks."
+    },
+    {
+      "id": "E092",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "There's mild tension around chores and bedtime."
+    },
+    {
+      "id": "E093",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We feel aligned and generous with each other â¤ï¸"
+    },
+    {
+      "id": "L_SV_003",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "SmÃ¥ irritationer om tiderna, inget stort."
+    },
+    {
+      "id": "L_SV_004",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi missfÃ¶rstÃ¥r varandra ibland men reder ut det."
+    },
+    {
+      "id": "L_EN_002",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "Some mild frustration when plans change last minute."
+    },
+    {
+      "id": "L_EN_003",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "Occasional annoyance about schedules, nothing major."
+    },
+    {
+      "id": "L_EN_004",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We raise our voices sometimes but calm down quickly."
+    },
+    {
+      "id": "P_SV_001",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Jag kÃ¤nner mig sedd och bemÃ¶tt med respekt."
+    },
+    {
+      "id": "P_SV_002",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi lÃ¶ser konflikter mjukt och lyssnar in varandra."
+    },
+    {
+      "id": "P_EN_002",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "We resolve disagreements gently and check in with each other."
+    },
+    {
+      "id": "L_SV_005",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Det Ã¤r lite smÃ¥gnabb ibland men vi skrattar Ã¥t det sen."
+    },
+    {
+      "id": "L_SV_006",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Vi pratar mindre just nu men allt kÃ¤nns Ã¤ndÃ¥ okej."
+    },
+    {
+      "id": "L_SV_007",
+      "expected": "light",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "SmÃ¥ brister i kommunikationen, men inget allvarligt."
+    }
+  ],
+  "sv_en_gap": 0.0034,
+  "red_fp_rate": 0,
+  "sv_count": 120,
+  "en_count": 120,
+  "red_predictions": 21,
+  "red_false_positives": 0,
+  "generated_utc": "2025-11-02T08:42:32.756Z"
+}

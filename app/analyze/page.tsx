@@ -763,20 +763,30 @@ function AnalysisPanel({
         }`}>{recommendation}</p>
       </div>
 
-      {/* Overall Status from v2 report */}
+      {/* Analysis Quality Indicator */}
       {v2Report && (
-        <div className={`p-3 rounded-lg border ${
-          v2Report.overall_status === "OK" ? "bg-green-50 border-green-200" :
-          v2Report.overall_status === "WARNING" ? "bg-yellow-50 border-yellow-200" :
-          "bg-red-50 border-red-200"
-        }`}>
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-sm">
-              Status: {v2Report.overall_status}
-            </span>
-            {v2Report.metrics.cost_estimate && (
-              <span className="text-xs text-gray-600">
-                (${v2Report.metrics.cost_estimate.toFixed(4)})
+        <div className="p-3 rounded-lg border bg-gray-50 border-gray-200">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">Analyskvalitet:</span>
+              {confidence !== undefined && (
+                <span className={`text-sm font-semibold ${
+                  confidence >= 0.9 ? "text-green-600" :
+                  confidence >= 0.7 ? "text-yellow-600" :
+                  "text-orange-600"
+                }`}>
+                  {Math.round(confidence * 100)}% konfidens
+                </span>
+              )}
+              {!confidence && analysisMode && (
+                <span className="text-xs text-gray-600">
+                  {analysisMode === "ai" ? "AI-analys" : "Deterministisk analys"}
+                </span>
+              )}
+            </div>
+            {(v2Report.metadata?.latency_ms_total || v2Report.metrics?.latency_ms_total) && (
+              <span className="text-xs text-gray-500">
+                Bearbetningstid: {Math.round((v2Report.metadata?.latency_ms_total || v2Report.metrics?.latency_ms_total || 0) / 1000)}s
               </span>
             )}
           </div>

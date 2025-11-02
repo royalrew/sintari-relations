@@ -1,0 +1,199 @@
+{
+  "profiles": [
+    {
+      "profile": "C: Resolve OFF, Mutual ON",
+      "accuracy": 0.5625,
+      "gap": 0.0251,
+      "redFp": 0,
+      "recall": {
+        "neutral": 1,
+        "light": 0.24528301886792453,
+        "plus": 0.5365853658536586,
+        "red": 0.84
+      },
+      "confusion_matrix": {
+        "neutral": {
+          "neutral": 25,
+          "light": 0,
+          "plus": 0,
+          "red": 0
+        },
+        "light": {
+          "neutral": 39,
+          "light": 13,
+          "plus": 1,
+          "red": 0
+        },
+        "plus": {
+          "neutral": 17,
+          "light": 2,
+          "plus": 22,
+          "red": 0
+        },
+        "red": {
+          "neutral": 3,
+          "light": 1,
+          "plus": 0,
+          "red": 21
+        }
+      },
+      "score": 0.55995
+    },
+    {
+      "profile": "D: Both ON (with safety)",
+      "accuracy": 0.5625,
+      "gap": 0.0251,
+      "redFp": 0,
+      "recall": {
+        "neutral": 1,
+        "light": 0.24528301886792453,
+        "plus": 0.5365853658536586,
+        "red": 0.84
+      },
+      "confusion_matrix": {
+        "neutral": {
+          "neutral": 25,
+          "light": 0,
+          "plus": 0,
+          "red": 0
+        },
+        "light": {
+          "neutral": 39,
+          "light": 13,
+          "plus": 1,
+          "red": 0
+        },
+        "plus": {
+          "neutral": 17,
+          "light": 2,
+          "plus": 22,
+          "red": 0
+        },
+        "red": {
+          "neutral": 3,
+          "light": 1,
+          "plus": 0,
+          "red": 21
+        }
+      },
+      "score": 0.55995
+    },
+    {
+      "profile": "A: Baseline (both OFF)",
+      "accuracy": 0.5486,
+      "gap": 0.0135,
+      "redFp": 0,
+      "recall": {
+        "neutral": 1,
+        "light": 0.24528301886792453,
+        "plus": 0.4878048780487805,
+        "red": 0.84
+      },
+      "confusion_matrix": {
+        "neutral": {
+          "neutral": 25,
+          "light": 0,
+          "plus": 0,
+          "red": 0
+        },
+        "light": {
+          "neutral": 39,
+          "light": 13,
+          "plus": 1,
+          "red": 0
+        },
+        "plus": {
+          "neutral": 17,
+          "light": 4,
+          "plus": 20,
+          "red": 0
+        },
+        "red": {
+          "neutral": 3,
+          "light": 1,
+          "plus": 0,
+          "red": 21
+        }
+      },
+      "score": 0.5486
+    },
+    {
+      "profile": "B: Resolve ON, Mutual OFF",
+      "accuracy": 0.5486,
+      "gap": 0.0135,
+      "redFp": 0,
+      "recall": {
+        "neutral": 1,
+        "light": 0.24528301886792453,
+        "plus": 0.4878048780487805,
+        "red": 0.84
+      },
+      "confusion_matrix": {
+        "neutral": {
+          "neutral": 25,
+          "light": 0,
+          "plus": 0,
+          "red": 0
+        },
+        "light": {
+          "neutral": 39,
+          "light": 13,
+          "plus": 1,
+          "red": 0
+        },
+        "plus": {
+          "neutral": 17,
+          "light": 4,
+          "plus": 20,
+          "red": 0
+        },
+        "red": {
+          "neutral": 3,
+          "light": 1,
+          "plus": 0,
+          "red": 21
+        }
+      },
+      "score": 0.5486
+    }
+  ],
+  "winner": {
+    "profile": "C: Resolve OFF, Mutual ON",
+    "accuracy": 0.5625,
+    "gap": 0.0251,
+    "redFp": 0,
+    "recall": {
+      "neutral": 1,
+      "light": 0.24528301886792453,
+      "plus": 0.5365853658536586,
+      "red": 0.84
+    },
+    "confusion_matrix": {
+      "neutral": {
+        "neutral": 25,
+        "light": 0,
+        "plus": 0,
+        "red": 0
+      },
+      "light": {
+        "neutral": 39,
+        "light": 13,
+        "plus": 1,
+        "red": 0
+      },
+      "plus": {
+        "neutral": 17,
+        "light": 2,
+        "plus": 22,
+        "red": 0
+      },
+      "red": {
+        "neutral": 3,
+        "light": 1,
+        "plus": 0,
+        "red": 21
+      }
+    },
+    "score": 0.55995
+  }
+}

@@ -20,7 +20,7 @@ compute_cache_version = _scoring.compute_cache_version
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 LEVELS = ["bronze", "silver", "gold", "platinum", "diamond"]
-FILENAMES = ["seed.jsonl", "more.jsonl", "edge.jsonl", "edge3.jsonl", "edge4.jsonl"]
+FILENAMES = ["seed.jsonl", "more.jsonl", "edge.jsonl", "edge3.jsonl", "edge4.jsonl", "sv_en_parity.jsonl"]
 
 THRESH = {
     "bronze":   {"total": 0.95, "tone": 0.85, "reco": 0.85, "expl": 0.00},

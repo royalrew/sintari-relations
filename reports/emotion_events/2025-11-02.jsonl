@@ -1,0 +1,16 @@
+{"ts":"2025-11-02T09:41:55.264Z","trace_id":"8ee61cd3-dae6-4927-afab-02d2dfb51aa0","agent":"micro_mood","level":"plus","score":0.999,"lang":"sv","len_chars":27,"latency_ms":14}
+{"ts":"2025-11-02T09:41:58.738Z","trace_id":"c0898b8a-c130-4df7-805d-449bcb7fc3c2","agent":"micro_mood","level":"plus","score":0.999,"lang":"sv","len_chars":27,"latency_ms":0}
+{"ts":"2025-11-02T09:42:06.598Z","trace_id":"89e2c778-8475-4a25-8d95-b99c52dcfde2","agent":"micro_mood","level":"plus","score":0.999,"lang":"sv","len_chars":27,"latency_ms":0}
+{"ts":"2025-11-02T09:42:08.870Z","trace_id":"78af956a-32dc-4044-a7f9-ea5692af8c87","agent":"micro_mood","level":"plus","score":0.999,"lang":"sv","len_chars":27,"latency_ms":0}
+{"ts":"2025-11-02T09:42:33.093Z","trace_id":"f40db1c3-2216-49d9-96dc-ca06ba0c6dcd","agent":"micro_mood","level":"neutral","score":0.45,"lang":"sv","len_chars":35,"latency_ms":1}
+{"ts":"2025-11-02T09:42:35.582Z","trace_id":"fcd6c1b1-bf2b-4b07-a181-4fb6ae5010bd","agent":"micro_mood","level":"neutral","score":0.45,"lang":"sv","len_chars":35,"latency_ms":1}
+{"ts":"2025-11-02T09:45:10.418Z","trace_id":"15469794-5f45-4148-a4db-6161a0f651cc","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":10}
+{"ts":"2025-11-02T09:45:13.440Z","trace_id":"b4bc63ec-f521-4579-8417-db82f83e7695","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":1}
+{"ts":"2025-11-02T09:45:40.081Z","trace_id":"3a5eb03e-100a-4a8a-b33a-818ab0b3bfb1","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":0}
+{"ts":"2025-11-02T09:45:43.111Z","trace_id":"73ea5cda-91fc-48b1-b075-1391fdd67396","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":0}
+{"ts":"2025-11-02T09:45:57.104Z","trace_id":"afb907b0-237f-4f21-a91f-06577f6d651b","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":0}
+{"ts":"2025-11-02T09:45:59.689Z","trace_id":"4c5364d0-2680-45fe-8552-54821e83c858","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":0}
+{"ts":"2025-11-02T10:04:19.055Z","trace_id":"5a014a75-0970-43d8-bc39-452f0ecf0c65","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":13}
+{"ts":"2025-11-02T10:04:21.398Z","trace_id":"de3c5d90-9f27-46c0-9b72-09af78657c12","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":36,"latency_ms":1}
+{"ts":"2025-11-02T10:05:18.868Z","trace_id":"8d95ce3a-b24e-4bf0-955d-3d18001f55f1","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":44,"latency_ms":0}
+{"ts":"2025-11-02T10:05:20.968Z","trace_id":"a8d47772-9947-440b-ae6b-c8b35b66bab1","agent":"micro_mood","level":"light","score":0.64,"lang":"en","len_chars":44,"latency_ms":0}
