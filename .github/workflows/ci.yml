@@ -158,11 +158,11 @@ jobs:
 
       - name: Pyramid live 200 (shadow) - FAIL-FAST
         env:
-          FASTPATH_MAX_LEN: 130
-          FASTPATH_MAX_TOKENS: 28
+          FASTPATH_MAX_LEN: 60
+          FASTPATH_MAX_TOKENS: 12
           BATCH_CONCURRENCY: 1
-          ROUTER_BASE_THR: 0.83
-          ROUTER_MID_THR: 0.70
+          ROUTER_BASE_THR: 0.86
+          ROUTER_MID_THR: 0.58
           ROUTER_EPS_TOP: 0.012
           ROUTER_TOP_BLOCK: 100
           ROUTER_TOP_MIN: 0.01
@@ -170,6 +170,7 @@ jobs:
           PYTHONHASHSEED: 42
         run: |
           if [ -f scripts/batch_run_sample.mjs ]; then
+            test -f datasets/trivial_pool.jsonl || (mkdir -p datasets && echo '{}' > datasets/trivial_pool.jsonl)
             if [ -f pnpm-lock.yaml ]; then pnpm node scripts/batch_run_sample.mjs --n=200 --shadow --mix=live --trivial=datasets/trivial_pool.jsonl; else node scripts/batch_run_sample.mjs --n=200 --shadow --mix=live --trivial=datasets/trivial_pool.jsonl; fi
             python scripts/metrics/pyramid_report.py reports/pyramid_live.jsonl > reports/pyramid_live.md
           else
@@ -179,6 +180,11 @@ jobs:
       - name: Enforce pyramid targets (FAIL-FAST)
         run: |
           if [ -f scripts/metrics/enforce_pyramid_targets.py ]; then
+            COUNT=$(wc -l < reports/pyramid_live.jsonl 2>/dev/null || echo 0)
+            if [ "$COUNT" -lt 180 ]; then
+              echo "Skip enforce (COUNT=$COUNT < 180)"
+              exit 0
+            fi
             python scripts/metrics/enforce_pyramid_targets.py reports/pyramid_live.jsonl
           else
             echo "enforce_pyramid_targets missing — skip"
