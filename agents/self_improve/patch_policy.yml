@@ -1,0 +1,18 @@
+version: 1
+allow:
+  - agents/**
+  - sintari-relations/**
+  - tests/**
+  - scripts/**
+  - docs/**
+deny:
+  - "**/.ssh/**"
+  - "**/secrets/**"
+  - "**/node_modules/**"
+review:
+  required: true
+  owners:
+    - Jimmy
+    - SecurityTeam
+
+
