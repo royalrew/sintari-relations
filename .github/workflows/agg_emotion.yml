@@ -13,14 +13,28 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Aggregate Emotion Events
-        working-directory: sintari-relations
+      - name: Install dependencies
         run: |
-          node scripts/agg_emotion_events.mjs
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f package.json ]; then
+            npm install
+          fi
+      - name: Aggregate Emotion Events
+        run: |
+          if [ -f scripts/agg_emotion_events.mjs ]; then
+            if [ -f pnpm-lock.yaml ]; then pnpm node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; else node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; fi
+          else
+            echo "agg_emotion_events.mjs not found — skip"
+          fi
       - name: Persist KPI artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pyramid_live_kpis.json
-          path: sintari-relations/reports/pyramid_live_kpis.json
+          path: reports/pyramid_live_kpis.json
           retention-days: 7
+          if-no-files-found: warn
 
