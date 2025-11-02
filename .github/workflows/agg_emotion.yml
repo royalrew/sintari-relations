@@ -2,7 +2,7 @@ name: Agg Emotion
 
 on:
   schedule:
-    - cron: "0 * * * *"  # varje timme
+    - cron: "0 2 * * *"  # dagligen kl 02:00
   workflow_dispatch:
 
 jobs:
@@ -10,30 +10,53 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
+      
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      
+      - name: pnpm store path
+        id: pnpm-cache
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
+      
       - name: Install dependencies
         run: |
           if [ -f pnpm-lock.yaml ]; then
             pnpm install --frozen-lockfile
           elif [ -f package-lock.json ]; then
             npm ci
+          elif [ -f yarn.lock ]; then
+            corepack enable && yarn install --frozen-lockfile
           elif [ -f package.json ]; then
             npm install
+          else
+            echo "No JS project found — skipping"
           fi
+      
       - name: Aggregate Emotion Events
         run: |
           if [ -f scripts/agg_emotion_events.mjs ]; then
-            if [ -f pnpm-lock.yaml ]; then pnpm node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; else node scripts/agg_emotion_events.mjs || echo "No emotion events yet (OK)"; fi
+            node scripts/agg_emotion_events.mjs
           else
-            echo "agg_emotion_events.mjs not found — skip"
+            echo "No aggregator script — skip"
           fi
+      
       - name: Persist KPI artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: pyramid_live_kpis.json
+          name: pyramid_live_kpis
           path: reports/pyramid_live_kpis.json
           retention-days: 7
           if-no-files-found: warn
