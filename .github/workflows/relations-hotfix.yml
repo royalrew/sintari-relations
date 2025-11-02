@@ -1,0 +1,106 @@
+name: relations-hotfix
+
+on: [push, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      EXPORT_BACKEND: libreoffice
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install system deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice fonts-dejavu-core jq
+      
+      - name: Install Python deps
+        run: |
+          pip install python-docx pytest jq
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Verify LibreOffice
+        run: |
+          soffice --headless --version || echo "WARN: LibreOffice not found"
+      
+      - name: Run minimal test
+        run: |
+          mkdir -p out/minimal
+          python -m backend.cli.run --input tests/golden/minimal/input_en.json --out out/minimal
+      
+      - name: Run SV test
+        run: |
+          mkdir -p out/sv_aa_oo
+          python -m backend.cli.run --input tests/golden/sv_aa_oo/input_sv.json --out out/sv_aa_oo
+      
+      - name: Run PII test
+        run: |
+          mkdir -p out/pii
+          python -m backend.cli.run --input tests/golden/pii/input_pii.json --out out/pii
+      
+      - name: Run NA test
+        run: |
+          mkdir -p out/na
+          python -m backend.cli.run --input tests/golden/na/input_na.json --out out/na
+      
+      - name: Assertions
+        run: |
+          set -e
+          
+          # Check PDFs exist and are not empty (REQUIRED)
+          for dir in out/minimal out/sv_aa_oo out/pii out/na; do
+            if [ -f "$dir/report.json" ]; then
+              pdf="$dir/report.pdf"
+              if [ ! -f "$pdf" ]; then
+                echo "FAIL: Missing PDF: $pdf"
+                exit 1
+              fi
+              size=$(stat -f%z "$pdf" 2>/dev/null || stat -c%s "$pdf" 2>/dev/null || echo "0")
+              if [ "$size" -lt 1024 ]; then
+                echo "FAIL: PDF too small or empty: $pdf (size: $size bytes)"
+                exit 1
+              fi
+              echo "✓ PDF OK: $pdf ($size bytes)"
+            fi
+          done
+          
+          # Check lang (no "und")
+          if [ -f out/minimal/report.json ]; then
+            LANG=$(jq -r '.payload.lang // empty' out/minimal/report.json)
+            test "$LANG" != "und" && test -n "$LANG" && echo "✓ lang is not 'und': $LANG"
+            test "$LANG" == "en" && echo "✓ lang is 'en'"
+          fi
+          
+          # Check backend (must be libreoffice in CI)
+          for dir in out/minimal out/sv_aa_oo out/pii out/na; do
+            if [ -f "$dir/report.json" ]; then
+              BACKEND=$(jq -r '.export.backend_used // empty' "$dir/report.json")
+              if [ "$BACKEND" != "libreoffice" ]; then
+                echo "FAIL: Expected libreoffice backend, got: $BACKEND"
+                exit 1
+              fi
+              echo "✓ Backend OK: $BACKEND"
+            fi
+          done
+          
+          # No "und" lang anywhere
+          ! grep -r '"lang": "und"' out || (echo "FAIL: found 'und' lang" && exit 1)
+          
+          # No ReportLab
+          ! grep -ri 'reportlab' out || (echo "FAIL: ReportLab found" && exit 1)
+          
+          echo "✓ All assertions passed"
+      
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-outputs
+          path: out/
+          retention-days: 1

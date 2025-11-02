@@ -1,0 +1,66 @@
+name: Test Py-Bridge Micro-Mood
+
+on:
+  pull_request:
+    paths:
+      - 'agents/emotion/micro_mood.py'
+      - 'sintari-relations/backend/ai/py_bridge.ts'
+      - 'sintari-relations/scripts/test_py_bridge_micro_mood.mjs'
+  push:
+    branches: [main, develop]
+    paths:
+      - 'agents/emotion/micro_mood.py'
+      - 'sintari-relations/backend/ai/py_bridge.ts'
+      - 'sintari-relations/scripts/test_py_bridge_micro_mood.mjs'
+
+jobs:
+  test-py-bridge:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: sintari-relations/package.json
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      
+      - name: Install dependencies
+        working-directory: sintari-relations
+        run: |
+          npm ci
+      
+      - name: Install Python dependencies
+        run: |
+          # Install only if requirements.txt exists
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+      
+      - name: Run Py-Bridge Golden Test
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+          PYTHONIOENCODING: utf-8
+          LC_ALL: C.UTF-8
+          LANG: C.UTF-8
+        run: |
+          node scripts/test_py_bridge_micro_mood.mjs
+      
+      - name: Test error handling
+        run: |
+          echo '{"agent":"micro_mood","text":"","lang":"sv"}' | python3 agents/emotion/micro_mood.py
+          echo "Error handling test completed"
+      
+      - name: Test JSONL protocol
+        run: |
+          echo '{"agent":"micro_mood","text":"test","lang":"sv"}' | python3 agents/emotion/micro_mood.py | jq -e '.ok == true'
+

@@ -1,0 +1,26 @@
+name: Agg Emotion
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # varje timme
+  workflow_dispatch:
+
+jobs:
+  agg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Aggregate Emotion Events
+        working-directory: sintari-relations
+        run: |
+          node scripts/agg_emotion_events.mjs
+      - name: Persist KPI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pyramid_live_kpis.json
+          path: sintari-relations/reports/pyramid_live_kpis.json
+          retention-days: 7
+

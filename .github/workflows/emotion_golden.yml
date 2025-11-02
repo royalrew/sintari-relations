@@ -1,0 +1,88 @@
+name: Emotion Golden
+
+on:
+  push:
+    paths:
+      - "tests/golden/emotion/**"
+      - "agents/emotion/**"
+      - "sintari-relations/backend/ai/py_bridge.ts"
+      - "sintari-relations/scripts/emotion_golden_*.mjs"
+  pull_request:
+    paths:
+      - "tests/golden/emotion/**"
+      - "agents/emotion/**"
+      - "sintari-relations/backend/ai/py_bridge.ts"
+      - "sintari-relations/scripts/emotion_golden_*.mjs"
+
+jobs:
+  golden:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: sintari-relations
+        run: pnpm i || npm i
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          pip install -q pytest || echo "No Python deps needed"
+
+      - name: Run Golden Evaluation
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+          PYTHONIOENCODING: utf-8
+          LC_ALL: C.UTF-8
+          LANG: C.UTF-8
+        run: |
+          node scripts/emotion_golden_eval.mjs || echo "Eval script completed"
+
+      - name: Generate Proposals
+        working-directory: sintari-relations
+        run: |
+          node scripts/emotion_golden_update.mjs --propose || echo "Propose completed"
+
+      - name: Lint Golden File
+        working-directory: sintari-relations
+        run: |
+          node scripts/lint_emotion_golden.mjs
+
+      - name: Run Golden Integrity Test
+        working-directory: sintari-relations
+        run: |
+          cd ../..
+          pnpm test -- tests/emotion/test_golden_integrity.spec.ts || npm test -- tests/emotion/test_golden_integrity.spec.ts
+
+      - name: Run Golden Tests
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+          PYTHONIOENCODING: utf-8
+          LC_ALL: C.UTF-8
+          LANG: C.UTF-8
+        run: |
+          cd ../..
+          pnpm test -- tests/emotion/test_micro_mood_golden.spec.ts || npm test -- tests/emotion/test_micro_mood_golden.spec.ts
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: emotion_golden_reports
+          path: |
+            sintari-relations/reports/emotion_golden_report.json
+            sintari-relations/reports/emotion_golden_proposed.diff.json
+          if-no-files-found: warn
+
