@@ -1,0 +1,11 @@
+{
+  "WX_RED": 2.6,
+  "WX_TENSION": 1.25,
+  "WX_POS": 0.85,
+  "WX_EVID": 0.18,
+  "WX_ANCHOR_NEUTRAL": -0.25,
+  "BIAS": 0.02,
+  "Z_LIGHT": 0.45,
+  "Z_PLUS": 0.75,
+  "Z_RED": 1.06
+}

@@ -1,389 +1,431 @@
 {
-  "total": 240,
-  "accuracy": 0.4792,
+  "total": 133,
+  "accuracy": 0.5789,
   "confusion_matrix": {
     "neutral": {
-      "neutral": 25,
-      "light": 0,
+      "neutral": 55,
+      "light": 7,
       "plus": 0,
       "red": 0
     },
     "light": {
-      "neutral": 99,
-      "light": 49,
-      "plus": 1,
+      "neutral": 1,
+      "light": 0,
+      "plus": 0,
       "red": 0
     },
     "plus": {
-      "neutral": 17,
-      "light": 4,
-      "plus": 20,
+      "neutral": 38,
+      "light": 9,
+      "plus": 7,
       "red": 0
     },
     "red": {
-      "neutral": 3,
+      "neutral": 0,
       "light": 1,
       "plus": 0,
-      "red": 21
+      "red": 15
     }
   },
   "misses": [
     {
-      "id": "E001",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Vi pratar mest om vardagssaker och det flyter på."
-    },
-    {
-      "id": "E002",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Vi har det bra, men ibland känns vardagen lite tung."
-    },
-    {
-      "id": "E006",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Små irritationer dyker upp om städning då och då."
-    },
-    {
-      "id": "E010",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Jag blir lite stressad av våra olika rutiner."
-    },
-    {
-      "id": "E014",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Vi glider isär lite i vardagen, inget stort men märkbart."
-    },
-    {
-      "id": "E015",
-      "expected": "plus",
-      "detected": "light",
-      "lang": "sv",
-      "text": "Jag känner hopp och värme när vi pratar öppet 🙂"
-    },
-    {
-      "id": "E018",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Lite frustration över att jag inte blir lyssnad på ibland."
-    },
-    {
-      "id": "E019",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Vi löste en konflikt på ett moget sätt och kramades efteråt."
-    },
-    {
-      "id": "E022",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Det skaver lite kring ansvarsfördelningen hemma."
-    },
-    {
-      "id": "E023",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Jag känner mig älskad och accepterad för den jag är."
-    },
-    {
-      "id": "E026",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Vi har börjat missa varandras signaler."
-    },
-    {
-      "id": "E030",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Saknar närhet; inte katastrof, men det märks."
-    },
-    {
-      "id": "E031",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Jag känner mig respekterad även när vi tycker olika."
-    },
-    {
-      "id": "E034",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Det är lite stelt efter jobbet, svårt att landa."
-    },
-    {
-      "id": "E038",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Lite oro kring ekonomin påverkar humöret."
-    },
-    {
-      "id": "E042",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Små kommentarer svider mer än de borde."
-    },
-    {
-      "id": "E043",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Känner stark samhörighet när vi planerar framtiden ihop."
-    },
-    {
-      "id": "E047",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Jag vågar vara sårbar och får ett mjukt svar tillbaka."
-    },
-    {
-      "id": "E048",
-      "expected": "red",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Han säger att det aldrig hänt, trots att jag vet att det gjorde det."
-    },
-    {
-      "id": "E056",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "Small tensions about how we spend evenings."
-    },
-    {
-      "id": "E057",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We solved a conflict well and hugged afterward."
-    },
-    {
-      "id": "E060",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I feel somewhat overlooked lately, nothing dramatic."
-    },
-    {
-      "id": "E062",
-      "expected": "red",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I'm scared of how angry she gets if I disagree."
-    },
-    {
-      "id": "E064",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We drift a bit; we don't check in like before."
-    },
-    {
-      "id": "E065",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I'm proud of us for communicating with kindness."
-    },
-    {
-      "id": "E069",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We feel closer after setting fair boundaries."
-    },
-    {
-      "id": "E072",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "Tension rises when we discuss money, but we're trying."
-    },
-    {
-      "id": "E073",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I feel encouraged and supported to grow."
-    },
-    {
-      "id": "E076",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We've grown a bit distant; I miss our jokes."
-    },
-    {
-      "id": "E080",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I feel slightly on edge around bedtime routines."
-    },
-    {
-      "id": "E081",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I feel loved and accepted for who I am."
-    },
-    {
-      "id": "E082",
-      "expected": "red",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "He blames me for everything; I'm exhausted."
-    },
-    {
-      "id": "E084",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We're a bit short with each other lately (not a big deal)."
-    },
-    {
-      "id": "E085",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "I can be vulnerable and get a gentle response back."
-    },
-    {
-      "id": "E088",
-      "expected": "light",
-      "detected": "plus",
-      "lang": "en",
-      "text": "I miss feeling close; lately we just coexist."
-    },
-    {
-      "id": "E089",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We share small joys and check in kindly 🙂"
-    },
-    {
-      "id": "E090",
+      "id": "case_8",
       "expected": "red",
       "detected": "light",
       "lang": "en",
-      "text": "I feel isolated and anxious after our talks."
+      "text": "I feel trapped, like there's no safe way out."
     },
     {
-      "id": "E092",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "There's mild tension around chores and bedtime."
-    },
-    {
-      "id": "E093",
-      "expected": "plus",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We feel aligned and generous with each other ❤️"
-    },
-    {
-      "id": "L_SV_003",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Små irritationer om tiderna, inget stort."
-    },
-    {
-      "id": "L_SV_004",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "sv",
-      "text": "Vi missförstår varandra ibland men reder ut det."
-    },
-    {
-      "id": "L_EN_002",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "Some mild frustration when plans change last minute."
-    },
-    {
-      "id": "L_EN_003",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "Occasional annoyance about schedules, nothing major."
-    },
-    {
-      "id": "L_EN_004",
-      "expected": "light",
-      "detected": "neutral",
-      "lang": "en",
-      "text": "We raise our voices sometimes but calm down quickly."
-    },
-    {
-      "id": "P_SV_001",
+      "id": "case_11",
       "expected": "plus",
       "detected": "light",
       "lang": "sv",
-      "text": "Jag känner mig sedd och bemött med respekt."
+      "text": "Jag är trött men hoppfull; ett litet steg i taget räcker idag."
     },
     {
-      "id": "P_SV_002",
+      "id": "case_12",
       "expected": "plus",
-      "detected": "neutral",
+      "detected": "light",
       "lang": "sv",
-      "text": "Vi löser konflikter mjukt och lyssnar in varandra."
+      "text": "Jag vågade be om hjälp—känns faktiskt lite lättare nu."
     },
     {
-      "id": "P_EN_002",
+      "id": "case_15",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Jag känner tacksamhet; det finns små saker som fungerar ändå."
+    },
+    {
+      "id": "case_17",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "en",
+      "text": "I asked for support and felt heard; that helps."
+    },
+    {
+      "id": "case_19",
       "expected": "plus",
       "detected": "neutral",
       "lang": "en",
-      "text": "We resolve disagreements gently and check in with each other."
+      "text": "A short walk cleared my head a bit."
     },
     {
-      "id": "L_SV_006",
+      "id": "case_20",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "en",
+      "text": "Grateful for small steps; it's not perfect, but it's progress."
+    },
+    {
+      "id": "R_PLUS_sv_vagade_be_om_hjalp",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Jag vågade be om hjälp — känns faktiskt lite lättare nu."
+    },
+    {
+      "id": "R_PLUS_en_asked_for_support",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "en",
+      "text": "I asked for support and felt heard; that helps."
+    },
+    {
+      "id": "R_PLUS_en_short_walk_cleared",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "A short walk cleared my head a bit."
+    },
+    {
+      "id": "R_LIGHT_sv_orolig_men_plan",
       "expected": "light",
       "detected": "neutral",
       "lang": "sv",
-      "text": "Vi pratar mindre just nu men allt känns ändå okej."
+      "text": "Jag är orolig men vi tar en paus och pratar imorgon i lugn takt."
     },
     {
-      "id": "L_SV_007",
-      "expected": "light",
+      "id": "E001-sv",
+      "expected": "plus",
       "detected": "neutral",
       "lang": "sv",
-      "text": "Små brister i kommunikationen, men inget allvarligt."
+      "text": "Jag är orolig att hon inte svarar längre, kanske är hon trött på mig."
     },
     {
-      "id": "L_SV_008",
-      "expected": "light",
+      "id": "E002-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm worried she's pulling away; I might have pushed too hard."
+    },
+    {
+      "id": "E007-sv",
+      "expected": "plus",
       "detected": "neutral",
       "lang": "sv",
-      "text": "Vi missar varandras signaler ibland i vardagen."
+      "text": "Jag skämtade bort det men innerst inne är jag nervös inför vårt nästa samtal."
+    },
+    {
+      "id": "E008-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I laughed it off, but deep down I'm nervous about our next talk."
+    },
+    {
+      "id": "E011-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag är inte arg, bara spänd – försöker hålla tonen lugn."
+    },
+    {
+      "id": "E012-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm not mad, just tense—trying to keep my tone calm."
+    },
+    {
+      "id": "E015-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag överanalyserar nog allt hon skriver, blir orolig av minsta punkt."
+    },
+    {
+      "id": "E016-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I probably overanalyze every message—even a period worries me."
+    },
+    {
+      "id": "E019-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag skämtar ibland när jag egentligen vill säga att jag känner mig sårbar."
+    },
+    {
+      "id": "E020-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I joke when I actually want to say I feel vulnerable."
+    },
+    {
+      "id": "E021-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag oroar mig för att vi pratar mindre nu, undrar om jag gjorde något fel."
+    },
+    {
+      "id": "E022-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm concerned we're talking less—did I do something wrong?"
+    },
+    {
+      "id": "E025-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Ja, förlåt att jag känner mig osäker… mycket konstruktivt."
+    },
+    {
+      "id": "E026-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "Yeah, sorry for feeling uncertain… very helpful."
+    },
+    {
+      "id": "E029-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag är rädd att hon tycker att jag är för känslig."
+    },
+    {
+      "id": "E030-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm afraid she thinks I'm too sensitive."
+    },
+    {
+      "id": "E035-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag känner mig stressad över vårt förhållande, vet inte vad jag ska göra."
+    },
+    {
+      "id": "E036-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel stressed about our relationship—not sure what to do."
+    },
+    {
+      "id": "E041-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag undrar om hon fortfarande känner samma sak för mig."
+    },
+    {
+      "id": "E042-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I wonder if she still feels the same about me."
+    },
+    {
+      "id": "E047-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag är nervös över vad hon kommer säga när vi ses."
+    },
+    {
+      "id": "E048-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm nervous about what she'll say when we meet."
+    },
+    {
+      "id": "E053-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag oroar mig att jag säger fel saker och gör saker värre."
+    },
+    {
+      "id": "E054-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I worry I'll say the wrong thing and make things worse."
+    },
+    {
+      "id": "E059-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag känner mig obekväm med hur tyst det har blivit mellan oss."
+    },
+    {
+      "id": "E060-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel uneasy about how quiet it's become between us."
+    },
+    {
+      "id": "E063-sv",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Vi skämtade om hur dåliga vi är på att fatta beslut tillsammans."
+    },
+    {
+      "id": "E064-en",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "en",
+      "text": "We joked about how bad we are at making decisions together."
+    },
+    {
+      "id": "E065-sv",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Jag är bekymrad över att vi inte hittar lösningar tillsammans."
+    },
+    {
+      "id": "E066-en",
+      "expected": "plus",
+      "detected": "light",
+      "lang": "en",
+      "text": "I'm concerned we're not finding solutions together."
+    },
+    {
+      "id": "E071-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag känner mig ångestfylld över var vårt förhållande är på väg."
+    },
+    {
+      "id": "E072-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I feel anxious about where our relationship is heading."
+    },
+    {
+      "id": "E073-sv",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Genialt att ta upp alla problem på en gång, det blir ju bara bättre."
+    },
+    {
+      "id": "E075-sv",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Vi har så roliga minnen från när vi gjorde något dumt tillsammans."
+    },
+    {
+      "id": "E076-en",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "en",
+      "text": "We have such funny memories from when we did something silly together."
+    },
+    {
+      "id": "E077-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag oroar mig att jag är för känslomässig i mina svar."
+    },
+    {
+      "id": "E078-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I worry I'm too emotional in my responses."
+    },
+    {
+      "id": "E083-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag är rädd att jag har gjort henne besviken med mina handlingar."
+    },
+    {
+      "id": "E084-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm afraid I've disappointed her with my actions."
+    },
+    {
+      "id": "E087-sv",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "sv",
+      "text": "Hon gjorde ett roligt skämt om situationen och vi skrattade tillsammans."
+    },
+    {
+      "id": "E088-en",
+      "expected": "neutral",
+      "detected": "light",
+      "lang": "en",
+      "text": "She made a funny joke about the situation and we laughed together."
+    },
+    {
+      "id": "E089-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag känner mig osäker på om jag gör rätt när jag kommunicerar med henne."
+    },
+    {
+      "id": "E090-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm uncertain if I'm doing right when communicating with her."
+    },
+    {
+      "id": "E095-sv",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "sv",
+      "text": "Jag är bekymrad över att jag inte kan uttrycka mina känslor ordentligt."
+    },
+    {
+      "id": "E096-en",
+      "expected": "plus",
+      "detected": "neutral",
+      "lang": "en",
+      "text": "I'm worried I can't express my feelings properly."
     }
   ],
-  "sv_en_gap": 0.0123,
+  "sv_en_gap": 0.0293,
   "red_fp_rate": 0,
-  "sv_count": 120,
-  "en_count": 120,
-  "red_predictions": 21,
+  "sv_count": 67,
+  "en_count": 66,
+  "red_predictions": 15,
   "red_false_positives": 0,
-  "generated_utc": "2025-11-02T09:03:56.221Z"
+  "generated_utc": "2025-11-06T17:53:23.856Z"
 }

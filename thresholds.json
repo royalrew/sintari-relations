@@ -1,0 +1,12 @@
+{
+  "sv": {
+    "plus_min": 0.46,
+    "light_min": 0.39,
+    "red_min": 1.06
+  },
+  "en": {
+    "plus_min": 0.48,
+    "light_min": 0.41,
+    "red_min": 1.06
+  }
+}
