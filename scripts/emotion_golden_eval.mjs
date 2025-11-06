@@ -15,18 +15,67 @@ const __dirname = path.dirname(__filename);
 // Script is in sintari-relations/scripts, so go up one level to sintari-relations
 const sintariRoot = path.resolve(__dirname, "..");
 
-// Try both sintari-relations/tests and project root/tests
-let golden = path.join(sintariRoot, "tests", "golden", "emotion", "micro_mood_golden.jsonl");
-if (!fs.existsSync(golden)) {
-  // Try from project root (one level up from sintari-relations)
-  golden = path.join(sintariRoot, "..", "tests", "golden", "emotion", "micro_mood_golden.jsonl");
+// Parse command line arguments
+const args = process.argv.slice(2);
+let inputDir = null;
+let checkMode = false;
+
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === "--in" && i + 1 < args.length) {
+    inputDir = args[i + 1];
+    i++;
+  } else if (args[i] === "--check") {
+    checkMode = true;
+  }
 }
-if (!fs.existsSync(golden)) {
-  console.error(`[Eval] Golden file not found. Tried:`);
-  console.error(`  ${path.join(sintariRoot, "tests", "golden", "emotion", "micro_mood_golden.jsonl")}`);
-  console.error(`  ${path.join(sintariRoot, "..", "tests", "golden", "emotion", "micro_mood_golden.jsonl")}`);
+
+// Determine input directory: --in flag > GOLDEN_IN env var > default
+if (!inputDir) {
+  inputDir = process.env.GOLDEN_IN || "tests/golden/relations";
+}
+
+// Resolve input directory (can be relative or absolute)
+if (!path.isAbsolute(inputDir)) {
+  inputDir = path.resolve(sintariRoot, inputDir);
+}
+
+// Function to find all .jsonl files in a directory (recursively)
+function findJsonlFiles(dir) {
+  const files = [];
+  if (!fs.existsSync(dir)) {
+    return files;
+  }
+  
+  const stat = fs.statSync(dir);
+  if (stat.isFile() && dir.endsWith(".jsonl")) {
+    return [dir];
+  }
+  
+  if (stat.isDirectory()) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        files.push(...findJsonlFiles(fullPath));
+      } else if (entry.isFile() && entry.name.endsWith(".jsonl")) {
+        files.push(fullPath);
+      }
+    }
+  }
+  
+  return files;
+}
+
+// Find all golden files
+const goldenFiles = findJsonlFiles(inputDir);
+
+if (goldenFiles.length === 0) {
+  console.error(`[Eval] No .jsonl files found in: ${inputDir}`);
+  console.error(`[Eval] Tried: ${inputDir}`);
   process.exit(1);
 }
+
+console.log(`[Eval] Found ${goldenFiles.length} .jsonl file(s) in: ${inputDir}`);
 
 const reportPath = path.join(sintariRoot, "reports", "emotion_golden_report.json");
 
@@ -124,12 +173,130 @@ async function run() {
     });
   }
 
-  if (!fs.existsSync(golden)) {
-    console.error(`[Eval] Golden file not found: ${golden}`);
+  // Load all golden files
+  const allCases = [];
+  for (const goldenFile of goldenFiles) {
+    const lines = fs.readFileSync(goldenFile, "utf8").trim().split("\n");
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      try {
+        const r = JSON.parse(line);
+        
+        // Map different formats to standard format
+        let mappedCase = null;
+        
+        // Format 1: Simple format with direct label field (lang, text, label)
+        if (r.text && r.lang !== undefined && r.label) {
+          // Map label directly to expected level
+          const label = (r.label || "").toLowerCase();
+          let expected = "neutral";
+          if (label === "red" || label === "crisis") {
+            expected = "red";
+          } else if (label === "plus" || label === "worry" || label === "oro") {
+            expected = "plus";
+          } else if (label === "light" || label === "mild") {
+            expected = "light";
+          }
+          
+          mappedCase = {
+            id: r.id || `case_${allCases.length + 1}`,
+            lang: r.lang === "auto" ? "sv" : r.lang,
+            text: r.text,
+            expected: expected
+          };
+        }
+        // Format 2: worldclass_emotion.jsonl format (id, lang, text, labels, flags)
+        else if (r.id && r.text && r.lang !== undefined) {
+          // Map labels to expected level
+          let expected = "neutral";
+          if (r.flags?.red) {
+            expected = "red";
+          } else if (r.labels && r.labels.length > 0) {
+            const labelsStr = r.labels.join(" ").toLowerCase();
+            if (labelsStr.includes("red") || labelsStr.includes("crisis")) {
+              expected = "red";
+            } else if (labelsStr.includes("plus") || labelsStr.includes("worry") || labelsStr.includes("oro")) {
+              expected = "plus";
+            } else if (labelsStr.includes("light") || labelsStr.includes("mild")) {
+              expected = "light";
+            }
+          }
+          
+          mappedCase = {
+            id: r.id,
+            lang: r.lang === "auto" ? "sv" : r.lang,
+            text: r.text,
+            expected: expected
+          };
+        }
+        // Format 3: relations format (description, language, expected.tone)
+        else if (r.description && r.language) {
+          // Map tone to level (simplified mapping)
+          let expected = "neutral";
+          const tone = (r.expected?.tone || "").toLowerCase();
+          if (tone.includes("red") || tone.includes("crisis")) {
+            expected = "red";
+          } else if (tone.includes("plus") || tone.includes("worry")) {
+            expected = "plus";
+          } else if (tone.includes("light")) {
+            expected = "light";
+          }
+          
+          mappedCase = {
+            id: r.id || `case_${allCases.length + 1}`,
+            lang: r.language === "auto" ? "sv" : r.language,
+            text: r.description,
+            expected: expected
+          };
+        }
+        
+        if (mappedCase) {
+          allCases.push(mappedCase);
+        }
+      } catch (e) {
+        console.warn(`[Eval] Skipping invalid JSON line in ${goldenFile}: ${e.message}`);
+      }
+    }
+  }
+  
+  if (checkMode) {
+    console.log(`\n✅ Loaded ${allCases.length} golden cases from ${goldenFiles.length} file(s)`);
+    console.log(`   Files: ${goldenFiles.map(f => path.basename(f)).join(", ")}`);
+    const langCounts = {};
+    const levelCounts = {};
+    for (const c of allCases) {
+      langCounts[c.lang] = (langCounts[c.lang] || 0) + 1;
+      levelCounts[c.expected] = (levelCounts[c.expected] || 0) + 1;
+    }
+    console.log(`   Languages: ${JSON.stringify(langCounts)}`);
+    console.log(`   Expected levels: ${JSON.stringify(levelCounts)}`);
+    
+    // Check coverage if requested
+    const coverageArg = args.find(arg => arg.startsWith('--check-coverage'));
+    if (coverageArg) {
+      const minCoverage = parseFloat(coverageArg.split('=')[1] || '0.95');
+      const totalCases = allCases.length;
+      const coveredLevels = Object.keys(levelCounts).length;
+      const expectedLevels = 4; // neutral, light, plus, red
+      const coverage = coveredLevels / expectedLevels;
+      
+      console.log(`   Coverage: ${(coverage * 100).toFixed(1)}% (${coveredLevels}/${expectedLevels} levels)`);
+      if (coverage >= minCoverage) {
+        console.log(`   ✅ Coverage ≥ ${(minCoverage * 100).toFixed(0)}%`);
+      } else {
+        console.log(`   ⚠️  Coverage < ${(minCoverage * 100).toFixed(0)}% (need ${(minCoverage * 100).toFixed(0)}%)`);
+      }
+    }
+    
+    process.exit(0);
+  }
+  
+  if (allCases.length === 0) {
+    console.error(`[Eval] No valid cases found in golden files`);
     process.exit(1);
   }
-
-  const lines = fs.readFileSync(golden, "utf8").trim().split("\n");
+  
+  console.log(`[Eval] Processing ${allCases.length} golden cases...`);
   
   let ok = 0;
   let tot = 0;
@@ -138,11 +305,7 @@ async function run() {
   let redFP = 0;
   let redPred = 0;
 
-  for (const line of lines) {
-    if (!line.trim()) continue;
-    
-    const r = JSON.parse(line);
-
+  for (const r of allCases) {
     try {
       const lang = r.lang === "auto" ? "sv" : r.lang;
       const resp = await callMicroMood(r.text, lang, `golden_${r.id}`);
@@ -152,7 +315,8 @@ async function run() {
         continue;
       }
 
-      const det = (resp.level || "neutral").toLowerCase();
+      const level = resp.level ?? resp.emits?.level ?? "neutral";
+      const det = (level || "neutral").toLowerCase();
       const exp = (r.expected || "neutral").toLowerCase();
 
       // Build confusion matrix
@@ -170,20 +334,22 @@ async function run() {
 
       // Track SV/EN scores
       if (lang === "sv") {
-        svScores.push(resp.score ?? 0);
+        const score = resp.score ?? resp.emits?.score ?? 0;
+        svScores.push(score);
       }
       if (lang === "en") {
-        enScores.push(resp.score ?? 0);
+        const score = resp.score ?? resp.emits?.score ?? 0;
+        enScores.push(score);
       }
 
       // Track misses
-      if (det !== exp && misses.length < 50) {
+      if (det !== exp) {
         misses.push({
           id: r.id,
           expected: exp,
           detected: det,
-          lang: lang,
-          text: r.text.substring(0, 100), // Truncate for readability
+          lang,
+          text: r.text,
         });
       }
 

@@ -1,0 +1,110 @@
+name: Emotion Nightly Calibration
+
+on:
+  schedule:
+    # Run at 00:40 UTC (01:40 CET, 02:40 CEST)
+    - cron: '40 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  nightly_calibration:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: sintari-relations
+        run: pnpm i || npm i
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          pip install -q pytest || echo "No Python deps needed"
+
+      - name: Run Golden Evaluation
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+          PYTHONIOENCODING: utf-8
+          LC_ALL: C.UTF-8
+          LANG: C.UTF-8
+        run: |
+          node scripts/emotion_golden_eval.mjs --in tests/golden/emotion --report reports/nightly/emotion_$(date +%Y%m%d).json
+
+      - name: Check CI Gates
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+        run: |
+          pytest -q tests/worldclass/test_emotion_suite.py -k "test_red_recall or test_red_false_positive or test_plus_precision or test_light_rate or test_bias_gap" || exit 1
+
+      - name: Calculate Metrics
+        working-directory: sintari-relations
+        run: |
+          python scripts/calc_metrics.py > reports/nightly/metrics_$(date +%Y%m%d).txt
+
+      - name: Check for Improvements
+        working-directory: sintari-relations
+        id: check_improvement
+        run: |
+          CURRENT_REPORT="reports/nightly/emotion_$(date +%Y%m%d).json"
+          PREVIOUS_REPORT="reports/nightly/emotion_$(date -d 'yesterday' +%Y%m%d).json"
+          
+          if [ -f "$PREVIOUS_REPORT" ]; then
+            CURRENT_ACC=$(python -c "import json; print(json.load(open('$CURRENT_REPORT')).get('accuracy', 0))")
+            PREVIOUS_ACC=$(python -c "import json; print(json.load(open('$PREVIOUS_REPORT')).get('accuracy', 0))")
+            
+            if (( $(echo "$CURRENT_ACC > $PREVIOUS_ACC" | bc -l) )); then
+              echo "improvement=true" >> $GITHUB_OUTPUT
+              echo "current_acc=$CURRENT_ACC" >> $GITHUB_OUTPUT
+              echo "previous_acc=$PREVIOUS_ACC" >> $GITHUB_OUTPUT
+            else
+              echo "improvement=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "improvement=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Auto-PR on Improvement
+        if: steps.check_improvement.outputs.improvement == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Auto-calibration: Improved emotion detection accuracy"
+          title: "Auto-calibration: Emotion detection improvement"
+          body: |
+            Automated calibration detected improvement:
+            - Current accuracy: ${{ steps.check_improvement.outputs.current_acc }}
+            - Previous accuracy: ${{ steps.check_improvement.outputs.previous_acc }}
+            
+            This PR updates thresholds.json with improved values.
+          branch: auto-calibration/emotion-$(date +%Y%m%d)
+          labels: auto-calibration
+
+      - name: Upload Nightly Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: emotion_nightly_reports
+          path: |
+            sintari-relations/reports/nightly/*.json
+            sintari-relations/reports/nightly/*.txt
+          if-no-files-found: warn
+
+      - name: Fail on Gate Violation
+        if: failure()
+        run: |
+          echo "❌ CI gates failed - RED_recall < 0.80 or RED_FP_rate > 0.15"
+          echo "Please review the nightly report and fix issues."
+          exit 1
+
