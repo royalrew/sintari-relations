@@ -1,0 +1,37 @@
+{
+  "openings": [
+    "Hej och välkommen in i värmen.",
+    "Hej, fint att du är här.",
+    "Varmt välkommen in. Ta din tid.",
+    "Hej! Skönt att du hittade hit.",
+    "Hej, jag är här med dig.",
+    "Hej {namn}, välkommen tillbaka.",
+    "God {tod}, kom in i värmen.",
+    "Hej, vi tar det lugnt och tryggt här."
+  ],
+  "interjections": [
+    "Hmm… jag tänker att",
+    "Okej… jag hör dig, och jag funderar på",
+    "Mmm… det låter som att",
+    "Jag vill bara känna in:"
+  ],
+  "soft_questions": [
+    "Hur känns det just nu, på riktigt?",
+    "Vad skulle vara skönt att börja med?",
+    "Vill du berätta lite om vad som hänt?",
+    "Vad hoppas du få ut av samtalet idag?"
+  ],
+  "farewells": [
+    "Tack för denna gången. Jag finns alltid här för dig.",
+    "Tack för att du delade. Du är alltid välkommen tillbaka.",
+    "Vi rundar av här. Ta hand om dig – jag finns kvar när du vill.",
+    "Tack. När du vill fortsätta, skriv bara ‘hej’ igen."
+  ],
+  "hr": {
+    "opening": "Hej och välkommen. Jag är här för att stötta er på jobbet – tryggt och respektfullt.",
+    "farewell": "Tack för idag. Jag finns här för er och kan hjälpa med nästa steg när ni vill."
+  },
+  "red_override": {
+    "farewell": "Tack för att du berättar. Det här låter allvarligt. Om du är i akut fara – ring 112. Jag kan även lista stödresurser om du vill."
+  }
+}

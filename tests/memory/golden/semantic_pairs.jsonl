@@ -1,0 +1,4 @@
+{"id":"S001","query":"Vi behöver prata om våra känslor","thread_id":"test_semantic","facets":["feelings"],"expected_ids":["test_semantic_turn_1"],"negatives":[]}
+{"id":"S002","query":"Hur mår du idag?","thread_id":"test_semantic","facets":["feelings"],"expected_ids":["test_semantic_turn_2"],"negatives":[]}
+{"id":"S003","query":"Kan vi ta en paus från diskussionen?","thread_id":"test_semantic","facets":["planning","pause"],"expected_ids":["test_semantic_turn_3"],"negatives":[]}
+

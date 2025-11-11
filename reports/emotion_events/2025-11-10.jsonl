@@ -1,0 +1,2 @@
+{"ts":"2025-11-10T14:28:25.728Z","trace_id":"test","agent":"micro_mood","level":"light","score":0.45,"lang":"sv","len_chars":13,"latency_ms":47}
+{"ts":"2025-11-10T14:31:36.767Z","trace_id":"test","agent":"micro_mood","level":"light","score":0.45,"lang":"sv","len_chars":4,"latency_ms":1}

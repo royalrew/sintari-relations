@@ -1,0 +1,13 @@
+{
+  "style": "warm",
+  "max_len": 160,
+  "levels": ["brief", "standard", "deep"],
+  "no_advice": true,
+  "sv_en_parity": true,
+  "evidence_links": true,
+  "tone_terms": {
+    "empathy": ["empati", "känslighet", "närvaro"],
+    "warmth": ["värme", "mjukt", "omtanke"],
+    "clarity": ["klarhet", "tydlighet", "fokus"]
+  }
+}

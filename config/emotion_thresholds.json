@@ -1,0 +1,33 @@
+{
+  "version": "2025-11-03",
+  "lang": ["sv", "en"],
+  "base": {
+    "concern": 0.62,
+    "warmth": 0.58,
+    "humor": 0.55,
+    "irony": 0.60,
+    "anxious": 0.57,
+    "calm": 0.59
+  },
+  "persona_offsets": {
+    "warmth": {
+      "scale": 0.10,
+      "bias": 0.02
+    },
+    "directness": {
+      "scale": -0.06,
+      "bias": -0.01
+    },
+    "humor": {
+      "scale": 0.08,
+      "bias": 0.00
+    }
+  },
+  "guards": {
+    "min": 0.45,
+    "max": 0.90,
+    "clamp": true,
+    "short_text_floor": 0.05
+  }
+}
+

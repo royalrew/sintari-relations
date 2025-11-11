@@ -1,0 +1,7 @@
+{
+  "hr.rumour.check": "Det här rör arbetsklimat. När det händer, vad gör du oftast:\n1) blir tyst\n2) byter ämne\n3) markerar kort?\n(Svara 1/2/3)\n<!-- reply_meta:{\"type\":\"hr_rumour\"} -->",
+  "hr.boundary.ask": "Vill du ha en mild eller tydlig markering?\n1) mild\n2) tydlig\n(Svara 1/2)\n<!-- reply_meta:{\"type\":\"hr_boundary\"} -->",
+  "hr.feedback.ask": "Vill du be om tid för ett lugnt samtal eller ge en kort markör i stunden?\n1) be om tid\n2) kort markör\n(Svara 1/2)\n<!-- reply_meta:{\"type\":\"hr_feedback\"} -->",
+  "hr.stress.selfcare": "Vi börjar med din del. Vad hjälper mest idag:\n1) kort återhämtning (5–10 min)\n2) en sak du kan säga nej till\n(Svara 1/2)\n<!-- reply_meta:{\"type\":\"hr_stress\"} -->"
+}
+

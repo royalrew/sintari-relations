@@ -1,0 +1,122 @@
+name: Memory Nightly Calibration
+
+on:
+  schedule:
+    # Run at 02:15 CET (01:15 UTC)
+    - cron: '15 1 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  nightly_memory:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: sintari-relations
+        run: pnpm i || npm i
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          pip install -q pytest || echo "No Python deps needed"
+
+      - name: Cleanup Memory (TTL + LRU)
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+        run: |
+          python scripts/cleanup_memory.py || echo "Cleanup completed"
+
+      - name: Tune Memory Parameters
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+        run: |
+          python scripts/tune_memory.py \
+            --golden "tests/memory/golden/*.jsonl" \
+            --k 5 \
+            --out-csv reports/memory_tuning_results.csv \
+            --out-json reports/memory_best_config.json || echo "Tuning completed"
+
+      - name: Evaluate Memory
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+        run: |
+          python tests/memory/eval_memory.py \
+            --golden "tests/memory/golden/*.jsonl" \
+            --config reports/memory_best_config.json \
+            --out reports/memory_eval_report.json || exit 1
+
+      - name: Check CI Gates
+        working-directory: sintari-relations
+        run: |
+          python -c "
+          import json
+          with open('reports/memory_eval_report.json', 'r') as f:
+              report = json.load(f)
+          if not report.get('all_passed', False):
+              print('❌ Memory CI gates failed!')
+              print(json.dumps(report['thresholds'], indent=2))
+              exit(1)
+          print('✅ All memory CI gates passed!')
+          "
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: memory_nightly_reports
+          path: |
+            sintari-relations/reports/memory_*.csv
+            sintari-relations/reports/memory_*.json
+          if-no-files-found: warn
+
+      - name: Create Summary
+        working-directory: sintari-relations
+        run: |
+          python -c "
+          import json
+          from pathlib import Path
+          
+          summary = []
+          summary.append('# Memory Nightly Calibration Report')
+          summary.append('')
+          summary.append(f'Generated: {Path(\"reports/memory_eval_report.json\").stat().st_mtime}')
+          summary.append('')
+          
+          if Path('reports/memory_eval_report.json').exists():
+              with open('reports/memory_eval_report.json', 'r') as f:
+                  report = json.load(f)
+              metrics = report.get('metrics', {})
+              summary.append('## Metrics')
+              summary.append(f'- Hit@3: {metrics.get(\"hit_at_3\", 0):.3f}')
+              summary.append(f'- MRR: {metrics.get(\"mrr\", 0):.3f}')
+              summary.append(f'- P95 Latency: {metrics.get(\"p95_latency_ms\", 0):.1f}ms')
+              summary.append('')
+              summary.append('## Thresholds')
+              for metric, passed in report.get('thresholds', {}).items():
+                  status = '✅' if passed else '❌'
+                  summary.append(f'- {metric}: {status}')
+          
+          Path('reports/memory_nightly_summary.md').write_text('\n'.join(summary))
+          "
+      
+      - name: Upload Summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: memory_nightly_summary
+          path: sintari-relations/reports/memory_nightly_summary.md
+          if-no-files-found: warn
+

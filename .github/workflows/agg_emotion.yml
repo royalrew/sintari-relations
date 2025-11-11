@@ -8,6 +8,8 @@ on:
 jobs:
   agg:
     runs-on: ubuntu-latest
+    # Only run on schedule or manual dispatch, not on every push
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
       

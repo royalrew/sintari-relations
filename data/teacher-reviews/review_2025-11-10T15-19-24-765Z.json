@@ -1,0 +1,41 @@
+{
+  "feedback": {
+    "overallScore": 7.5,
+    "criteria": {
+      "naturalness": 7,
+      "empathy": 8,
+      "relevance": 8,
+      "clarity": 7,
+      "tone": 8,
+      "actionability": 5,
+      "nonCoercive": 9
+    },
+    "strengths": [
+      "Bra känsloerkännande",
+      "Varm ton"
+    ],
+    "weaknesses": [
+      "Lite vag fråga"
+    ],
+    "suggestions": [
+      "Förtydliga frågan",
+      "Ge konkreta förslag"
+    ],
+    "patternFlags": [
+      "unclear_question"
+    ],
+    "severity": "pass"
+  },
+  "timestamp": 1762787964759,
+  "userInput": "Jag vill bli en bättre människa",
+  "coachReply": "Det verkar kännas tungt just nu. Vad märker du i kroppen, och vad händer i tankarna.",
+  "context": {
+    "conversationLength": 5,
+    "turnNumber": 3,
+    "insightsUsed": {
+      "goals": [],
+      "patterns": [],
+      "communication": null
+    }
+  }
+}

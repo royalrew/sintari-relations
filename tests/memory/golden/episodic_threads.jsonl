@@ -1,0 +1,4 @@
+{"id":"E001","query":"Vad sa vi om pausen igår?","thread_id":"anna_erik","facets":["planning","pause"],"expected_ids":["anna_erik_turn_5","anna_erik_turn_6"],"negatives":["anna_erik_turn_1"]}
+{"id":"E002","query":"Kommer du ihåg när vi bestämde att ta en paus?","thread_id":"anna_erik","facets":["planning"],"expected_ids":["anna_erik_turn_5"],"negatives":[]}
+{"id":"E003","query":"Vad var det vi diskuterade om känslor?","thread_id":"anna_erik","facets":["feelings"],"expected_ids":["anna_erik_turn_3","anna_erik_turn_4"],"negatives":[]}
+

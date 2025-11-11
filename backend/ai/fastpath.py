@@ -39,7 +39,9 @@ PATTERNS = {
     "simple_greeting": {
         "regex": r"^(hej|hello|hi|tjenare|tjena|hallå|tja)\s*[!.]*\s*$",
         "confidence": 0.98,
-        "response_template": "Hej! Jag är här för att hjälpa dig med din relation. Berätta gärna mer om situationen.",
+        # CASE-1-INTRO: Optimal första hälsning - lugnt, varmt, utan push
+        # Fokuserar på trygghet + tillåtande tempo, reglerar nervsystemet först
+        "response_template": "Hej. Jag är här.\n\nVi tar det i den takt som känns rimlig för dig.\n\nVad känns mest i kroppen just nu?",
     },
     "clear_positive": {
         "regex": r"^vi.*?älskar.*?varandra.*?mycket",
@@ -101,11 +103,13 @@ def check_fastpath(
     # Matcha hälsningar eller OK/Tack/Emoji på korta texter
     if is_short:
         if GREETING_PATTERN.search(text_clean):
+            # CASE-1-INTRO: Optimal första hälsning - lugnt, varmt, utan push
+            # Fokuserar på trygghet + tillåtande tempo, reglerar nervsystemet först
             return {
                 "qualifies": True,
                 "pattern": "short_greeting",
                 "confidence": 0.95,
-                "response": "Hej! Jag är här för att hjälpa dig med din relation. Berätta gärna mer om situationen.",
+                "response": "Hej. Jag är här.\n\nVi tar det i den takt som känns rimlig för dig.\n\nVad känns mest i kroppen just nu?",
                 "tier": "fastpath",
             }
         if OKAY_PATTERN.search(text_clean):

@@ -1,0 +1,7 @@
+{"id":"R001","query":"Påminn mig om vad vi bestämde igår","thread_id":"regression_1","facets":["planning"],"expected_ids":["regression_1_turn_10"],"negatives":[]}
+{"id":"R002","query":"Vi bestämde att ta en paus","thread_id":"regression_1","facets":["planning","pause"],"expected_ids":["regression_1_turn_10"],"negatives":[]}
+{"id":"R003","query":"Hon sa att hon var orolig igår","thread_id":"regression_2","facets":["feelings","worry"],"expected_ids":["regression_2_turn_8"],"negatives":[]}
+{"id":"R004","query":"Påminn mig om X","thread_id":"regression_3","facets":[],"expected_ids":["regression_3_turn_5"],"negatives":[]}
+{"id":"R005","query":"Vi bestämde Y","thread_id":"regression_3","facets":["planning"],"expected_ids":["regression_3_turn_5"],"negatives":[]}
+{"id":"R006","query":"Hon sa Z igår","thread_id":"regression_2","facets":[],"expected_ids":["regression_2_turn_8"],"negatives":[]}
+

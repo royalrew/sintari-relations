@@ -1,0 +1,64 @@
+{
+  "empathy": {
+    "low": [
+      "I hear you.",
+      "Come in where it's warm.",
+      "You're in a safe space with me."
+    ],
+    "medium": [
+      "That sounds important to you.",
+      "I understand this matters to you.",
+      "You're in a safe space with me."
+    ],
+    "high": [
+      "That sounds heavy.",
+      "You're in a safe space with me.",
+      "Come in where it's warm."
+    ]
+  },
+  "bridge": {
+    "share_low": [
+      "We'll go gently and clearly.",
+      "Let's take it calm and clear."
+    ],
+    "share_medium": [
+      "We'll go gently and clearly.",
+      "Let's take it calm and clear."
+    ],
+    "share_high": [
+      "We'll go gently and clearly.",
+      "Let's take it step by step, at your pace."
+    ],
+    "ask_low": [
+      "We can start with one small step today.",
+      "Let's take one small step that feels safe."
+    ],
+    "ask_medium": [
+      "We can start with one small step today.",
+      "Let's take one small step that feels safe."
+    ],
+    "ask_high": [
+      "Let's take one small step that feels safe.",
+      "We can start with one small step today."
+    ]
+  },
+  "questions": {
+    "generic": [
+      "How does it feel right now?",
+      "Would you like to share a bit more?",
+      "What would feel good to start with?"
+    ],
+    "ask": [
+      "Would you like me to suggest a first small step?",
+      "Would you like a few options to choose from?"
+    ]
+  },
+  "hr": {
+    "opening": ["Welcome. I'll support your team respectfully."],
+    "farewell": ["Thanks for today. I'm here when you're ready."]
+  },
+  "red": {
+    "farewell": ["If you're in immediate danger, call your local emergency number. Want me to list support resources?"]
+  }
+}
+

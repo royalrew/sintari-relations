@@ -1,0 +1,75 @@
+{
+  "empathy": {
+    "low": [
+      "Jag hör dig.",
+      "Tack för att du delar.",
+      "Jag finns här med dig.",
+      "Det är okej att känna så."
+    ],
+    "medium": [
+      "Det låter viktigt för dig.",
+      "Jag förstår att det tar på dig.",
+      "Jag hör hur det påverkar dig.",
+      "Jag tar in att det betyder mycket för dig."
+    ],
+    "high": [
+      "Det där låter tungt.",
+      "Jag vill att du ska känna dig trygg här.",
+      "Det låter som om det gör riktigt ont just nu.",
+      "Jag är med dig i den tyngden."
+    ]
+  },
+  "bridge": {
+    "share_low": [
+      "Vi tar det lugnt och tydligt.",
+      "Vi håller tempot lugnt och tydligt.",
+      "Vi tar det tryggt, steg för steg."
+    ],
+    "share_medium": [
+      "Vi tar det lugnt och tydligt.",
+      "Vi tar ett litet steg i taget, i din takt.",
+      "Vi håller oss nära och tydliga genom det här."
+    ],
+    "share_high": [
+      "Vi tar det steg för steg, i din takt.",
+      "Vi tar det tillsammans, lugnt och tryggt.",
+      "Vi håller i varandra och går ett litet steg i taget."
+    ],
+    "ask_low": [
+      "Vi kan börja med ett litet steg redan idag.",
+      "Vi tar ett mjukt första steg tillsammans.",
+      "Vi kan prova något litet direkt om du vill."
+    ],
+    "ask_medium": [
+      "Vi kan börja med ett litet steg redan idag.",
+      "Vi tar ett litet steg som känns tryggt.",
+      "Vi tar en sak i taget så du hinner med."
+    ],
+    "ask_high": [
+      "Vi tar ett litet steg som känns tryggt.",
+      "Vi tar det varsamt, ett steg i taget.",
+      "Vi ser till att första steget känns stabilt."
+    ]
+  },
+  "questions": {
+    "generic": [
+      "Hur känns det just nu, på riktigt?",
+      "Vill du berätta lite mer?",
+      "Vad skulle vara skönt att börja med?",
+      "Vad skulle kännas hjälpsamt att säga mer om?",
+      "Vad vill du att vi stannar upp vid just nu?"
+    ],
+    "ask": [
+      "Vill du att jag föreslår ett första litet steg?",
+      "Vill du ha ett par alternativ att välja mellan?",
+      "Skulle det hjälpa med två konkreta steg att välja på?"
+    ]
+  },
+  "hr": {
+    "opening": ["Hej och välkommen. Jag stöttar er tryggt och respektfullt."],
+    "farewell": ["Tack för idag. Jag finns här när ni vill ta nästa steg."]
+  },
+  "red": {
+    "farewell": ["Tack för att du berättar. Om du är i akut fara – ring 112. Vill du att jag listar stödresurser?"]
+  }
+}

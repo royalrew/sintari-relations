@@ -118,6 +118,33 @@ net_score = pos_count - neg_count - risk_count
 
 Se `data/logs/CSV_SCHEMA.md` för fullständig dokumentation av alla fält och domäner.
 
+## 🔐 Admin – Test Execution
+
+### Körning
+
+1. Sätt `ADMIN_SECRET` i `.env.local`:
+   ```env
+   ADMIN_SECRET=byt-mig-till-en-säker-nyckel
+   ```
+
+2. Gå till `/admin`, klistra in hemligheten i fältet.
+
+3. Klicka på valfri testknapp. Status pollas varje sekund tills klart.
+
+### Kommandon som körs
+
+- **Emotion**: `pytest tests/worldclass/test_emotion_suite.py -v`
+- **Memory**: `pytest tests/worldclass/test_memory_suite.py -v`
+- **Alla**: Kör både emotion och memory tests
+- **Smoke**: `python tests/memory/test_memory_smoke.py`
+
+### Noter
+
+- In-memory job queue (uppgradera till Redis för flera instanser).
+- Metrics extraheras via regex och från report-filer (`reports/emotion_golden_report.json`, `reports/memory_eval_report.json`).
+- Resultattabellen listar upptäckta `PASSED/FAILED` från pytest-output.
+- Rate limiting: 1 jobb per minut per hemlighet (valfritt, via `lib/adminLimiter.ts`).
+
 ## 📝 Nästa steg
 
 **✅ Dag 6:** Billing - Stripe testbetalning (Checkout + webhook → run)  

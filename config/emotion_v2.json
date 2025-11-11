@@ -1,0 +1,12 @@
+{
+  "worry_weight": 0.35,
+  "humor_weight": 0.3,
+  "irony_weight": 0.35,
+  "worry_threshold": 0.5,
+  "humor_threshold": 0.55,
+  "irony_threshold": 0.4,
+  "confidence_floor": 0.7,
+  "version": "1.0.1",
+  "calibrated_date": "2025-11-02",
+  "notes": "Calibrated from 100 worldclass_emotion cases. Accuracy: 0.500, Gap: 0.0400"
+}

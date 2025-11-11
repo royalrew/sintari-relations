@@ -1,0 +1,17 @@
+[
+  {
+    "id": "c2651dd6-2f90-4a32-8be5-0b6b8ceeba25",
+    "email": "admin@sintari.se",
+    "name": "Jimmy Berndtsson",
+    "passwordHash": "de12e5966e9477699b22142600923255cf3870878456db64915c6136c57f378d",
+    "createdAt": "2025-11-09T20:45:47.435Z",
+    "emailVerified": false,
+    "consent": {
+      "termsAccepted": true,
+      "privacyAccepted": true,
+      "marketingConsent": false,
+      "termsAcceptedAt": "2025-11-09T20:45:48.253Z",
+      "privacyAcceptedAt": "2025-11-09T20:45:48.253Z"
+    }
+  }
+]

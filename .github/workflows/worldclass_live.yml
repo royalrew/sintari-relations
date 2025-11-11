@@ -1,0 +1,81 @@
+name: worldclass_live
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"  # Var 5:e minut
+  workflow_dispatch:
+
+jobs:
+  build-kpis:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sintari-relations
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install deps (cached)
+        run: |
+          pnpm i --frozen-lockfile || pnpm i
+          python -m pip install -U pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Brain Sync → brain_matrix.json
+        run: python scripts/brain_sync.py
+      
+      - name: WorldClass Live JSON
+        run: python backend/metrics/worldclass_live.py
+      
+      - name: Enforce keys
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+          
+          p = Path("reports/worldclass_live.json")
+          if not p.exists():
+              print("ERROR: worldclass_live.json not found", file=sys.stderr)
+              sys.exit(1)
+          
+          data = json.loads(p.read_text(encoding="utf-8"))
+          req = ["empathy_f1", "tone_drift", "recall_rate", "si_loop_status", "likability", "retention_7d"]
+          missing = [k for k in req if k not in data]
+          
+          if missing:
+              print(f"ERROR: Missing keys: {missing}", file=sys.stderr)
+              sys.exit(1)
+          
+          # hårda KPI-gränser (kan tunas)
+          if data["empathy_f1"] < 0.92:
+              print(f"ERROR: Empathy F1 under 0.92 (got {data['empathy_f1']})", file=sys.stderr)
+              sys.exit(1)
+          
+          if data["tone_drift"] >= 0.05:
+              print(f"ERROR: Tone drift för hög (got {data['tone_drift']})", file=sys.stderr)
+              sys.exit(1)
+          
+          if data["recall_rate"] < 0.90:
+              print(f"ERROR: Recall under 0.90 (got {data['recall_rate']})", file=sys.stderr)
+              sys.exit(1)
+          
+          print("✅ All KPI gates passed")
+          PY
+      
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: worldclass_live
+          path: sintari-relations/reports/worldclass_live.json
+          retention-days: 7
+

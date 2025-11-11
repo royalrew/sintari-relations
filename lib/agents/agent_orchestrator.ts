@@ -5,6 +5,10 @@ import { getWorkText, normalizeText, canonLabel, generateFallbackSpans } from '@
 import { detectViolence } from '@/lib/utils/safetyDetection';
 import { logRouter } from './_orchestrator_logs';
 import { callMicroMood } from '@/backend/ai/py_bridge';
+import { DialogMemoryV2 } from '@/lib/memory/dialog_memory_v2';
+import { shouldUseMemory } from '@/lib/memory/memory_feature_flag';
+import { buildExplainPayload } from '@/lib/explain/explain_emotion';
+import { logExplainTelemetry } from '@/backend/metrics/explain_logger';
 
 export interface AgentResult {
   agent_id: string;
@@ -27,6 +31,51 @@ export interface AgentOrchestratorResult {
     modelId?: string;
   };
   cost_info?: any;
+}
+
+const clamp01 = (v: number): number => {
+  const n = Number(v);
+  if (Number.isNaN(n)) return 0;
+  return Math.max(0, Math.min(1, n));
+};
+
+function deriveToneVector(emotionResult: any): [number, number, number] {
+  const score = clamp01(emotionResult?.score ?? 0.55);
+  const level = String(emotionResult?.level || '').toLowerCase();
+  let warmth = 0.5;
+  if (level === 'plus') warmth = 0.7;
+  else if (level === 'light') warmth = 0.6;
+  else if (level === 'red') warmth = 0.25;
+
+  let clarity = 0.55;
+  if (level === 'red') clarity = 0.3;
+  else if (level === 'light') clarity = 0.5;
+
+  return [score, warmth, clarity];
+}
+
+function extractMemoryFacets(memoryContext: any): string[] {
+  if (!memoryContext?.results || !Array.isArray(memoryContext.results)) return [];
+  const facets: string[] = [];
+  for (const item of memoryContext.results) {
+    const f = item?.facets;
+    if (f && typeof f === 'object') {
+      for (const key of Object.keys(f)) {
+        if (f[key]) facets.push(String(key));
+      }
+    }
+  }
+  return facets.slice(0, 6);
+}
+
+function extractRiskFlags(safetyAgent: any): Record<string, any> {
+  const emits = safetyAgent?.output?.emits || {};
+  const riskAreas = Array.isArray(emits?.risk_areas) ? emits.risk_areas.map((r: any) => String(r).toLowerCase()) : [];
+  return {
+    coercion: riskAreas.includes('coercion'),
+    selfharm: riskAreas.includes('selfharm') || riskAreas.includes('self_harm'),
+    red: emits?.safety === 'RED',
+  };
 }
 
 export async function runAllAgents(
@@ -113,6 +162,43 @@ export async function runAllAgents(
   
   // Use original for emotion detection (critical path)
   let sharedText = original.trim();
+  
+  // ============================================================
+  // MEMORY V2: Retrieve context (FÖRE analys)
+  // ============================================================
+  // Generate threadId for feature flag check
+  const threadId = `${input.person1}_${input.person2}`.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+  const USE_MEMORY = shouldUseMemory(threadId);
+  let memCtx: any = null;
+  let memory: DialogMemoryV2 | null = null;
+  
+  if (USE_MEMORY) {
+    try {
+      memory = await DialogMemoryV2.open(process.env.MEMORY_PATH);
+      
+      // Retrieve memory context
+      memCtx = await memory.retrieve({
+        threadId,
+        kEpisodic: parseInt(process.env.MEMORY_K_EPISODIC || '6'),
+        kSemantic: parseInt(process.env.MEMORY_K_SEMANTIC || '8'),
+        weights: {
+          semantic: parseFloat(process.env.MEMORY_W_SEM || '0.6'),
+          episodic: parseFloat(process.env.MEMORY_W_EPI || '0.4'),
+        },
+        recency: {
+          boost: parseFloat(process.env.MEMORY_RECENCY_BOOST || '0.35'),
+          halfLifeDays: parseFloat(process.env.MEMORY_HALFLIFE_DAYS || '7'),
+        },
+        piiMask: true,
+        queryText: sharedText,
+      });
+      
+      console.log(`[MEMORY] ✅ Retrieved ${memCtx?.length || 0} memory records`);
+    } catch (error) {
+      // Non-blocking: om memory failar, fortsätt normalt
+      console.warn(`[MEMORY] ⚠️ Memory retrieval failed, continuing: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
   
   // ============================================================
   // EMOTION CORE: Micro-Mood Detection (FÖRE routing)
@@ -399,11 +485,152 @@ export async function runAllAgents(
         console.log(`[FALLBACK] Generated ${fallbackSpans.length} fallback spans for explain_linker`);
       }
     }
+
+    // Build explain summary using tone, memory, risks
+    const toneVector = deriveToneVector(emotionResult);
+    const memoryFacetsList = extractMemoryFacets(memoryContext);
+    const riskMap = extractRiskFlags(safetyAgent);
+    const explainOut = buildExplainPayload({
+      toneVector,
+      spans: explainAgent.output.emits?.explain_spans || [],
+      memoryFacets: memoryFacetsList,
+      riskFlags: riskMap,
+      level: (process.env.EXPLAIN_LEVEL as any) || undefined,
+      style: (process.env.EXPLAIN_STYLE as any) || undefined,
+      lang: (context.language === 'en' ? 'en' : 'sv'),
+    });
+
+    explainAgent.output.emits = {
+      ...explainAgent.output.emits,
+      explain_summary: explainOut,
+    };
+
+    try {
+      logExplainTelemetry(context.run_id, explainOut);
+    } catch (err) {
+      console.warn('[TELEMETRY] Failed to log explain KPIs', err);
+    }
+
+    results.push({
+      agent_id: 'explain_emotion',
+      version: '1.0.0',
+      status: 'success',
+      output: { emits: explainOut },
+      latency_ms: 0,
+    });
   }
 
+  // ============================================================
+  // PR7: Brain-First Core Integration (sequential after parallel)
+  // ============================================================
+  // Memory V2 + Persona Agent (sequential, after normalize)
+  
+  // Feature flags
+  const MEMORY_V2_ENABLED = process.env.MEMORY_V2 === 'on';
+  const PERSONA_V1_ENABLED = process.env.PERSONA_V1 === 'on';
+  
+  let memoryContext: any = null;
+  let personaHints: any = null;
+  
+  // Memory V2: Retrieve context (if enabled)
+  if (MEMORY_V2_ENABLED && normalizeAgent && normalizeAgent.status === 'success') {
+    try {
+      const memoryBridgePath = join(process.cwd(), '..', 'sintari-relations', 'backend', 'bridge', 'dialog_memory_v2_bridge.py');
+      const memoryPayload = {
+        agent: "dialog_memory_v2",
+        action: "retrieve",
+        conv_id: context.run_id,
+        k: 8,
+        mode: "hybrid",
+        query_text: sharedText
+      };
+      
+      const memoryStart = Date.now();
+      memoryContext = await runAgentBridge(memoryBridgePath, memoryPayload);
+      const memoryLatency = Date.now() - memoryStart;
+      
+      if (memoryContext?.ok) {
+        console.log(`[MEMORY-V2] Retrieved ${memoryContext.results?.length || 0} context nodes (${memoryLatency}ms)`);
+        
+        // Add to results
+        results.push({
+          agent_id: 'dialog_memory_v2',
+          version: '2.0.0',
+          status: 'success',
+          output: memoryContext,
+          latency_ms: memoryLatency
+        });
+      }
+    } catch (error) {
+      console.warn(`[MEMORY-V2] Failed: ${error}`);
+    }
+  }
+  
+  // Persona Agent: Detect persona (if enabled)
+  if (PERSONA_V1_ENABLED && normalizeAgent && normalizeAgent.status === 'success') {
+    try {
+      const personaBridgePath = join(process.cwd(), '..', 'sintari-relations', 'backend', 'bridge', 'persona_agent_bridge.py');
+      const personaPayload = {
+        agent: "persona_agent",
+        text: sharedText,
+        meta: {
+          language: detectedLang
+        }
+      };
+      
+      const personaStart = Date.now();
+      const personaResult = await runAgentBridge(personaBridgePath, personaPayload);
+      const personaLatency = Date.now() - personaStart;
+      
+      if (personaResult?.ok && personaResult.persona_hints) {
+        personaHints = personaResult.persona_hints;
+        console.log(`[PERSONA] Detected persona: formality=${personaHints.formality}, warmth=${personaHints.warmth} (${personaLatency}ms)`);
+        
+        // Add to results
+        results.push({
+          agent_id: 'persona_agent',
+          version: '1.0.0',
+          status: 'success',
+          output: personaResult,
+          latency_ms: personaLatency
+        });
+      }
+    } catch (error) {
+      console.warn(`[PERSONA] Failed: ${error}`);
+    }
+  }
+  // ============================================================
+  
   const totalLatency = Date.now() - startTime;
   const successCount = results.filter(r => r.status === 'success').length;
   const errorCount = results.filter(r => r.status === 'error').length;
+
+  // ============================================================
+  // MEMORY V2: Ingest after analysis (EFTER svar)
+  // ============================================================
+  if (USE_MEMORY && memory) {
+    try {
+      const lastMood = emotionResult?.level || 'neutral';
+      
+      await memory.ingest({
+        threadId,
+        text: sharedText,
+        facets: {
+          lang: context.language || 'sv',
+          topic: 'relations',
+          mood: lastMood,
+        },
+        ttlDays: parseInt(process.env.MEMORY_TTL_DAYS || '90'),
+        piiMask: true,
+        speaker: input.person1 || 'user',
+      });
+      
+      console.log(`[MEMORY] ✅ Ingested memory record for thread ${threadId}`);
+    } catch (error) {
+      // Non-blocking: om memory ingest failar, logga men fortsätt
+      console.warn(`[MEMORY] ⚠️ Memory ingest failed: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
 
   // Shadow-logging (Fas 2 production test)
   if (routingDecision?.routing) {
@@ -425,6 +652,19 @@ export async function runAllAgents(
     });
   }
   
+  // ============================================================
+  // PR7: Telemetry logging (console only for now)
+  // ============================================================
+  // Detailed telemetry logged to worldclass_live.jsonl via Python agents
+  if (USE_MEMORY && memCtx) {
+    console.log(`[TELEMETRY] Memory: ${memCtx.length || 0} context nodes retrieved`);
+  }
+  
+  if (PERSONA_V1_ENABLED && personaHints) {
+    console.log(`[TELEMETRY] Persona: ${JSON.stringify(personaHints)}`);
+  }
+  // ============================================================
+  
   return {
     agents: results,
     total_latency_ms: totalLatency,
@@ -437,6 +677,7 @@ export async function runAllAgents(
       reason: routingDecision.routing.reason,
     } : undefined,
     cost_info: costCheck,
+    memory_context: memCtx, // Include memory context in response
   };
 }
 

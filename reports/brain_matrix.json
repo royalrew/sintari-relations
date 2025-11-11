@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "timestamp": "2025-11-02T16:18:42Z",
+    "plan_sha1": "0281313acbc66630a89fbd9dcb0614249b92e282",
+    "version": "1.0.0",
+    "plan_path": "C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\Roadmapp\\BRAIN_FIRST_PLAN.md"
+  },
+  "core": [],
+  "polish": [
+    "❌ Flow Enhancer (steg 117) - mikropauser, \"hm...\"",
+    "❌ Metaphor Mixer (steg 118) - kreativitet",
+    "❌ Dashboard UI panels (steg 100, 102, 120, 133-134) - animationer",
+    "❌ Live Ticker komponent (steg 133) - framer-motion",
+    "❌ PDF Investor Uplift-sektion (steg 101, 103) - visuellt polish",
+    "❌ Live Ticker komponent (steg 133) - React-CountUp animation",
+    "❌ Integrera Ticker på landningssidan (steg 134) - framer-motion",
+    "❌ Live Emotion Dashboard UI (steg 139) - frontend panels"
+  ],
+  "core_presence": {
+    "EmpathyToneAgent v2": false,
+    "Tone Regularizer": false,
+    "Soft Correction Agent": false,
+    "Empathy Fusion": false,
+    "WorldClass Eval Suite": false,
+    "Uplift telemetry": false,
+    "Persona Agent": false,
+    "Dialog Memory v2": false
+  }
+}

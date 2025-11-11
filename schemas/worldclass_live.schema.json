@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Worldclass Live Telemetry",
+  "type": "object",
+  "required": ["ts", "session_id", "style"],
+  "properties": {
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "session_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": ["string", "null"]
+    },
+    "seed_id": {
+      "type": ["string", "null"]
+    },
+    "turn": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["personal", "hr"]
+    },
+    "risk": {
+      "type": "string",
+      "enum": ["SAFE", "RED"]
+    },
+    "reply_text": {
+      "type": "string"
+    },
+    "kpi": {
+      "type": "object",
+      "properties": {
+        "explain": {
+          "type": "object",
+          "properties": {
+            "coverage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "has_evidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "no_advice": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "level": {
+              "type": "string",
+              "enum": ["brief", "standard", "deep"]
+            },
+            "style": {
+              "type": "string",
+              "enum": ["neutral", "warm", "coach"]
+            }
+          }
+        },
+        "memory": {
+          "type": "object",
+          "properties": {
+            "mrr": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "hit_at_3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    },
+    "tone": {
+      "type": "object",
+      "properties": {
+        "vec": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "delta": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "style": {
+      "type": "object",
+      "required": ["likability_proxy", "empathy_score", "question_count", "echo_ratio", "tone_delta"],
+      "properties": {
+        "likability_proxy": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "empathy_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "question_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "echo_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "tone_delta": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "honesty": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "missing_facets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "suggested_probe": {
+          "type": ["string", "null"]
+        },
+        "no_advice": {
+          "type": "boolean"
+        },
+        "rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "repair_accept_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "time_to_repair": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": ["active"]
+    },
+    "goals": {
+      "type": "object",
+      "properties": {
+        "created": { "type": "integer", "minimum": 0 },
+        "updated": { "type": "integer", "minimum": 0 },
+        "progress_delta": { "type": "number" },
+        "coach_ok": { "type": "integer", "minimum": 0 },
+        "coach_block": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "skipped_reason": {
+      "type": "string"
+    }
+  }
+}
+

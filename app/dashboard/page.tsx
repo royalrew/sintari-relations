@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { loadPhaseKPIs } from "@/lib/phases";
 import EmotionPanel from "./emotion_panel";
+import HonestyPanel from "./honesty_panel";
 
 type PyramidKPI = {
   meta: { source: string; sha1: string; generated_utc: string };
@@ -162,6 +163,12 @@ export default function DashboardPage() {
           <div className="text-sm text-muted-foreground">
             Generated: {data?.meta?.generated_utc?.replace("T", " ").replace("Z", "")} • Total cases: {data?.counts?.total ?? 0} • SHA1: {data?.meta?.sha1 ?? "N/A"}
           </div>
+          <Link
+            href="/admin"
+            className="inline-flex items-center rounded-md border border-blue-300 bg-blue-50 px-3 py-2 text-sm font-medium hover:bg-blue-100 transition-colors"
+          >
+            Admin Tests
+          </Link>
           <a
             href="/api/export/pdf"
             className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium hover:bg-gray-50 transition-colors"
@@ -246,6 +253,11 @@ export default function DashboardPage() {
             <div className="text-sm text-muted-foreground">Target: 0</div>
           </Card>
         </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-lg font-medium">Honesty & Style Telemetry</h2>
+        <HonestyPanel />
       </section>
 
       <section className="space-y-3">

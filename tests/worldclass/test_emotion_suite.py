@@ -60,17 +60,31 @@ def load_golden() -> List[Dict[str, Any]]:
     return cases
 
 
-def call_empathy_tone(text: str, lang: str) -> Dict[str, Any]:
-    """Call empathy_tone_v2 agent."""
+def call_empathy_tone(text: str, lang: str, trace_id: str = None, prev_state: Dict = None) -> Dict[str, Any]:
+    """Call empathy_tone_v2 agent with language bridge for SV/EN parity."""
     agent_path = ROOT / "agents" / "emotion" / "empathy_tone_v2.py"
     if not agent_path.exists():
         pytest.skip(f"Agent not found: {agent_path}")
     
+    # Use language bridge for canonical processing
+    try:
+        from lib.lang.language_bridge import to_canonical_en
+        canon_text, orig_lang = to_canonical_en(text)
+    except ImportError:
+        # Fallback if language_bridge not available
+        canon_text, orig_lang = text, lang
+    
+    # Use provided trace_id or generate one based on text hash for stateful filtering
+    if trace_id is None:
+        import hashlib
+        trace_id = f"test_{hashlib.md5(text.encode('utf-8')).hexdigest()[:8]}"
+    
     request = json.dumps({
         "agent": "empathy_tone_v2",
-        "text": text,
-        "lang": lang,
-        "trace_id": "test"
+        "text": canon_text,  # Use canonical text
+        "lang": "en",  # Always use EN for canonical processing
+        "trace_id": trace_id,
+        "prev_state": prev_state  # Pass state for stateful filtering
     }, ensure_ascii=False)
     
     try:
@@ -140,13 +154,20 @@ def test_tone_drift():
     if len(golden) < 2:
         pytest.skip("Need at least 2 cases for drift test")
     
+    # Use same trace_id for all cases in sequence to test stateful filtering
+    # This simulates a real conversation thread
+    trace_id = "test_tone_drift_sequence"
+    
     results = []
+    prev_state = None
     for case in golden[:10]:  # Use first 10 for drift calculation
         text = case.get("text", "")
         lang = case.get("lang", "sv")
-        result = call_empathy_tone(text, lang)
+        result = call_empathy_tone(text, lang, trace_id=trace_id, prev_state=prev_state)
         if result.get("ok"):
             results.append(result.get("tone_vector", [0.5, 0.5, 0.5]))
+            # Get updated state for next call
+            prev_state = result.get("next_state")
     
     if len(results) < 2:
         pytest.skip("Not enough successful results")

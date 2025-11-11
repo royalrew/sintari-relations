@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "date": "2025-11-06",
+  "description": "Memory V2 baseline configuration - Fas 5B",
+  "weights": {
+    "alpha": 0.30,
+    "beta": 0.45,
+    "gamma": 0.15,
+    "delta": 0.10
+  },
+  "tau_days": 14.0,
+  "k": 5,
+  "k_episodic": 6,
+  "k_semantic": 8,
+  "ttl_days": 90,
+  "lru_max_items": 500,
+  "recency": {
+    "boost": 0.35,
+    "half_life_days": 7
+  },
+  "memory": {
+    "rerank_topk": 10,
+    "lex_boost": true,
+    "diversity_penalty": true
+  },
+  "thresholds": {
+    "hit_at_3": 0.70,
+    "mrr": 0.65,
+    "p95_latency_ms": 150.0,
+    "fail_rate": 0.01,
+    "dup_rate": 0.05
+  },
+  "feature_flags": {
+    "memory_v2_enabled": false,
+    "canary_percent": 0,
+    "pii_mask_required": true
+  }
+}
+

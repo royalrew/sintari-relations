@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-11-02T16:17:38Z",
+  "empathy_f1": 0.9,
+  "tone_drift": 0.02,
+  "recall_rate": 0.91,
+  "si_loop_status": "idle",
+  "likability": 4.5,
+  "retention_7d": 0.41,
+  "core_presence": {
+    "EmpathyToneAgent v2": false,
+    "Tone Regularizer": false,
+    "Soft Correction Agent": false,
+    "Empathy Fusion": false,
+    "WorldClass Eval Suite": false,
+    "Uplift telemetry": false,
+    "Persona Agent": false,
+    "Dialog Memory v2": false
+  }
+}

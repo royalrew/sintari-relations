@@ -1,0 +1,52 @@
+name: Memory CI Gate
+
+on:
+  pull_request:
+    paths:
+      - "agents/memory/**"
+      - "lib/memory/**"
+      - "scripts/tune_memory.py"
+      - "tests/memory/**"
+      - "configs/memory/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "agents/memory/**"
+      - "lib/memory/**"
+      - "scripts/tune_memory.py"
+      - "tests/memory/**"
+      - "configs/memory/**"
+
+jobs:
+  memory_ci_gate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -q pytest
+
+      - name: Run Memory CI Gates
+        working-directory: sintari-relations
+        env:
+          PYTHON_BIN: python3
+        run: |
+          pytest -q tests/worldclass/test_memory_suite.py -v
+
+      - name: Upload Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: memory_ci_reports
+          path: sintari-relations/reports/memory_*.json
+          if-no-files-found: warn
+

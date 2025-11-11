@@ -1,10 +1,10 @@
 {
   "total": 133,
-  "accuracy": 0.5789,
+  "accuracy": 0.6165,
   "confusion_matrix": {
     "neutral": {
-      "neutral": 55,
-      "light": 7,
+      "neutral": 60,
+      "light": 2,
       "plus": 0,
       "red": 0
     },
@@ -288,20 +288,6 @@
       "text": "I feel uneasy about how quiet it's become between us."
     },
     {
-      "id": "E063-sv",
-      "expected": "neutral",
-      "detected": "light",
-      "lang": "sv",
-      "text": "Vi skämtade om hur dåliga vi är på att fatta beslut tillsammans."
-    },
-    {
-      "id": "E064-en",
-      "expected": "neutral",
-      "detected": "light",
-      "lang": "en",
-      "text": "We joked about how bad we are at making decisions together."
-    },
-    {
       "id": "E065-sv",
       "expected": "plus",
       "detected": "light",
@@ -335,13 +321,6 @@
       "detected": "light",
       "lang": "sv",
       "text": "Genialt att ta upp alla problem på en gång, det blir ju bara bättre."
-    },
-    {
-      "id": "E075-sv",
-      "expected": "neutral",
-      "detected": "light",
-      "lang": "sv",
-      "text": "Vi har så roliga minnen från när vi gjorde något dumt tillsammans."
     },
     {
       "id": "E076-en",
@@ -379,20 +358,6 @@
       "text": "I'm afraid I've disappointed her with my actions."
     },
     {
-      "id": "E087-sv",
-      "expected": "neutral",
-      "detected": "light",
-      "lang": "sv",
-      "text": "Hon gjorde ett roligt skämt om situationen och vi skrattade tillsammans."
-    },
-    {
-      "id": "E088-en",
-      "expected": "neutral",
-      "detected": "light",
-      "lang": "en",
-      "text": "She made a funny joke about the situation and we laughed together."
-    },
-    {
       "id": "E089-sv",
       "expected": "plus",
       "detected": "neutral",
@@ -421,11 +386,11 @@
       "text": "I'm worried I can't express my feelings properly."
     }
   ],
-  "sv_en_gap": 0.0293,
+  "sv_en_gap": 0.022,
   "red_fp_rate": 0,
   "sv_count": 67,
   "en_count": 66,
   "red_predictions": 15,
   "red_false_positives": 0,
-  "generated_utc": "2025-11-06T17:56:32.799Z"
+  "generated_utc": "2025-11-06T20:36:56.764Z"
 }

@@ -1,0 +1,7 @@
+[
+  { "id": "work_rumour", "match": "work_rumour", "template": "hr.rumour.check" },
+  { "id": "work_boundary", "match": "work_boundary", "template": "hr.boundary.ask" },
+  { "id": "work_feedback", "match": "work_feedback", "template": "hr.feedback.ask" },
+  { "id": "work_stress", "match": "work_stress", "template": "hr.stress.selfcare" }
+]
+

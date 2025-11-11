@@ -1,0 +1,41 @@
+{
+  "feedback": {
+    "overallScore": 6.1,
+    "criteria": {
+      "naturalness": 6,
+      "empathy": 5,
+      "relevance": 7,
+      "clarity": 7,
+      "tone": 6,
+      "actionability": 4,
+      "nonCoercive": 8
+    },
+    "strengths": [
+      "Öppen fråga"
+    ],
+    "weaknesses": [
+      "Överdriven spegling",
+      "Låg empati"
+    ],
+    "suggestions": [
+      "Minska spegling",
+      "Öka empati"
+    ],
+    "patternFlags": [
+      "over_mirroring"
+    ],
+    "severity": "warn"
+  },
+  "timestamp": 1762787755622,
+  "userInput": "Hej",
+  "coachReply": "Hej. Jag lyssnar. Vad vill du utforska eller stärka?",
+  "context": {
+    "conversationLength": 1,
+    "turnNumber": 1,
+    "insightsUsed": {
+      "goals": [],
+      "patterns": [],
+      "communication": null
+    }
+  }
+}

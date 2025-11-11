@@ -1,0 +1,42 @@
+{
+  "feedback": {
+    "overallScore": 6,
+    "criteria": {
+      "naturalness": 6,
+      "empathy": 5,
+      "relevance": 7,
+      "clarity": 7,
+      "tone": 6,
+      "actionability": 3,
+      "nonCoercive": 8
+    },
+    "strengths": [
+      "Försök till empati"
+    ],
+    "weaknesses": [
+      "Upprepning",
+      "Låg specifik empati"
+    ],
+    "suggestions": [
+      "Undvik upprepning",
+      "Förbättra känsloerkännande"
+    ],
+    "patternFlags": [
+      "repetition",
+      "low_empathy"
+    ],
+    "severity": "warn"
+  },
+  "timestamp": 1762787769257,
+  "userInput": "Jag vill bli en bättre människa",
+  "coachReply": "Det låter som att det känns tungt. Det verkar kännas tungt just nu. Hur känns det både i kroppen och i tankarna.",
+  "context": {
+    "conversationLength": 3,
+    "turnNumber": 2,
+    "insightsUsed": {
+      "goals": [],
+      "patterns": [],
+      "communication": null
+    }
+  }
+}

@@ -9,6 +9,7 @@ import sys
 import pathlib
 import json
 import re
+import os
 from datetime import datetime, timedelta
 
 
@@ -25,6 +26,61 @@ OPTIONAL_BUT_RECOMMENDED = [
     R / "reports" / "pyramid_weekly.md",
     R / "docs" / "RELEASE_CRITERIA.md",
 ]
+
+
+def mean(values):
+    return (sum(values) / len(values)) if values else 0.0
+
+
+def check_explain_kpis() -> bool:
+    """Ensure explain coverage and no-advice policy meet thresholds."""
+    path = R / "reports" / "worldclass_live.jsonl"
+    if not path.exists():
+        print("❌ Explain telemetry missing (reports/worldclass_live.jsonl)", file=sys.stderr)
+        return False
+
+    coverage: list[float] = []
+    no_advice: list[float] = []
+
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                kpi = rec.get("kpi", {})
+                if "explain.coverage" in kpi:
+                    coverage.append(float(kpi.get("explain.coverage", 0.0)))
+                    no_advice.append(float(kpi.get("explain.no_advice", 0.0)))
+    except Exception as exc:
+        print(f"❌ Failed to read explain telemetry: {exc}", file=sys.stderr)
+        return False
+
+    if not coverage:
+        print("❌ No explain KPI entries found in worldclass_live.jsonl", file=sys.stderr)
+        return False
+
+    m_cov = mean(coverage)
+    m_noa = mean(no_advice)
+
+    TH_COVERAGE = 0.95
+    TH_NO_ADVICE = 1.0
+
+    ok = True
+    if m_cov < TH_COVERAGE:
+        print(f"[FAIL] Explain coverage {m_cov:.3f} < {TH_COVERAGE}", file=sys.stderr)
+        ok = False
+    if m_noa < TH_NO_ADVICE:
+        print(f"[FAIL] Explain no-advice {m_noa:.3f} < {TH_NO_ADVICE}", file=sys.stderr)
+        ok = False
+
+    if ok:
+        print(f"[OK] Explain coverage={m_cov:.3f} no_advice={m_noa:.3f}")
+    return ok
 
 
 def check_artifacts() -> bool:
@@ -154,6 +210,11 @@ def check_pyramid_data() -> bool:
 
 def main():
     """Main enforcement logic."""
+    explain_only = os.getenv("EXPLAIN_ONLY") == "1"
+    if explain_only:
+        ok = check_explain_kpis()
+        sys.exit(0 if ok else 1)
+
     print("🔍 Checking release criteria...")
     
     # Check artifacts
@@ -166,6 +227,7 @@ def main():
         ("Scorecard", check_scorecard),
         ("Golden VERSION", check_golden_version),
         ("Pyramid Data", check_pyramid_data),
+        ("Explain KPIs", check_explain_kpis),
     ]
     
     failed = []

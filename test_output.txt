@@ -1,0 +1,9 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0
+rootdir: C:\Users\royal\OneDrive\Skrivbord\Mitt foretag\Sintari AI Market\sintari-relations
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collected 6 items
+
+tests\worldclass\test_memory_suite.py .F...F

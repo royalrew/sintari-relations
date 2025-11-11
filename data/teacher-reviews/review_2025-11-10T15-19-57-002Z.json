@@ -1,0 +1,42 @@
+{
+  "feedback": {
+    "overallScore": 5,
+    "criteria": {
+      "naturalness": 6,
+      "empathy": 5,
+      "relevance": 4,
+      "clarity": 5,
+      "tone": 6,
+      "actionability": 2,
+      "nonCoercive": 8
+    },
+    "strengths": [
+      "Varm ton"
+    ],
+    "weaknesses": [
+      "Låg relevans",
+      "Brist på empati"
+    ],
+    "suggestions": [
+      "Fokusera mer på användarens mål",
+      "Erbjud konkreta steg"
+    ],
+    "patternFlags": [
+      "malplaced_question",
+      "low_empathy"
+    ],
+    "severity": "fail"
+  },
+  "timestamp": 1762787996995,
+  "userInput": "Jag vill kunna göra så att andra skrattar åt min skämt",
+  "coachReply": "Det känns tungt just nu. Vad händer i kroppen och vad finns i tankarna.",
+  "context": {
+    "conversationLength": 7,
+    "turnNumber": 4,
+    "insightsUsed": {
+      "goals": [],
+      "patterns": [],
+      "communication": null
+    }
+  }
+}

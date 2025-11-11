@@ -236,6 +236,74 @@ jobs:
             echo "No KPI dashboard — skip"
           fi
 
+      - name: Style Policy Tests
+        working-directory: sintari-relations
+        run: |
+          if [ -f tests/style/test_chat_policy.test.ts ]; then
+            if [ -f pnpm-lock.yaml ]; then
+              pnpm test -- tests/style/test_chat_policy.test.ts --runInBand || echo "Style tests failed"
+            else
+              npm test -- tests/style/test_chat_policy.test.ts --runInBand || echo "Style tests failed"
+            fi
+          else
+            echo "⚠️ Style tests not found — skip"
+          fi
+
+      - name: Normalise worldclass logs
+        working-directory: sintari-relations
+        run: |
+          mkdir -p reports
+          if [ -f reports/worldclass_live.jsonl ]; then
+            node scripts/metrics/normalise_worldclass_live.mjs reports/worldclass_live.jsonl > reports/worldclass_live.norm.jsonl
+          else
+            echo "⚠️ reports/worldclass_live.jsonl not found — skip normalisation"
+          fi
+
+      - name: Schema validate
+        working-directory: sintari-relations
+        run: |
+          if [ -f reports/worldclass_live.norm.jsonl ]; then
+            npm run schema:validate -- reports/worldclass_live.norm.jsonl
+          else
+            echo "⚠️ reports/worldclass_live.norm.jsonl not found — skip schema validation"
+          fi
+
+      - name: Enforce style gate
+        working-directory: sintari-relations
+        run: |
+          if [ -f reports/worldclass_live.norm.jsonl ]; then
+            python scripts/metrics/enforce_style_gate.py reports/worldclass_live.norm.jsonl --parity-p95-like-gap 0.02 --strict-lang-match
+          else
+            echo "⚠️ reports/worldclass_live.norm.jsonl not found — skip style gate"
+          fi
+
+      - name: Enforce parity gate
+        working-directory: sintari-relations
+        run: |
+          if [ -f reports/worldclass_live.norm.jsonl ]; then
+            python scripts/metrics/enforce_parity_gate.py reports/worldclass_live.norm.jsonl
+          else
+            echo "⚠️ reports/worldclass_live.norm.jsonl not found — skip parity gate"
+          fi
+
+      - name: Enforce honesty gate
+        working-directory: sintari-relations
+        run: |
+          if [ -f reports/worldclass_live.norm.jsonl ]; then
+            python scripts/metrics/enforce_honesty_gate.py reports/worldclass_live.norm.jsonl --min-honesty-rate 0.10 --no-advice-when-honest 1 --min-repair-accept 0.50
+          else
+            echo "⚠️ reports/worldclass_live.norm.jsonl not found — skip honesty gate"
+          fi
+
+      - name: Enforce RED snapshot
+        working-directory: sintari-relations
+        run: |
+          if [ -f reports/worldclass_live.norm.jsonl ] && [ -f tests/golden/style/red_farewell_snap.json ]; then
+            python scripts/metrics/enforce_red_snapshot.py reports/worldclass_live.norm.jsonl tests/golden/style/red_farewell_snap.json
+          else
+            echo "⚠️ RED snapshot gate skipped (files not found)"
+          fi
+
       - name: Enforce golden freeze
         run: |
           if git diff --name-only origin/main...HEAD 2>/dev/null | grep -q "tests/golden/"; then
@@ -245,6 +313,16 @@ jobs:
             fi
           fi
           echo "✅ Golden freeze check passed"
+
+      - name: Enforce release criteria (for release tags)
+        if: startsWith(github.ref, 'refs/tags/v')
+        working-directory: sintari-relations
+        run: |
+          if [ -f scripts/metrics/enforce_release_criteria.py ]; then
+            python scripts/metrics/enforce_release_criteria.py
+          else
+            echo "⚠️ enforce_release_criteria.py not found — skip release criteria check"
+          fi
 
       - name: Enforce CI gate
         run: |

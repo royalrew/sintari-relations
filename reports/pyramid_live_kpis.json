@@ -26,17 +26,17 @@
   },
   "emotion": {
     "window": "24h",
-    "events": 91,
+    "events": 0,
     "counts_by_level": {
-      "neutral": 43,
-      "light": 19,
-      "plus": 23,
-      "red": 6
+      "neutral": 0,
+      "light": 0,
+      "plus": 0,
+      "red": 0
     },
     "p50_latency_ms": 0,
-    "p95_latency_ms": 11,
-    "red_rate": 0.066,
-    "sv_en_gap": 0.341,
-    "generated_utc": "2025-11-02T09:43:41.244Z"
+    "p95_latency_ms": 0,
+    "red_rate": 0,
+    "sv_en_gap": 0,
+    "generated_utc": "2025-11-09T16:34:08.699Z"
   }
 }

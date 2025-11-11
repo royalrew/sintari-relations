@@ -1,0 +1,1156 @@
+[
+  {
+    "id": "ba967f39-31ae-4eb9-9adf-a45059e61946",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:17:07.687Z",
+    "finishedAt": "2025-11-07T13:17:07.898Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "8e5bced0-d85b-44f7-93f0-11e8c9675b52",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "10"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:18:43.026Z",
+    "finishedAt": "2025-11-07T13:18:43.226Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "10"
+    }
+  },
+  {
+    "id": "a92cd3d4-53ab-4dbe-9aee-dd9093037174",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "0"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:18:58.153Z",
+    "finishedAt": "2025-11-07T13:18:58.407Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "0"
+    }
+  },
+  {
+    "id": "e2373218-1d7e-4fd0-b32b-4a2482eb56b7",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:19:07.723Z",
+    "finishedAt": "2025-11-07T13:19:07.947Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "7541356a-6ebe-4959-8047-19dec378c856",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:19:11.740Z",
+    "finishedAt": "2025-11-07T13:19:11.940Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "59394d4f-eea7-42c6-b5f7-4ae63f7cd900",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "10"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:19:15.422Z",
+    "finishedAt": "2025-11-07T13:19:15.619Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "10"
+    }
+  },
+  {
+    "id": "d4bd5bbb-55cc-44e0-9db0-d8b512f70a5b",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "0"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:19:40.141Z",
+    "finishedAt": "2025-11-07T13:19:40.333Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "0"
+    }
+  },
+  {
+    "id": "21605553-4203-4156-ae22-7e47fa095ca7",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "0"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:19:43.935Z",
+    "finishedAt": "2025-11-07T13:19:44.162Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "0"
+    }
+  },
+  {
+    "id": "2c3ebb99-760b-47f0-99c4-71a2b1f0e293",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:30:50.063Z",
+    "finishedAt": "2025-11-07T13:30:50.398Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "94b6cdad-d407-4810-bcd8-8032dfcfc239",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "10"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:30:56.466Z",
+    "finishedAt": "2025-11-07T13:30:56.548Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "10"
+    }
+  },
+  {
+    "id": "c79a9d81-ed00-45d3-b5ed-7b2577ae4c66",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "0"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:30:58.621Z",
+    "finishedAt": "2025-11-07T13:30:58.813Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=0 in .env\n[CANARY] Updated state percent=0, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "0"
+    }
+  },
+  {
+    "id": "f0c87502-0e1c-4c7b-a26b-d930cfbcab8b",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:31:08.246Z",
+    "finishedAt": "2025-11-07T13:31:08.536Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "2bf155f4-62e2-4095-85e5-62abc001c23a",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "10"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:31:10.747Z",
+    "finishedAt": "2025-11-07T13:31:10.985Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=10 in .env\n[CANARY] Updated state percent=10, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "10"
+    }
+  },
+  {
+    "id": "6155cc1d-cbd7-40b3-8c01-cf18b599e6fd",
+    "kind": "logrotate_live",
+    "cmd": "python",
+    "args": [
+      "scripts/metrics/rotate_worldclass_log.py",
+      "--file",
+      "reports/worldclass_live.jsonl",
+      "--max-mb",
+      "50"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:32:32.804Z",
+    "finishedAt": "2025-11-07T13:32:33.061Z",
+    "raw": "",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/metrics/rotate_worldclass_log.py",
+        "status": "passed"
+      }
+    ],
+    "options": {
+      "maxMb": "50"
+    }
+  },
+  {
+    "id": "b4ae04bc-1bfa-4ae2-8ad4-769496aaa5f2",
+    "kind": "smoke",
+    "cmd": "python",
+    "args": [
+      "tests/memory/test_memory_smoke.py"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:33:58.200Z",
+    "finishedAt": "2025-11-07T13:33:58.580Z",
+    "raw": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "tests/memory/test_memory_smoke.py",
+        "status": "passed",
+        "log": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "26f83745-7ced-4bcc-bf33-d500bab79723",
+    "kind": "logrotate_live",
+    "cmd": "python",
+    "args": [
+      "scripts/metrics/rotate_worldclass_log.py",
+      "--file",
+      "reports/worldclass_live.jsonl",
+      "--max-mb",
+      "50"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T13:34:01.957Z",
+    "finishedAt": "2025-11-07T13:34:02.036Z",
+    "raw": "{\"file\": \"reports/worldclass_live.jsonl\", \"max_mb\": 50, \"timestamp\": 1762522442, \"exists\": true, \"size_mb_before\": 0.018, \"action\": \"skip\", \"reason\": \"below_threshold\"}\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/metrics/rotate_worldclass_log.py",
+        "status": "passed",
+        "log": "{\"file\": \"reports/worldclass_live.jsonl\", \"max_mb\": 50, \"timestamp\": 1762522442, \"exists\": true, \"size_mb_before\": 0.018, \"action\": \"skip\", \"reason\": \"below_threshold\"}"
+      }
+    ],
+    "options": {
+      "maxMb": "50"
+    }
+  },
+  {
+    "id": "6793a007-c4fb-4ac9-89ff-6305dbe56749",
+    "kind": "emotion",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T20:24:02.821Z",
+    "finishedAt": "2025-11-07T20:24:15.748Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 9 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\n\r\n============================= 9 passed in 11.37s ==============================\r\n",
+    "metrics": {
+      "RED_FP_rate": 0,
+      "SV_EN_gap": 0.022,
+      "accuracy": 0.6165
+    },
+    "tests": [
+      {
+        "name": "test_empathy_f1",
+        "status": "passed"
+      },
+      {
+        "name": "test_tone_drift",
+        "status": "passed"
+      },
+      {
+        "name": "test_sv_en_parity",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_false_positive",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_recall",
+        "status": "passed"
+      },
+      {
+        "name": "test_plus_precision",
+        "status": "passed"
+      },
+      {
+        "name": "test_light_rate",
+        "status": "passed"
+      },
+      {
+        "name": "test_bias_gap",
+        "status": "passed"
+      },
+      {
+        "name": "test_soft_correction",
+        "status": "passed"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "568c0d9d-cb42-4b6b-bdab-ed6f96246254",
+    "kind": "explain",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_explain_suite.py",
+      "-q",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T20:30:45.120Z",
+    "finishedAt": "2025-11-07T20:30:47.104Z",
+    "raw": ".......\r\n",
+    "metrics": {},
+    "tests": [],
+    "options": {
+      "EXPLAIN_STYLE": "warm",
+      "EXPLAIN_LEVEL": "standard"
+    }
+  },
+  {
+    "id": "2bb669ed-5e43-491c-871c-143a446ed8a5",
+    "kind": "smoke",
+    "cmd": "python",
+    "args": [
+      "tests/memory/test_memory_smoke.py"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T20:30:55.205Z",
+    "finishedAt": "2025-11-07T20:30:55.712Z",
+    "raw": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "tests/memory/test_memory_smoke.py",
+        "status": "passed",
+        "log": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "06aa0da5-4bc2-4e17-aaeb-e518442b31a3",
+    "kind": "memory",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_memory_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T20:31:03.539Z",
+    "finishedAt": "2025-11-07T20:31:05.473Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 6 items\r\n\r\ntests\\worldclass\\test_memory_suite.py \r\n[DEBUG] Hit@3: 1.000 (threshold: 0.70)\r\n[DEBUG] All metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.229, 'p95_latency_ms': 0.442, 'p99_latency_ms': 0.442, 'avg_latency_ms': 0.24316666666666667, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n.\r\n[DEBUG] MRR: 0.917 (threshold: 0.65)\r\n....\r\n[DEBUG] Metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.258, 'p95_latency_ms': 0.321, 'p99_latency_ms': 0.321, 'avg_latency_ms': 0.24416666666666667, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n[DEBUG] Threshold results: {'hit_at_3': True, 'mrr': True, 'p95_latency_ms': True, 'fail_rate': True, 'dup_rate': True}\r\n.",
+    "metrics": {
+      "HitAt3": 1,
+      "MRR": 0.917
+    },
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "f997e2c9-c458-4307-8e53-7642509b8a8d",
+    "kind": "emotion",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T20:31:09.854Z",
+    "finishedAt": "2025-11-07T20:31:23.800Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 9 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\n\r\n============================= 9 passed in 12.65s ==============================\r\n",
+    "metrics": {
+      "RED_FP_rate": 0,
+      "SV_EN_gap": 0.022,
+      "accuracy": 0.6165
+    },
+    "tests": [
+      {
+        "name": "test_empathy_f1",
+        "status": "passed"
+      },
+      {
+        "name": "test_tone_drift",
+        "status": "passed"
+      },
+      {
+        "name": "test_sv_en_parity",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_false_positive",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_recall",
+        "status": "passed"
+      },
+      {
+        "name": "test_plus_precision",
+        "status": "passed"
+      },
+      {
+        "name": "test_light_rate",
+        "status": "passed"
+      },
+      {
+        "name": "test_bias_gap",
+        "status": "passed"
+      },
+      {
+        "name": "test_soft_correction",
+        "status": "passed"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "f4425588-b064-444d-9695-231cc6f132cf",
+    "kind": "memory",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_memory_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:30:25.038Z",
+    "finishedAt": "2025-11-07T23:30:27.271Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 6 items\r\n\r\ntests\\worldclass\\test_memory_suite.py \r\n[DEBUG] Hit@3: 1.000 (threshold: 0.70)\r\n[DEBUG] All metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.236, 'p95_latency_ms': 0.40299999999999997, 'p99_latency_ms': 0.40299999999999997, 'avg_latency_ms': 0.24066666666666667, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n.\r\n[DEBUG] MRR: 0.917 (threshold: 0.65)\r\n....\r\n[DEBUG] Metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.124, 'p95_latency_ms': 0.212, 'p99_latency_ms': 0.212, 'avg_latency_ms': 0.12483333333333334, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n[DEBUG] Threshold results: {'hit_at_3': True, 'mrr': True, 'p95_latency_ms': True, 'fail_rate': True, 'dup_rate': True}\r\n.",
+    "metrics": {
+      "HitAt3": 1,
+      "MRR": 0.917
+    },
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "cc345e16-5872-4878-930c-03d78f6cee68",
+    "kind": "emotion",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:30:57.265Z",
+    "finishedAt": "2025-11-07T23:31:08.721Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 9 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\n\r\n============================= 9 passed in 10.13s ==============================\r\n",
+    "metrics": {
+      "RED_FP_rate": 0,
+      "SV_EN_gap": 0.022,
+      "accuracy": 0.6165
+    },
+    "tests": [
+      {
+        "name": "test_empathy_f1",
+        "status": "passed"
+      },
+      {
+        "name": "test_tone_drift",
+        "status": "passed"
+      },
+      {
+        "name": "test_sv_en_parity",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_false_positive",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_recall",
+        "status": "passed"
+      },
+      {
+        "name": "test_plus_precision",
+        "status": "passed"
+      },
+      {
+        "name": "test_light_rate",
+        "status": "passed"
+      },
+      {
+        "name": "test_bias_gap",
+        "status": "passed"
+      },
+      {
+        "name": "test_soft_correction",
+        "status": "passed"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "8c777e48-70e5-4334-853e-745698ef93d2",
+    "kind": "smoke",
+    "cmd": "python",
+    "args": [
+      "tests/memory/test_memory_smoke.py"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:31:13.064Z",
+    "finishedAt": "2025-11-07T23:31:13.444Z",
+    "raw": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "tests/memory/test_memory_smoke.py",
+        "status": "passed",
+        "log": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "c32f31d4-7b92-48da-b183-ddb581b8d1e9",
+    "kind": "memory",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_memory_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:31:18.032Z",
+    "finishedAt": "2025-11-07T23:31:19.597Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 6 items\r\n\r\ntests\\worldclass\\test_memory_suite.py \r\n[DEBUG] Hit@3: 1.000 (threshold: 0.70)\r\n[DEBUG] All metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.132, 'p95_latency_ms': 0.244, 'p99_latency_ms': 0.244, 'avg_latency_ms': 0.13949999999999999, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n.\r\n[DEBUG] MRR: 0.917 (threshold: 0.65)\r\n....\r\n[DEBUG] Metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.217, 'p95_latency_ms': 0.314, 'p99_latency_ms': 0.314, 'avg_latency_ms': 0.20350000000000001, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n[DEBUG] Threshold results: {'hit_at_3': True, 'mrr': True, 'p95_latency_ms': True, 'fail_rate': True, 'dup_rate': True}\r\n.",
+    "metrics": {
+      "HitAt3": 1,
+      "MRR": 0.917
+    },
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "c2ddfef7-7833-4acd-ae6c-10fdf2e2a787",
+    "kind": "explain",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_explain_suite.py",
+      "-q",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:31:24.767Z",
+    "finishedAt": "2025-11-07T23:31:26.303Z",
+    "raw": ".......\r\n",
+    "metrics": {},
+    "tests": [],
+    "options": {
+      "EXPLAIN_STYLE": "warm",
+      "EXPLAIN_LEVEL": "standard"
+    }
+  },
+  {
+    "id": "a8fa33e5-4cb6-43c3-914c-503e37998ebc",
+    "kind": "all",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "tests/worldclass/test_memory_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:31:32.309Z",
+    "finishedAt": "2025-11-07T23:31:51.812Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 15 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\ntests\\worldclass\\test_memory_suite.py \r\n[DEBUG] Hit@3: 1.000 (threshold: 0.70)\r\n[DEBUG] All metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.277, 'p95_latency_ms': 0.475, 'p99_latency_ms': 0.475, 'avg_latency_ms': 0.2781666666666667, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n.\r\n[DEBUG] MRR: 0.917 (threshold: 0.65)\r\n....\r\n[DEBUG] Metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.22699999999999998, 'p95_latency_ms': 0.357, 'p99_latency_ms': 0.357, 'avg_latency_ms': 0.2303333333333333, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n[DEBUG] Threshold results: {'hit_at_3': True, 'mrr': True, 'p95_latency_ms': True, 'fail_rate': True, 'dup_rate': True}\r\n.",
+    "metrics": {
+      "HitAt3": 1,
+      "MRR": 0.917
+    },
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "371369bb-a1bd-4eb4-b362-37490856083b",
+    "kind": "si_nightly",
+    "cmd": "python",
+    "args": [
+      "agents/self_improve/si_core.py",
+      "--count",
+      "50",
+      "--out",
+      "reports/si/nightly_local.jsonl"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:31:57.680Z",
+    "finishedAt": "2025-11-07T23:31:57.973Z",
+    "raw": "[SI] Wrote 6 runs to reports\\si\\nightly_local.jsonl\r\n",
+    "metrics": {},
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "361cca19-55b2-44b0-a3b9-b96f71f1bbcd",
+    "kind": "si_apply",
+    "cmd": "node",
+    "args": [
+      "scripts/si/apply_si_proposals.mjs",
+      "--in",
+      "reports/si/forlag_dev.json"
+    ],
+    "status": "failed",
+    "progress": 100,
+    "startedAt": "2025-11-07T23:32:07.118Z",
+    "finishedAt": "2025-11-07T23:32:07.405Z",
+    "error": "Process exited with code 2",
+    "raw": "[SI] No proposals found (pattern: reports/si/forlag_dev.json)\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/apply_si_proposals.mjs",
+        "status": "failed",
+        "log": "[SI] No proposals found (pattern: reports/si/forlag_dev.json)"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "978bc2a5-b423-40be-84d3-f039e715b5ac",
+    "kind": "smoke",
+    "cmd": "python",
+    "args": [
+      "tests/memory/test_memory_smoke.py"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-08T20:57:41.162Z",
+    "finishedAt": "2025-11-08T20:57:42.714Z",
+    "raw": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "tests/memory/test_memory_smoke.py",
+        "status": "passed",
+        "log": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "b94b2562-65fb-4dad-ab31-159cf2c1a1ce",
+    "kind": "smoke",
+    "cmd": "python",
+    "args": [
+      "tests/memory/test_memory_smoke.py"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:14:55.426Z",
+    "finishedAt": "2025-11-09T16:14:56.110Z",
+    "raw": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "tests/memory/test_memory_smoke.py",
+        "status": "passed",
+        "log": "============================================================\r\nMemory Bridge Smoke Test (Steg 1)\r\n============================================================\r\n\r\n\r\n[Memory Ingest]\r\n[Test] Testing memory ingest...\r\n  ✅ Ingest successful\r\n  ✅ Memory Ingest PASSED\r\n\r\n[Memory Retrieve]\r\n[Test] Testing memory retrieve...\r\n  ✅ Retrieved 1 results\r\n  ✅ Memory Retrieve PASSED\r\n\r\n[PII Mask]\r\n[Test] Testing PII masking...\r\n  ✅ PII mask check available\r\n  ✅ PII Mask PASSED\r\n\r\n[Forget Policy]\r\n[Test] Testing forget policy...\r\n  ✅ TTL cleanup: 0 items evicted\r\n  ✅ LRU cap: 0 items evicted\r\n  ✅ Forget Policy PASSED\r\n\r\n[Scoring]\r\n[Test] Testing scoring module...\r\n  ✅ Cosine similarity works\r\n  ✅ Scoring works: 1 items scored\r\n  ✅ Scoring PASSED\r\n\r\n============================================================\r\nResults: 5 passed, 0 failed\r\n============================================================\r\n\r\n✅ All smoke tests passed!"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "c4db90dc-70c8-4ea1-80c2-75b4d9988a84",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:16:59.994Z",
+    "finishedAt": "2025-11-09T16:17:00.428Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "c2e92a14-30aa-417f-bf96-4aefec9b2ea2",
+    "kind": "emotion",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:24:13.809Z",
+    "finishedAt": "2025-11-09T16:24:31.254Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 9 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\n\r\n============================= 9 passed in 14.21s ==============================\r\n",
+    "metrics": {
+      "RED_FP_rate": 0,
+      "SV_EN_gap": 0.022,
+      "accuracy": 0.6165
+    },
+    "tests": [
+      {
+        "name": "test_empathy_f1",
+        "status": "passed"
+      },
+      {
+        "name": "test_tone_drift",
+        "status": "passed"
+      },
+      {
+        "name": "test_sv_en_parity",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_false_positive",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_recall",
+        "status": "passed"
+      },
+      {
+        "name": "test_plus_precision",
+        "status": "passed"
+      },
+      {
+        "name": "test_light_rate",
+        "status": "passed"
+      },
+      {
+        "name": "test_bias_gap",
+        "status": "passed"
+      },
+      {
+        "name": "test_soft_correction",
+        "status": "passed"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "24501828-2890-45af-b802-8b75b262f320",
+    "kind": "memory",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_memory_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:25:29.798Z",
+    "finishedAt": "2025-11-09T16:25:31.812Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 6 items\r\n\r\ntests\\worldclass\\test_memory_suite.py \r\n[DEBUG] Hit@3: 1.000 (threshold: 0.70)\r\n[DEBUG] All metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.134, 'p95_latency_ms': 0.297, 'p99_latency_ms': 0.297, 'avg_latency_ms': 0.15283333333333335, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n.\r\n[DEBUG] MRR: 0.917 (threshold: 0.65)\r\n....\r\n[DEBUG] Metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.242, 'p95_latency_ms': 0.337, 'p99_latency_ms': 0.337, 'avg_latency_ms': 0.24116666666666667, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n[DEBUG] Threshold results: {'hit_at_3': True, 'mrr': True, 'p95_latency_ms': True, 'fail_rate': True, 'dup_rate': True}\r\n.",
+    "metrics": {
+      "HitAt3": 1,
+      "MRR": 0.917
+    },
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "14b3b787-4502-40f6-9569-de1835ab5e44",
+    "kind": "si_nightly",
+    "cmd": "python",
+    "args": [
+      "agents/self_improve/si_core.py",
+      "--count",
+      "50",
+      "--out",
+      "reports/si/nightly_local.jsonl"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:25:38.678Z",
+    "finishedAt": "2025-11-09T16:25:39.007Z",
+    "raw": "[SI] Wrote 6 runs to reports\\si\\nightly_local.jsonl\r\n",
+    "metrics": {},
+    "tests": [],
+    "options": {}
+  },
+  {
+    "id": "278a5282-c44e-4d5a-8241-8e9b76c360cc",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:25:46.776Z",
+    "finishedAt": "2025-11-09T16:25:47.119Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "7730d6e2-5349-4207-b625-105c526dbed4",
+    "kind": "explain",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_explain_suite.py",
+      "-q",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:25:58.363Z",
+    "finishedAt": "2025-11-09T16:25:59.841Z",
+    "raw": ".......\r\n",
+    "metrics": {},
+    "tests": [],
+    "options": {
+      "EXPLAIN_STYLE": "warm",
+      "EXPLAIN_LEVEL": "standard"
+    }
+  },
+  {
+    "id": "9ed15b2d-c720-46f9-8c0c-17fff3499f26",
+    "kind": "emotion",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:26:18.394Z",
+    "finishedAt": "2025-11-09T16:26:30.315Z",
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 9 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\n\r\n============================= 9 passed in 10.65s ==============================\r\n",
+    "metrics": {
+      "RED_FP_rate": 0,
+      "SV_EN_gap": 0.022,
+      "accuracy": 0.6165
+    },
+    "tests": [
+      {
+        "name": "test_empathy_f1",
+        "status": "passed"
+      },
+      {
+        "name": "test_tone_drift",
+        "status": "passed"
+      },
+      {
+        "name": "test_sv_en_parity",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_false_positive",
+        "status": "passed"
+      },
+      {
+        "name": "test_red_recall",
+        "status": "passed"
+      },
+      {
+        "name": "test_plus_precision",
+        "status": "passed"
+      },
+      {
+        "name": "test_light_rate",
+        "status": "passed"
+      },
+      {
+        "name": "test_bias_gap",
+        "status": "passed"
+      },
+      {
+        "name": "test_soft_correction",
+        "status": "passed"
+      }
+    ],
+    "options": {}
+  },
+  {
+    "id": "ad753f97-d59c-49d1-96da-59543d777b02",
+    "kind": "logrotate_live",
+    "cmd": "python",
+    "args": [
+      "scripts/metrics/rotate_worldclass_log.py",
+      "--file",
+      "reports/worldclass_live.jsonl",
+      "--max-mb",
+      "50"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:26:54.391Z",
+    "finishedAt": "2025-11-09T16:26:54.482Z",
+    "raw": "{\"file\": \"reports/worldclass_live.jsonl\", \"max_mb\": 50, \"timestamp\": 1762705614, \"exists\": true, \"size_mb_before\": 0.026, \"action\": \"skip\", \"reason\": \"below_threshold\"}\r\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/metrics/rotate_worldclass_log.py",
+        "status": "passed",
+        "log": "{\"file\": \"reports/worldclass_live.jsonl\", \"max_mb\": 50, \"timestamp\": 1762705614, \"exists\": true, \"size_mb_before\": 0.026, \"action\": \"skip\", \"reason\": \"below_threshold\"}"
+      }
+    ],
+    "options": {
+      "maxMb": "50"
+    }
+  },
+  {
+    "id": "618d6cf1-bcfe-4b67-a5fe-15d6bf611a85",
+    "kind": "canary_toggle",
+    "cmd": "node",
+    "args": [
+      "scripts/si/canary_toggle.mjs",
+      "5"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "startedAt": "2025-11-09T16:26:58.646Z",
+    "finishedAt": "2025-11-09T16:26:58.997Z",
+    "raw": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0\n",
+    "metrics": {},
+    "tests": [
+      {
+        "name": "scripts/si/canary_toggle.mjs",
+        "status": "passed",
+        "log": "[CANARY] Updated CANARY_PERCENT=5 in .env\n[CANARY] Updated state percent=5, passes=0"
+      }
+    ],
+    "options": {
+      "percent": "5"
+    }
+  },
+  {
+    "id": "181ada82-d188-4880-b7fc-d48e768b017f",
+    "kind": "all",
+    "cmd": "pytest",
+    "args": [
+      "tests/worldclass/test_emotion_suite.py",
+      "tests/worldclass/test_memory_suite.py",
+      "-v",
+      "--tb=short",
+      "--capture=no"
+    ],
+    "status": "completed",
+    "progress": 100,
+    "raw": "============================= test session starts =============================\r\nplatform win32 -- Python 3.13.2, pytest-8.3.2, pluggy-1.6.0\r\nrootdir: C:\\Users\\royal\\OneDrive\\Skrivbord\\Mitt foretag\\Sintari AI Market\\sintari-relations\r\nconfigfile: pytest.ini\r\nplugins: anyio-4.9.0, asyncio-1.2.0, cov-6.2.1\r\nasyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function\r\ncollected 15 items\r\n\r\ntests\\worldclass\\test_emotion_suite.py .........\r\ntests\\worldclass\\test_memory_suite.py \r\n[DEBUG] Hit@3: 1.000 (threshold: 0.70)\r\n[DEBUG] All metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.182, 'p95_latency_ms': 0.244, 'p99_latency_ms': 0.244, 'avg_latency_ms': 0.16583333333333333, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n.\r\n[DEBUG] MRR: 0.917 (threshold: 0.65)\r\n....\r\n[DEBUG] Metrics: {'total_cases': 6, 'hit_at_1': 0.8333333333333334, 'hit_at_3': 1.0, 'hit_at_5': 1.0, 'mrr': 0.9166666666666666, 'map': 0.9166666666666666, 'ndcg': 0.9444444444444445, 'p50_latency_ms': 0.182, 'p95_latency_ms': 0.301, 'p99_latency_ms': 0.301, 'avg_latency_ms': 0.18183333333333332, 'fail_rate': 0.0, 'dup_rate': 0.0}\r\n[DEBUG] Threshold results: {'hit_at_3': True, 'mrr': True, 'p95_latency_ms': True, 'fail_rate': True, 'dup_rate': True}\r\n.",
+    "metrics": {
+      "HitAt3": 1,
+      "MRR": 0.917
+    },
+    "tests": [],
+    "startedAt": "2025-11-09T16:27:18.767Z",
+    "finishedAt": "2025-11-09T16:27:37.301Z"
+  }
+]

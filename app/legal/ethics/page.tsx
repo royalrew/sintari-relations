@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function EthicsPage() {
   return (
     <main className="max-w-3xl mx-auto p-6 prose prose-sm sm:prose lg:prose-lg">
@@ -61,12 +63,12 @@ export default function EthicsPage() {
       </div>
 
       <div className="mt-8 text-center">
-        <a 
+        <Link 
           href="/" 
           className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all"
         >
-          ← Tillbaka till analys
-        </a>
+          ← Tillbaka till startsidan
+        </Link>
       </div>
     </main>
   );

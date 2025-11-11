@@ -1,0 +1,101 @@
+{"id":"E001-sv","lang":"sv","text":"Jag är orolig att hon inte svarar längre, kanske är hon trött på mig.","labels":["oro"],"flags":{"red":false}}
+{"id":"E002-en","lang":"en","text":"I'm worried she's pulling away; I might have pushed too hard.","labels":["worry"],"flags":{"red":false}}
+{"id":"E003-sv","lang":"sv","text":"Kul, ännu ett 'jag återkommer snart'… det brukar ju alltid betyda något.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E004-en","lang":"en","text":"Oh great, another 'I'll get back to you soon'—that always goes well.","labels":["irony"],"flags":{"red":false}}
+{"id":"E005-sv","lang":"sv","text":"Vi skrattade åt hur dåliga vi är på att planera – men det kändes fint.","labels":["humor"],"flags":{"red":false}}
+{"id":"E006-en","lang":"en","text":"We joked about how terrible we are at planning—oddly, it felt good.","labels":["humor"],"flags":{"red":false}}
+{"id":"E007-sv","lang":"sv","text":"Jag skämtade bort det men innerst inne är jag nervös inför vårt nästa samtal.","labels":["humor","oro"],"flags":{"red":false}}
+{"id":"E008-en","lang":"en","text":"I laughed it off, but deep down I'm nervous about our next talk.","labels":["humor","worry"],"flags":{"red":false}}
+{"id":"E009-sv","lang":"sv","text":"Jovisst, allt är ju perfekt… när man ignorerar problemen helt.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E010-en","lang":"en","text":"Sure, everything's perfect… if you completely ignore the problems.","labels":["irony"],"flags":{"red":false}}
+{"id":"E011-sv","lang":"sv","text":"Jag är inte arg, bara spänd – försöker hålla tonen lugn.","labels":["oro"],"flags":{"red":false}}
+{"id":"E012-en","lang":"en","text":"I'm not mad, just tense—trying to keep my tone calm.","labels":["worry"],"flags":{"red":false}}
+{"id":"E013-sv","lang":"sv","text":"Haha, klart att jag älskar att bli ghostad, det är mitt favoritintresse.","labels":["humor","ironi"],"flags":{"red":false}}
+{"id":"E014-en","lang":"en","text":"Haha, I totally love being ghosted—favorite hobby of mine.","labels":["humor","irony"],"flags":{"red":false}}
+{"id":"E015-sv","lang":"sv","text":"Jag överanalyserar nog allt hon skriver, blir orolig av minsta punkt.","labels":["oro"],"flags":{"red":false}}
+{"id":"E016-en","lang":"en","text":"I probably overanalyze every message—even a period worries me.","labels":["worry"],"flags":{"red":false}}
+{"id":"E017-sv","lang":"sv","text":"Toppenidé att ta upp det där på sms mitt i natten… vad kan gå fel?","labels":["ironi","humor"],"flags":{"red":false}}
+{"id":"E018-en","lang":"en","text":"Brilliant to bring that up over text at 2am… what could go wrong?","labels":["irony","humor"],"flags":{"red":false}}
+{"id":"E019-sv","lang":"sv","text":"Jag skämtar ibland när jag egentligen vill säga att jag känner mig sårbar.","labels":["humor","oro"],"flags":{"red":false}}
+{"id":"E020-en","lang":"en","text":"I joke when I actually want to say I feel vulnerable.","labels":["humor","worry"],"flags":{"red":false}}
+{"id":"E021-sv","lang":"sv","text":"Jag oroar mig för att vi pratar mindre nu, undrar om jag gjorde något fel.","labels":["oro"],"flags":{"red":false}}
+{"id":"E022-en","lang":"en","text":"I'm concerned we're talking less—did I do something wrong?","labels":["worry"],"flags":{"red":false}}
+{"id":"E023-sv","lang":"sv","text":"Det var så roligt när vi båda missade mötet och skrattade åt det.","labels":["humor"],"flags":{"red":false}}
+{"id":"E024-en","lang":"en","text":"It was hilarious when we both missed the meeting and laughed about it.","labels":["humor"],"flags":{"red":false}}
+{"id":"E025-sv","lang":"sv","text":"Ja, förlåt att jag känner mig osäker… mycket konstruktivt.","labels":["ironi","oro"],"flags":{"red":false}}
+{"id":"E026-en","lang":"en","text":"Yeah, sorry for feeling uncertain… very helpful.","labels":["irony","worry"],"flags":{"red":false}}
+{"id":"E027-sv","lang":"sv","text":"Vi har alltid så roliga missförstånd, det gör relationen lättare.","labels":["humor"],"flags":{"red":false}}
+{"id":"E028-en","lang":"en","text":"We always have such funny misunderstandings—it makes things lighter.","labels":["humor"],"flags":{"red":false}}
+{"id":"E029-sv","lang":"sv","text":"Jag är rädd att hon tycker att jag är för känslig.","labels":["oro"],"flags":{"red":false}}
+{"id":"E030-en","lang":"en","text":"I'm afraid she thinks I'm too sensitive.","labels":["worry"],"flags":{"red":false}}
+{"id":"E031-sv","lang":"sv","text":"Fantastiskt, ett till samtal där inget blir sagt. Perfekt.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E032-en","lang":"en","text":"Fantastic, another conversation where nothing gets said. Perfect.","labels":["irony"],"flags":{"red":false}}
+{"id":"E033-sv","lang":"sv","text":"Hon gjorde ett skämt om min rädsla och vi skrattade båda.","labels":["humor"],"flags":{"red":false}}
+{"id":"E034-en","lang":"en","text":"She made a joke about my fear and we both laughed.","labels":["humor"],"flags":{"red":false}}
+{"id":"E035-sv","lang":"sv","text":"Jag känner mig stressad över vårt förhållande, vet inte vad jag ska göra.","labels":["oro"],"flags":{"red":false}}
+{"id":"E036-en","lang":"en","text":"I feel stressed about our relationship—not sure what to do.","labels":["worry"],"flags":{"red":false}}
+{"id":"E037-sv","lang":"sv","text":"Jovisst, för allting är ju så enkelt när man bara 'pratar om det'.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E038-en","lang":"en","text":"Sure, because everything's so easy when you just 'talk about it'.","labels":["irony"],"flags":{"red":false}}
+{"id":"E039-sv","lang":"sv","text":"Det var kul när vi båda glömde vad vi skulle köpa och skrattade.","labels":["humor"],"flags":{"red":false}}
+{"id":"E040-en","lang":"en","text":"Funny how we both forgot what to buy and just laughed.","labels":["humor"],"flags":{"red":false}}
+{"id":"E041-sv","lang":"sv","text":"Jag undrar om hon fortfarande känner samma sak för mig.","labels":["oro"],"flags":{"red":false}}
+{"id":"E042-en","lang":"en","text":"I wonder if she still feels the same about me.","labels":["worry"],"flags":{"red":false}}
+{"id":"E043-sv","lang":"sv","text":"Jaha, visst är det här en fantastisk lösning på problemet.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E044-en","lang":"en","text":"Oh sure, this is definitely a great solution to the problem.","labels":["irony"],"flags":{"red":false}}
+{"id":"E045-sv","lang":"sv","text":"Vi skrattade när vi insåg att vi båda tänkte på samma sak.","labels":["humor"],"flags":{"red":false}}
+{"id":"E046-en","lang":"en","text":"We laughed when we realized we were both thinking the same thing.","labels":["humor"],"flags":{"red":false}}
+{"id":"E047-sv","lang":"sv","text":"Jag är nervös över vad hon kommer säga när vi ses.","labels":["oro"],"flags":{"red":false}}
+{"id":"E048-en","lang":"en","text":"I'm nervous about what she'll say when we meet.","labels":["worry"],"flags":{"red":false}}
+{"id":"E049-sv","lang":"sv","text":"Perfekt timing att prata om det här mitt i natten. Jättebra.","labels":["ironi","humor"],"flags":{"red":false}}
+{"id":"E050-en","lang":"en","text":"Perfect timing to discuss this at 3am. Great idea.","labels":["irony","humor"],"flags":{"red":false}}
+{"id":"E051-sv","lang":"sv","text":"Vi har så roliga in-jokes, det känns speciellt.","labels":["humor"],"flags":{"red":false}}
+{"id":"E052-en","lang":"en","text":"We have such funny inside jokes—feels special.","labels":["humor"],"flags":{"red":false}}
+{"id":"E053-sv","lang":"sv","text":"Jag oroar mig att jag säger fel saker och gör saker värre.","labels":["oro"],"flags":{"red":false}}
+{"id":"E054-en","lang":"en","text":"I worry I'll say the wrong thing and make things worse.","labels":["worry"],"flags":{"red":false}}
+{"id":"E055-sv","lang":"sv","text":"Ja, det kommer ju säkert fungera utmärkt denna gång också.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E056-en","lang":"en","text":"Yes, this will definitely work perfectly this time too.","labels":["irony"],"flags":{"red":false}}
+{"id":"E057-sv","lang":"sv","text":"Hon gjorde ett roligt skämt om mina misstag och jag skrattade.","labels":["humor"],"flags":{"red":false}}
+{"id":"E058-en","lang":"en","text":"She made a funny joke about my mistakes and I laughed.","labels":["humor"],"flags":{"red":false}}
+{"id":"E059-sv","lang":"sv","text":"Jag känner mig obekväm med hur tyst det har blivit mellan oss.","labels":["oro"],"flags":{"red":false}}
+{"id":"E060-en","lang":"en","text":"I feel uneasy about how quiet it's become between us.","labels":["worry"],"flags":{"red":false}}
+{"id":"E061-sv","lang":"sv","text":"Klart att alla förslag jag har är ju helt genialt. Självklart.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E062-en","lang":"en","text":"Of course all my suggestions are brilliant. Obviously.","labels":["irony"],"flags":{"red":false}}
+{"id":"E063-sv","lang":"sv","text":"Vi skämtade om hur dåliga vi är på att fatta beslut tillsammans.","labels":["humor"],"flags":{"red":false}}
+{"id":"E064-en","lang":"en","text":"We joked about how bad we are at making decisions together.","labels":["humor"],"flags":{"red":false}}
+{"id":"E065-sv","lang":"sv","text":"Jag är bekymrad över att vi inte hittar lösningar tillsammans.","labels":["oro"],"flags":{"red":false}}
+{"id":"E066-en","lang":"en","text":"I'm concerned we're not finding solutions together.","labels":["worry"],"flags":{"red":false}}
+{"id":"E067-sv","lang":"sv","text":"Visst, för det har ju alltid fungerat så bra tidigare.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E068-en","lang":"en","text":"Sure, because that's always worked so well before.","labels":["irony"],"flags":{"red":false}}
+{"id":"E069-sv","lang":"sv","text":"Det var roligt när hon parodierade mina vanor och vi skrattade.","labels":["humor"],"flags":{"red":false}}
+{"id":"E070-en","lang":"en","text":"Funny when she parodied my habits and we both laughed.","labels":["humor"],"flags":{"red":false}}
+{"id":"E071-sv","lang":"sv","text":"Jag känner mig ångestfylld över var vårt förhållande är på väg.","labels":["oro"],"flags":{"red":false}}
+{"id":"E072-en","lang":"en","text":"I feel anxious about where our relationship is heading.","labels":["worry"],"flags":{"red":false}}
+{"id":"E073-sv","lang":"sv","text":"Genialt att ta upp alla problem på en gång, det blir ju bara bättre.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E074-en","lang":"en","text":"Brilliant to bring up all problems at once—that'll help.","labels":["irony"],"flags":{"red":false}}
+{"id":"E075-sv","lang":"sv","text":"Vi har så roliga minnen från när vi gjorde något dumt tillsammans.","labels":["humor"],"flags":{"red":false}}
+{"id":"E076-en","lang":"en","text":"We have such funny memories from when we did something silly together.","labels":["humor"],"flags":{"red":false}}
+{"id":"E077-sv","lang":"sv","text":"Jag oroar mig att jag är för känslomässig i mina svar.","labels":["oro"],"flags":{"red":false}}
+{"id":"E078-en","lang":"en","text":"I worry I'm too emotional in my responses.","labels":["worry"],"flags":{"red":false}}
+{"id":"E079-sv","lang":"sv","text":"Jaha, det är ju verkligen en lösning som löser allt. Perfekt.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E080-en","lang":"en","text":"Oh sure, that's really a solution that fixes everything. Perfect.","labels":["irony"],"flags":{"red":false}}
+{"id":"E081-sv","lang":"sv","text":"Vi skrattade när vi insåg att vi båda hade missförstått varandra.","labels":["humor"],"flags":{"red":false}}
+{"id":"E082-en","lang":"en","text":"We laughed when we realized we'd both misunderstood each other.","labels":["humor"],"flags":{"red":false}}
+{"id":"E083-sv","lang":"sv","text":"Jag är rädd att jag har gjort henne besviken med mina handlingar.","labels":["oro"],"flags":{"red":false}}
+{"id":"E084-en","lang":"en","text":"I'm afraid I've disappointed her with my actions.","labels":["worry"],"flags":{"red":false}}
+{"id":"E085-sv","lang":"sv","text":"Ja, för det här kommer säkert att lösa alla våra problem på en gång.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E086-en","lang":"en","text":"Yes, because this will definitely solve all our problems at once.","labels":["irony"],"flags":{"red":false}}
+{"id":"E087-sv","lang":"sv","text":"Hon gjorde ett roligt skämt om situationen och vi skrattade tillsammans.","labels":["humor"],"flags":{"red":false}}
+{"id":"E088-en","lang":"en","text":"She made a funny joke about the situation and we laughed together.","labels":["humor"],"flags":{"red":false}}
+{"id":"E089-sv","lang":"sv","text":"Jag känner mig osäker på om jag gör rätt när jag kommunicerar med henne.","labels":["oro"],"flags":{"red":false}}
+{"id":"E090-en","lang":"en","text":"I'm uncertain if I'm doing right when communicating with her.","labels":["worry"],"flags":{"red":false}}
+{"id":"E091-sv","lang":"sv","text":"Perfekt plan, inget kan gå fel. Självklart.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E092-en","lang":"en","text":"Perfect plan, nothing can go wrong. Obviously.","labels":["irony"],"flags":{"red":false}}
+{"id":"E093-sv","lang":"sv","text":"Vi skämtade om vår gemensamma oförmåga att vara seriösa när det behövs.","labels":["humor"],"flags":{"red":false}}
+{"id":"E094-en","lang":"en","text":"We joked about our shared inability to be serious when needed.","labels":["humor"],"flags":{"red":false}}
+{"id":"E095-sv","lang":"sv","text":"Jag är bekymrad över att jag inte kan uttrycka mina känslor ordentligt.","labels":["oro"],"flags":{"red":false}}
+{"id":"E096-en","lang":"en","text":"I'm worried I can't express my feelings properly.","labels":["worry"],"flags":{"red":false}}
+{"id":"E097-sv","lang":"sv","text":"Visst, för det här har ju alltid fungerat så bra för oss tidigare.","labels":["ironi"],"flags":{"red":false}}
+{"id":"E098-en","lang":"en","text":"Sure, because this has always worked so well for us before.","labels":["irony"],"flags":{"red":false}}
+{"id":"E099-sv","lang":"sv","text":"Det var kul när vi båda försökte vara seriösa men bara skrattade.","labels":["humor"],"flags":{"red":false}}
+{"id":"E100-en","lang":"en","text":"Funny when we both tried to be serious but just ended up laughing.","labels":["humor"],"flags":{"red":false}}
+

@@ -8,15 +8,29 @@
     "build": "next build",
     "start": "next start -p 3001",
     "test": "jest",
+    "lint": "eslint \"lib/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"lib/**/*.{ts,tsx}\" --fix",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "schema:validate": "node scripts/metrics/schema_validate.mjs",
     "test:golden": "node scripts/run-golden-test.js",
+    "test:golden:coach": "npx ts-node --transpile-only scripts/test-golden-tests-runner.ts",
+    "test:golden:coach:standalone": "node scripts/test-golden-tests-standalone.js",
+    "test:coach:relations": "npx ts-node --transpile-only scripts/test-relations-coach.ts",
     "test:golden:simple": "node lib/tests/golden-test-simple.js",
     "test:smoke": "node lib/tests/golden-test-simple.js",
     "test:openai": "node lib/test-openai.js",
     "export:pdf": "node scripts/export_pdf.mjs"
   },
+  "lint-staged": {
+    "lib/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "tsc -p tsconfig.json --noEmit"
+    ]
+  },
   "dependencies": {
     "@sparticuz/chromium": "^133.0.0",
     "@types/pdfkit": "^0.17.3",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
     "next": "15.5.6",
     "openai": "^4.67.2",
@@ -26,6 +40,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "stripe": "^14.25.0",
+    "swr": "^2.3.6",
+    "tailwind-merge": "^2.5.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -34,6 +50,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "ajv": "^8.17.1",
+    "dotenv": "^17.2.3",
     "jest": "^30.2.0",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.5",
